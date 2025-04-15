@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.dapperz.dapperz",
+      "sha256_cert_fingerprints": [
+        "B1:1B:48:CF:20:4A:81:26:91:94:15:A2:45:D0:56:61:74:BD:65:2A:2F:F8:A0:8E:5E:BB:79:FC:DF:E6:43:0B"
+      ]
+    }
+  }
+]

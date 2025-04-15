@@ -1,0 +1,26 @@
+export 'package:dapperz/views/menu/dashboard/dashboard_constant.dart';
+export 'package:dapperz/widgets/common_app_bar/common_app_bar_title.dart';
+export 'package:dapperz/controllers/home_product_controllers/home_controller.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_utils/home_constant.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_utils/home_widget.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/home_category_layouts/home_category_data.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/home_category_layouts/home_category_list.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/home_deals_of_the_day/deals_of_the_day_content.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/find_style_list_card.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/find_your_style.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/offer_time/time_layout.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/kids_corner/kids_corner.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/offer_corner/offer_corner.dart';
+export 'package:dapperz/models/home_find_style_category.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/offer_time/offer_time_layout.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/find_your_style_category_card.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/biggest_deal_brands/biggest_deal_brands.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/price_layout.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/product_image.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/find_style_sub_category.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/offer_corner/offer_corner_layout.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/offer_time/offer_time_data.dart';
+export 'package:dapperz/views/bottom_navigate_page/home/home_layouts/find_your_style/new_layout.dart';
+
+//home model
+export 'package:dapperz/models/home_banner_model.dart';
