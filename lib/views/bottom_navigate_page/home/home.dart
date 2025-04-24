@@ -117,40 +117,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             // const SizedBox(height: 15),
                             const HomeCategoryList(),
                             const SizedBox(height: 15),
-                            CarouselSlider(
-                              items: homeCtrl.images.map((i) {
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        int index = homeCtrl.images.indexOf(i);
-                                        if (index == 0) {
-                                          Get.toNamed(routeName.buildYourHome);
-                                        } else if (index == 1) {
-                                          Get.toNamed(routeName.getQuote);
-                                        }
-                                      },
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        clipBehavior: Clip.hardEdge,
-                                        child:
-                                            Image.network(i, fit: BoxFit.fill),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                              options: CarouselOptions(
-                                height: size.longestSide / tabletMobile,
-                                autoPlay: true,
-                                autoPlayInterval: const Duration(seconds: 3),
-                                autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                              ),
-                            ),
+                            // CarouselSlider(
+                            //   items: homeCtrl.images.map((i) {
+                            //     return Builder(
+                            //       builder: (BuildContext context) {
+                            //         return GestureDetector(
+                            //           onTap: () {
+                            //             int index = homeCtrl.images.indexOf(i);
+                            //             if (index == 0) {
+                            //               Get.toNamed(routeName.buildYourHome);
+                            //             } else if (index == 1) {
+                            //               Get.toNamed(routeName.getQuote);
+                            //             }
+                            //           },
+                            //           child: Card(
+                            //             shape: RoundedRectangleBorder(
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(10)),
+                            //             clipBehavior: Clip.hardEdge,
+                            //             child:
+                            //                 Image.network(i, fit: BoxFit.fill),
+                            //           ),
+                            //         );
+                            //       },
+                            //     );
+                            //   }).toList(),
+                            //   options: CarouselOptions(
+                            //     height: size.longestSide / tabletMobile,
+                            //     autoPlay: true,
+                            //     autoPlayInterval: const Duration(seconds: 3),
+                            //     autoPlayAnimationDuration:
+                            //         const Duration(milliseconds: 800),
+                            //     autoPlayCurve: Curves.fastOutSlowIn,
+                            //   ),
+                            // ),
                             const SizedBox(height: 15),
                             const BorderLineLayout(),
                             // Remaining

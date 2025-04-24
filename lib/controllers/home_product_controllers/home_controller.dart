@@ -67,7 +67,40 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
+
+
   //get data list
+//   getData({bool getLocation = false}) async {
+//   appCtrl.isShimmer = true;
+//   appCtrl.update();
+//   homeCategoryList.clear();
+//   featuredCategoriesList.clear();
+//   recommendedForYouList.clear();
+//   bestSellingProductList.clear();
+//   onSaleProductList.clear();
+
+//   try {
+//     if (!UserSingleton().isGuest!) {
+//       await getRecommendedProductList("1");
+//       update();
+//     }
+
+//     await getFeaturedCategoryList("1");
+//     update();
+
+//     await getBestSellingList("1");
+//     update();
+
+//     await getOnSaleList("1");
+//     update();
+//   } catch (e) {
+//     print("⚠️ Error loading product data: $e");
+//   }
+
+//   appCtrl.isShimmer = false;
+//   appCtrl.update();
+// }
+
   getData({bool getLocation = false}) async {
     appCtrl.isShimmer = true;
     appCtrl.update();
@@ -80,12 +113,7 @@ class HomeController extends GetxController {
     bestSellingProductList.clear();
     onSaleProductList.clear();
     recentlyViewedList.clear();
-    locationList.clear();
-    if (getLocation &&
-        (UserSingleton().selectedLocation == null ||
-            UserSingleton().selectedLocation == "")) {
-      getLocationList();
-    }
+   
     if (!UserSingleton().isGuest!) {
       await getRecommendedProductList("1");
       update();

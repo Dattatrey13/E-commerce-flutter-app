@@ -71,6 +71,9 @@ dependencies:
   grouped_list: ^6.0.0
   awesome_notifications: ^0.10.0
   path_provider: ^2.0.11
+  just_audio: ^0.9.46
+  audio_session: ^0.1.25
+
 
 dev_dependencies:
   flutter_test:
@@ -103,7 +106,7 @@ flutter:
     - assets/icons/homeIcon/
     - assets/svg/
     - assets/card/
-    - assets/language/
+#    - assets/language/
     - assets/gif/
 
   # An image asset can refer to one or more resolution-specific "variants", see
