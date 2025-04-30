@@ -136,7 +136,7 @@ class PItems {
   PItems({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     List<ImageIds>? imageIds,
     bool? isFeatured,
     num? averageRating,
@@ -149,7 +149,7 @@ class PItems {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _imageIds = imageIds;
     _isFeatured = isFeatured;
     _averageRating = averageRating;
@@ -164,7 +164,7 @@ class PItems {
   PItems.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     if (json['image_ids'] != null) {
       _imageIds = [];
       json['image_ids'].forEach((v) {
@@ -182,7 +182,7 @@ class PItems {
   }
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   List<ImageIds>? _imageIds;
   bool? _isFeatured;
   num? _averageRating;
@@ -195,7 +195,7 @@ class PItems {
 
   num? get id => _id;
   String? get productTitle => _productTitle;
-  String? get productSlug => _productSlug;
+  String? get slug => _slug;
   List<ImageIds>? get imageIds => _imageIds;
   bool? get isFeatured => _isFeatured;
   num? get averageRating => _averageRating;
@@ -210,7 +210,7 @@ class PItems {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     if (_imageIds != null) {
       map['image_ids'] = _imageIds?.map((v) => v.toJson()).toList();
     }
@@ -358,7 +358,7 @@ class SubProducts {
   SubProducts({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     List<ImageIds>? imageIds,
     bool? isFeatured,
     num? averageRating,
@@ -371,7 +371,7 @@ class SubProducts {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _imageIds = imageIds;
     _isFeatured = isFeatured;
     _averageRating = averageRating;
@@ -386,7 +386,7 @@ class SubProducts {
   SubProducts.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     if (json['image_ids'] != null) {
       _imageIds = [];
       json['image_ids'].forEach((v) {
@@ -404,7 +404,7 @@ class SubProducts {
   }
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   List<ImageIds>? _imageIds;
   bool? _isFeatured;
   num? _averageRating;
@@ -417,7 +417,7 @@ class SubProducts {
 
   num? get id => _id;
   String? get productTitle => _productTitle;
-  String? get productSlug => _productSlug;
+  String? get slug => _slug;
   List<ImageIds>? get imageIds => _imageIds;
   bool? get isFeatured => _isFeatured;
   num? get averageRating => _averageRating;
@@ -432,7 +432,7 @@ class SubProducts {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     if (_imageIds != null) {
       map['image_ids'] = _imageIds?.map((v) => v.toJson()).toList();
     }

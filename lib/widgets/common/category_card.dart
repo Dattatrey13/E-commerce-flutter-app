@@ -10,7 +10,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(builder: (appCtrl) {
       return InkWell(
-        onTap: () => appCtrl.goToProductDetail(),
+        onTap: () => appCtrl.goToProductDetail(slug: ''),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

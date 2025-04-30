@@ -13,7 +13,7 @@ class RecentSearchCard extends StatelessWidget {
     return GetBuilder<AppController>(builder: (appCtrl) {
       return InkWell(
         onTap: () =>
-            {appCtrl.goToProductDetail(productId: data!.id.toString())},
+            {appCtrl.goToProductDetail(slug: data!.id.toString())},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Row(

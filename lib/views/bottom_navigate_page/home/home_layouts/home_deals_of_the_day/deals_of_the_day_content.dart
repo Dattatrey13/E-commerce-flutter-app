@@ -28,47 +28,47 @@ class DealsOfTheDayContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LatoFontStyle(
-              text: data!.productId!.productTitle!.tr,
+              text: data!.slug!.productTitle!.tr,
               fontWeight: FontWeight.w700,
               color: appCtrl.appTheme.blackColor,
               fontSize: FontSizes.f12,
             ),
             const Space(0, 2),
-            data!.productId!.id != null &&
-                    (data!.productId!.isFeatured ?? false)
+            data!.slug!.id != null &&
+                    (data!.slug!.isFeatured ?? false)
                 ? Container()
                 : PriceLayout(
-                    totalPrice: data!.productId!.isOnSale == true &&
-                            data!.productId!.salePrice !=
-                                data!.productId!.price &&
-                            data!.productId!.salePrice != ""
-                        ? data!.productId!.salePrice
+                    totalPrice: data!.slug!.isOnSale == true &&
+                            data!.slug!.salePrice !=
+                                data!.slug!.price &&
+                            data!.slug!.salePrice != ""
+                        ? data!.slug!.salePrice
                         : null,
-                    mrp: data!.productId!.price,
+                    mrp: data!.slug!.price,
                     discount: "",
                     // todo: set discount value once set in api
-                    // discount: data!.productId!.discountPercentage.toString(),
+                    // discount: data!.slug!.discountPercentage.toString(),
 
-                    // data!.productId!.salePrice != null &&
-                    //         data!.productId!.salePrice != "" &&
-                    //         data!.productId!.salePrice != "null"
+                    // data!.slug!.salePrice != null &&
+                    //         data!.slug!.salePrice != "" &&
+                    //         data!.slug!.salePrice != "null"
                     //     ? isInteger(num.parse(
-                    //             (double.parse(data!.productId!.regularPrice!) - double.parse(data!.productId!.salePrice!)).toString()))
+                    //             (double.parse(data!.slug!.regularPrice!) - double.parse(data!.slug!.salePrice!)).toString()))
                     //         ? getDiscountPercentage(
-                    //                 double.parse(data!.productId!.regularPrice!), double.parse(data!.productId!.salePrice!))
+                    //                 double.parse(data!.slug!.regularPrice!), double.parse(data!.slug!.salePrice!))
                     //             .toString()
                     //         : getDiscountPercentage(
-                    //                 double.parse(data!.productId!.regularPrice!), double.parse(data!.productId!.salePrice!))
+                    //                 double.parse(data!.slug!.regularPrice!), double.parse(data!.slug!.salePrice!))
                     //             .toString()
                     //     : "",
-                    fontSize: data!.productId!.salePrice != null &&
-                            data!.productId!.salePrice != "" &&
-                            data!.productId!.salePrice != "null"
+                    fontSize: data!.slug!.salePrice != null &&
+                            data!.slug!.salePrice != "" &&
+                            data!.slug!.salePrice != "null"
                         ? MediaQuery.of(context).size.width > 400
                             ? FontSizes.f11
                             : FontSizes.f12
                         : FontSizes.f12,
-                    // isDiscountShow: data!.productId!.salePrice != null && data!.productId!.salePrice != "" && data!.productId!.salePrice != "null",
+                    // isDiscountShow: data!.slug!.salePrice != null && data!.slug!.salePrice != "" && data!.slug!.salePrice != "null",
                     isDiscountShow: false,
                   ),
             const Space(0, 10),
@@ -81,7 +81,7 @@ class DealsOfTheDayContent extends StatelessWidget {
                 about: 'wishlist',
                 firstActionTap: firstActionTap,
                 secondActionTap: secondActionTap,
-                isActionShow: !(data!.productId!.isFeatured ?? false),
+                isActionShow: !(data!.slug!.isFeatured ?? false),
               )
           ],
         ),

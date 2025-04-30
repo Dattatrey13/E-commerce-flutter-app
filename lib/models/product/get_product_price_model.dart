@@ -54,7 +54,7 @@ class GetProductPriceModel {
 
 class Data {
   Data({
-    num? productId,
+    num? slug,
     String? sku,
     num? virtual,
     num? downloadable,
@@ -69,7 +69,7 @@ class Data {
     String? taxStatus,
     String? taxClass,
   }) {
-    _productId = productId;
+    _slug = slug;
     _sku = sku;
     _virtual = virtual;
     _downloadable = downloadable;
@@ -86,7 +86,7 @@ class Data {
   }
 
   Data.fromJson(dynamic json) {
-    _productId = json['product_id'];
+    _slug = json['product_id'];
     _sku = json['sku'];
     _virtual = json['virtual'];
     _downloadable = json['downloadable'];
@@ -102,7 +102,7 @@ class Data {
     _taxClass = json['tax_class'];
   }
 
-  num? _productId;
+  num? _slug;
   String? _sku;
   num? _virtual;
   num? _downloadable;
@@ -118,7 +118,7 @@ class Data {
   String? _taxClass;
 
   Data copyWith({
-    num? productId,
+    num? slug,
     String? sku,
     num? virtual,
     num? downloadable,
@@ -134,7 +134,7 @@ class Data {
     String? taxClass,
   }) =>
       Data(
-        productId: productId ?? _productId,
+        slug: slug ?? _slug,
         sku: sku ?? _sku,
         virtual: virtual ?? _virtual,
         downloadable: downloadable ?? _downloadable,
@@ -150,7 +150,7 @@ class Data {
         taxClass: taxClass ?? _taxClass,
       );
 
-  num? get productId => _productId;
+  num? get slug => _slug;
 
   String? get sku => _sku;
 
@@ -180,7 +180,7 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['product_id'] = _productId;
+    map['product_id'] = _slug;
     map['sku'] = _sku;
     map['virtual'] = _virtual;
     map['downloadable'] = _downloadable;

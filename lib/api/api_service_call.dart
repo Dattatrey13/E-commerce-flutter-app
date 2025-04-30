@@ -140,40 +140,98 @@ class ApiServiceCall implements BaseApi {
   }
 
   dynamic returnResponse(http.Response response) async {
-    switch (response.statusCode) {
-      case 200:
-        dynamic responseJson = jsonDecode(utf8.decode(response.bodyBytes));
-        return responseJson;
-      case 201:
-        dynamic responseJson = jsonDecode(utf8.decode(response.bodyBytes));
-        return responseJson;
-      case 400:
-        dynamic responseJson = jsonDecode(utf8.decode(response.bodyBytes));
-        return responseJson;
-      case 401:
-        Fluttertoast.showToast(msg: "Session Expired");
-        break;
-      case 403:
-        if (UserSingleton().token != null) {
-          Fluttertoast.showToast(msg: "Session Expired");
+    try {
+      // Decode response body bytes
+      String responseBody = utf8.decode(response.bodyBytes);
+      String contentType = response.headers['content-type'] ?? '';
+
+      // Check if the response content type is JSON
+      if (contentType.contains('application/json')) {
+        switch (response.statusCode) {
+          case 200:
+          case 201:
+          case 400:
+          case 500:
+            return jsonDecode(responseBody);
+
+          case 401:
+            Fluttertoast.showToast(msg: "Session Expired");
+            break;
+          case 403:
+            if (UserSingleton().token != null) {
+              Fluttertoast.showToast(msg: "Session Expired");
+            }
+            AppController appCtrl = AppController();
+            appCtrl.selectedIndex = 0;
+            appCtrl.storage.erase();
+            Get.forceAppUpdate();
+            UserSingleton().token = null;
+            UserSingleton().selectedLocation = null;
+            Get.offAllNamed(routeName.login);
+            break;
+          case 404:
+            Fluttertoast.showToast(msg: "Not Found");
+            throw UnauthorisedException("404 Not Found: $responseBody");
+
+          default:
+            throw FetchDataException(
+              'Error occurred while communicating with server. Status: ${response.statusCode}, Body: $responseBody',
+            );
         }
-        AppController appCtrl = AppController();
-        appCtrl.selectedIndex = 0;
-        appCtrl.storage.erase();
-        Get.forceAppUpdate();
-        UserSingleton().token = null;
-        UserSingleton().selectedLocation = null;
-        Get.offAllNamed(routeName.login);
-      // throw UnauthorisedException(utf8.decode(response.bodyBytes));
-      case 404:
-        Fluttertoast.showToast(msg: "Not Found");
-        throw UnauthorisedException(utf8.decode(response.bodyBytes));
-      case 500:
-        dynamic responseJson = jsonDecode(utf8.decode(response.bodyBytes));
-        return responseJson;
-      default:
+      } else {
+        // Handle non-JSON responses (e.g., plain text)
+        print('Response body: $responseBody');
         throw FetchDataException(
-            'Error occurred while communication with server with status code : ${response.statusCode}');
+            'Unexpected response format. Content-Type: $contentType');
+      }
+    } catch (e) {
+      print("Error parsing response: $e");
+      throw FetchDataException("Unknown response format or error: $e");
     }
   }
 }
+//   dynamic returnResponse(http.Response response) {
+//     try {
+//       final bodyString = utf8.decode(response.bodyBytes);
+//
+//       // Only attempt JSON parsing for certain status codes
+//       switch (response.statusCode) {
+//         case 200:
+//         case 201:
+//         case 400:
+//         case 500:
+//           try {
+//             return jsonDecode(bodyString);
+//           } catch (e) {
+//             print("JSON parse error: $e");
+//             throw FormatException("Invalid JSON response: $bodyString");
+//           }
+//         case 401:
+//           Fluttertoast.showToast(msg: "Session Expired");
+//           break;
+//         case 403:
+//           if (UserSingleton().token != null) {
+//             Fluttertoast.showToast(msg: "Session Expired");
+//           }
+//           AppController appCtrl = AppController();
+//           appCtrl.selectedIndex = 0;
+//           appCtrl.storage.erase();
+//           Get.forceAppUpdate();
+//           UserSingleton().token = null;
+//           UserSingleton().selectedLocation = null;
+//           Get.offAllNamed(routeName.login);
+//           break;
+//         case 404:
+//           Fluttertoast.showToast(msg: "Not Found");
+//           throw UnauthorisedException("404 Not Found: $bodyString");
+//         default:
+//           throw FetchDataException(
+//               'Error occurred while communicating with server. Status: ${response.statusCode}, Body: $bodyString'
+//           );
+//       }
+//     } catch (e) {
+//       print("Unhandled returnResponse error: $e");
+//       throw FetchDataException("Unknown response format or error: $e");
+//     }
+//   }
+

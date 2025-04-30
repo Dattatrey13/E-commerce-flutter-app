@@ -28,14 +28,14 @@ class WishListCard extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () => appCtrl.goToProductDetail(
-                      productId: wishlistItemDetail!.productId!.id.toString()),
+                      slug: wishlistItemDetail!.slug!.id.toString()),
                   child: Stack(children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(
                           AppScreenUtil().borderRadius(3)),
                       child: FadeInImageLayout(
                         image:
-                            wishlistItemDetail!.productId!.imageIds!.first.url,
+                            wishlistItemDetail!.slug!.imageIds!.first.url,
                         height: AppScreenUtil().size(110),
                         width: AppScreenUtil().size(110),
                       ),

@@ -103,7 +103,7 @@ class ProductReviewLayout extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     Get.toNamed(routeName.allReviews,
-                        arguments: productCtrl.productId);
+                        arguments: productCtrl.slug);
                   },
                   child: LatoFontStyle(
                     text: ProductDetailFont().allReviews,

@@ -365,7 +365,7 @@ class Data {
 class LineItems {
   LineItems({
     num? id,
-    ProductId? productId,
+    Slug? slug,
     VariationId? variationId,
     VendorId? vendorId,
     num? quantity,
@@ -384,7 +384,7 @@ class LineItems {
     dynamic shippingClassId,
   }) {
     _id = id;
-    _productId = productId;
+    _slug = slug;
     _variationId = variationId;
     _vendorId = vendorId;
     _quantity = quantity;
@@ -405,8 +405,8 @@ class LineItems {
 
   LineItems.fromJson(dynamic json) {
     _id = json['id'];
-    _productId = json['product_id'] != null
-        ? ProductId.fromJson(json['product_id'])
+    _slug = json['product_id'] != null
+        ? Slug.fromJson(json['product_id'])
         : null;
     _variationId = json['variation_id'] != null
         ? VariationId.fromJson(json['variation_id'])
@@ -430,7 +430,7 @@ class LineItems {
   }
 
   num? _id;
-  ProductId? _productId;
+  Slug? _slug;
   VariationId? _variationId;
   VendorId? _vendorId;
   num? _quantity;
@@ -450,7 +450,7 @@ class LineItems {
 
   num? get id => _id;
 
-  ProductId? get productId => _productId;
+  Slug? get slug => _slug;
 
   VariationId? get variationId => _variationId;
 
@@ -487,8 +487,8 @@ class LineItems {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    if (_productId != null) {
-      map['product_id'] = _productId?.toJson();
+    if (_slug != null) {
+      map['product_id'] = _slug?.toJson();
     }
     if (_variationId != null) {
       map['variation_id'] = _variationId?.toJson();
@@ -619,7 +619,7 @@ class VariationId {
     String? weight,
     Dimensions? dimensions,
     String? taxStatus,
-    num? productId,
+    num? slug,
     num? taxClassId,
     dynamic shippingClassId,
   }) {
@@ -647,7 +647,7 @@ class VariationId {
     _weight = weight;
     _dimensions = dimensions;
     _taxStatus = taxStatus;
-    _productId = productId;
+    _slug = slug;
     _taxClassId = taxClassId;
     _shippingClassId = shippingClassId;
   }
@@ -689,7 +689,7 @@ class VariationId {
         ? Dimensions.fromJson(json['dimensions'])
         : null;
     _taxStatus = json['tax_status'];
-    _productId = json['product_id'];
+    _slug = json['product_id'];
     _taxClassId = json['tax_class_id'];
     _shippingClassId = json['shipping_class_id'];
   }
@@ -718,7 +718,7 @@ class VariationId {
   String? _weight;
   Dimensions? _dimensions;
   String? _taxStatus;
-  num? _productId;
+  num? _slug;
   num? _taxClassId;
   dynamic _shippingClassId;
 
@@ -770,7 +770,7 @@ class VariationId {
 
   String? get taxStatus => _taxStatus;
 
-  num? get productId => _productId;
+  num? get slug => _slug;
 
   num? get taxClassId => _taxClassId;
 
@@ -808,7 +808,7 @@ class VariationId {
       map['dimensions'] = _dimensions?.toJson();
     }
     map['tax_status'] = _taxStatus;
-    map['product_id'] = _productId;
+    map['product_id'] = _slug;
     map['tax_class_id'] = _taxClassId;
     map['shipping_class_id'] = _shippingClassId;
     return map;
@@ -824,11 +824,11 @@ class VariationId {
 /// image_ids : [{"id":15559,"name":"RV 602011","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/06/RV-602011.jpg","product_image_meta":{"card":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/RV-602011_300*200.jpg","mobile":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/RV-602011_375*250.jpg","tablet":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/RV-602011_768*512.jpg","product":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/RV-602011_600*400.jpg","original":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/06/RV-602011.jpg"},"caption":null,"media_type":"image"}]
 /// is_featured : false
 
-class ProductId {
-  ProductId({
+class Slug {
+  Slug({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -837,7 +837,7 @@ class ProductId {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
@@ -845,10 +845,10 @@ class ProductId {
     _isFeatured = isFeatured;
   }
 
-  ProductId.fromJson(dynamic json) {
+  Slug.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -863,7 +863,7 @@ class ProductId {
 
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -874,7 +874,7 @@ class ProductId {
 
   String? get productTitle => _productTitle;
 
-  String? get productSlug => _productSlug;
+  String? get slug => _slug;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -890,7 +890,7 @@ class ProductId {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;

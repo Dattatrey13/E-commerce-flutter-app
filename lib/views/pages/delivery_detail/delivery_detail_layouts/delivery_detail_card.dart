@@ -9,7 +9,7 @@ class DeliveryDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(builder: (appCtrl) {
       return InkWell(
-        onDoubleTap: () => appCtrl.goToProductDetail(),
+        onDoubleTap: () => appCtrl.goToProductDetail(slug: ''),
         child: Container(
           margin: EdgeInsets.only(bottom: AppScreenUtil().screenHeight(15)),
           padding: EdgeInsets.symmetric(horizontal: AppScreenUtil().screenWidth(15), vertical: AppScreenUtil().screenHeight(15)),

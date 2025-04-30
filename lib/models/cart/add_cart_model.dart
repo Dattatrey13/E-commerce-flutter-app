@@ -53,7 +53,7 @@ class AddCartModel {
 class Data {
   Data({
     num? id,
-    num? productId,
+    num? slug,
     dynamic variationId,
     num? quantity,
     num? lineSubtotal,
@@ -65,7 +65,7 @@ class Data {
     dynamic shippingClassId,
     num? price,}){
     _id = id;
-    _productId = productId;
+    _slug = slug;
     _variationId = variationId;
     _quantity = quantity;
     _lineSubtotal = lineSubtotal;
@@ -80,7 +80,7 @@ class Data {
 
   Data.fromJson(dynamic json) {
     _id = json['id'];
-    _productId = json['product_id'];
+    _slug = json['product_id'];
     _variationId = json['variation_id'];
     _quantity = json['quantity'];
     _lineSubtotal = json['line_subtotal'];
@@ -93,7 +93,7 @@ class Data {
     _price = json['price'];
   }
   num? _id;
-  num? _productId;
+  num? _slug;
   dynamic _variationId;
   num? _quantity;
   num? _lineSubtotal;
@@ -106,7 +106,7 @@ class Data {
   num? _price;
 
   num? get id => _id;
-  num? get productId => _productId;
+  num? get slug => _slug;
   dynamic get variationId => _variationId;
   num? get quantity => _quantity;
   num? get lineSubtotal => _lineSubtotal;
@@ -121,7 +121,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['product_id'] = _productId;
+    map['product_id'] = _slug;
     map['variation_id'] = _variationId;
     map['quantity'] = _quantity;
     map['line_subtotal'] = _lineSubtotal;

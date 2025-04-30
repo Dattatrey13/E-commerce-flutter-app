@@ -178,7 +178,7 @@ class _SliderDataState extends State<SliderData> {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    height: size.longestSide / 5.0,
+                    height: size.longestSide / 5.5,
                     width: size.longestSide / 9,
                     margin: EdgeInsets.only(
                         left: AppScreenUtil().screenWidth(15),
@@ -196,7 +196,7 @@ class _SliderDataState extends State<SliderData> {
                       children: [
                         const SizedBox(height: 10),
                         SizedBox(
-                          height: 80,
+                          height: 120,
                           child: Image.asset(
                             e.value['image_asset'].toString(),
                             fit: BoxFit.fill,

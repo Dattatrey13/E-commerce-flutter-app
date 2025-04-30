@@ -54,11 +54,11 @@ class HomeController extends GetxController {
 
   late PageController pageController;
 
-  List<String> images = [
-    "https://dapperz.s3.ap-south-1.amazonaws.com/app/build_your_home.jpg",
-    "https://dapperz.s3.ap-south-1.amazonaws.com/app/2.jpg",
-    "https://dapperz.s3.ap-south-1.amazonaws.com/app/3.jpg",
-  ];
+List<String> images = [
+  'assets/image/home_5.png',
+  'assets/image/home_1.png',
+  'assets/image/home_2.png',
+];
 
   @override
   void onReady() async {

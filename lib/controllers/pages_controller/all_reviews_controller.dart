@@ -15,17 +15,17 @@ class AllReviewsController extends GetxController {
 
   @override
   void onReady() async {
-    String productId = Get.arguments;
+    String slug = Get.arguments;
     await Future.delayed(DurationsClass.s1);
-    await getProductReview("10", productId);
+    await getProductReview("10", slug);
     update();
     super.onReady();
   }
 
-  getProductReview(String pageSize, String productId) async {
+  getProductReview(String pageSize, String slug) async {
     try {
       dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.getProductReview}$productId/?page_size=$pageSize");
+          "${ApiMethodList.getProductReview}$slug/?page_size=$pageSize");
       productReviewAll = prl.ProductReviewListModel.fromJson(response).data!;
       isLoading = false;
     } catch (e) {

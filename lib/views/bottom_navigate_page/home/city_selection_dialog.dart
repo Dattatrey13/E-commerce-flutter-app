@@ -112,7 +112,7 @@ class CitySelectionDialogState extends State<CitySelectionDialog> {
                       Navigator.pop(context, true);
                       if (UserSingleton().redirectProductPage ?? false) {
                         Get.toNamed(routeName.productDetail,
-                            arguments: UserSingleton().productId,
+                            arguments: UserSingleton().slug,
                             preventDuplicates: false);
                       }
                       homeCtrl.getData();

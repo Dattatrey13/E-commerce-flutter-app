@@ -334,7 +334,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         onTap: () {
                                           Get.toNamed(routeName.productDetail,
                                               arguments:
-                                                  e.productId!.id.toString(),
+                                                  e.slug!.id.toString(),
                                               preventDuplicates: false);
                                         },
                                         child: Row(
@@ -349,7 +349,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   LatoFontStyle(
-                                                    text: (e.productId!
+                                                    text: (e.slug!
                                                             .productTitle)!
                                                         .replaceAll(
                                                             "&amp;", "&"),
@@ -393,7 +393,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               //       children: [
                               //         Expanded(
                               //           child: LatoFontStyle(
-                              //             text: e.productId!.productSlug,
+                              //             text: e.slug!.slug,
                               //             fontSize: FontSizes.f12,
                               //             color: appCtrl.appTheme.contentColor,
                               //             softWrap: true,

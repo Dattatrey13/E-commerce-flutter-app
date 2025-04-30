@@ -399,7 +399,7 @@ class TaxClassId {
 class LineItems {
   LineItems({
     num? id,
-    ProductId? productId,
+    Slug? slug,
     dynamic variationId,
     String? productUrl,
     num? quantity,
@@ -418,7 +418,7 @@ class LineItems {
     dynamic shippingClassId,
   }) {
     _id = id;
-    _productId = productId;
+    _slug = slug;
     _variationId = variationId;
     _productUrl = productUrl;
     _quantity = quantity;
@@ -439,8 +439,8 @@ class LineItems {
 
   LineItems.fromJson(dynamic json) {
     _id = json['id'];
-    _productId = json['product_id'] != null
-        ? ProductId.fromJson(json['product_id'])
+    _slug = json['product_id'] != null
+        ? Slug.fromJson(json['product_id'])
         : null;
     _variationId = json['variation_id'];
     _productUrl = json['product_url'];
@@ -461,7 +461,7 @@ class LineItems {
   }
 
   num? _id;
-  ProductId? _productId;
+  Slug? _slug;
   dynamic _variationId;
   String? _productUrl;
   num? _quantity;
@@ -481,7 +481,7 @@ class LineItems {
 
   num? get id => _id;
 
-  ProductId? get productId => _productId;
+  Slug? get slug => _slug;
 
   dynamic get variationId => _variationId;
 
@@ -518,8 +518,8 @@ class LineItems {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    if (_productId != null) {
-      map['product_id'] = _productId?.toJson();
+    if (_slug != null) {
+      map['product_id'] = _slug?.toJson();
     }
     map['variation_id'] = _variationId;
     map['product_url'] = _productUrl;
@@ -550,11 +550,11 @@ class LineItems {
 /// image_ids : [{"id":13099,"name":"11-removebg-preview-1","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/10/11-removebg-preview-1.png","product_image_meta":{"card":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/11-removebg-preview-1_300*200.png","mobile":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/11-removebg-preview-1_375*250.png","tablet":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/11-removebg-preview-1_768*512.png","product":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/11-removebg-preview-1_600*400.png","original":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/10/11-removebg-preview-1.png"},"caption":null,"media_type":"image","is_default":true}]
 /// is_featured : false
 
-class ProductId {
-  ProductId({
+class Slug {
+  Slug({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -563,7 +563,7 @@ class ProductId {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
@@ -571,10 +571,10 @@ class ProductId {
     _isFeatured = isFeatured;
   }
 
-  ProductId.fromJson(dynamic json) {
+  Slug.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -589,7 +589,7 @@ class ProductId {
 
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -600,7 +600,7 @@ class ProductId {
 
   String? get productTitle => _productTitle;
 
-  String? get productSlug => _productSlug;
+  String? get slug => _slug;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -616,7 +616,7 @@ class ProductId {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;

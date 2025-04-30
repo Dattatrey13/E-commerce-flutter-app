@@ -36,7 +36,8 @@ class ProductDetailController extends GetxController {
   int currentLast = 0;
   int selectedColor = 0;
   int quantity = 1;
-  String productId = "";
+  String slug = "";
+  String Slug  = "";
   num? selectedVariationId;
 
   double reviewStar = 0.0;
@@ -62,24 +63,26 @@ class ProductDetailController extends GetxController {
 
   @override
   void onReady() async {
-    productId = Get.arguments;
+    slug  = Get.arguments; // Accept slug as argument instead of slug
     reviewStar = 0.0;
     reviewController.text = "";
     await Future.delayed(DurationsClass.s1);
-    await getDetails(productId);
+    await getDetails(slug ); // Use slug here
     if (UserSingleton().redirectProductPage ?? false) {
       UserSingleton().redirectProductPage = false;
-      UserSingleton().productId = '';
+      UserSingleton().slug = '';
     }
     isLoading = false;
     update();
     super.onReady();
   }
 
-  getDetails(String productId) async {
-    await getProductDetails(productId);
-    await getProductReview("3", productId);
-    await getRecommendedProductList(productId);
+  getDetails(String slug) async {
+    await getProductDetails(slug ); // Use slug for product details
+    slug =
+        product?.id.toString() ?? ""; // Set slug after fetching details
+    await getProductReview("3", slug);
+    await getRecommendedProductList(slug);
     if (UserSingleton().token != null) {
       await getRecentProduct("1");
     }
@@ -105,16 +108,29 @@ class ProductDetailController extends GetxController {
     update();
   }
 
-  getProductDetails(String productId) async {
+  getProductDetails(String slug ) async {
     try {
       dynamic response =
-          await apiCall.getResponse("${ApiMethodList.productById}$productId/");
+          // ignore: unnecessary_brace_in_string_interps
+          await apiCall.getResponse("${ApiMethodList.productByslug}${slug}/");
+        print("Fetching product by slug: $slug");
+      print(
+          "ProductDetalis API Response: ${response.toString()}"); // Print raw response to check if it is valid
+
+      // Ensure response is a Map before decoding
+      if (response is! Map<String, dynamic>) {
+        throw Exception("Invalid response format: not JSON");
+      }
+
+      print("product Details Response: $response");
+      product = pm.ProductDetailModel.fromJson(response).data;
+
       product = pm.ProductDetailModel.fromJson(response).data;
       if (product != null && product!.attributeMapping != null) {
         attributes.addAll(product!.attributeMapping!);
         productVariation.addAll(product!.productVariations!);
         url =
-            "Check out product ${ApiConfig.baseUrlWeb}product/${product!.productSlug}/?product-id=${product!.id}";
+            "Check out product ${ApiConfig.baseUrlWeb}product/${product!.slug}/?product-id=${product!.id}";
       }
       if (product != null && product!.imageIds != null) {
         for (int i = 0; i < product!.imageIds!.length; i++) {
@@ -129,10 +145,10 @@ class ProductDetailController extends GetxController {
     }
   }
 
-  getProductReview(String pageSize, String productId) async {
+  getProductReview(String pageSize, String slug) async {
     try {
       dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.getProductReview}$productId/?page_size=$pageSize");
+          "${ApiMethodList.getProductReview}$slug/?page_size=$pageSize");
       productReview = prl.ProductReviewListModel.fromJson(response).data!;
     } catch (e) {
       rethrow;
@@ -164,11 +180,11 @@ class ProductDetailController extends GetxController {
       reviewSubmitted = true;
       update();
       HashMap<String, dynamic> params = HashMap();
-      //params['post_id'] = productId;
+      //params['post_id'] = slug;
       params['review'] = reviewController.text.trim();
       params['rating'] = reviewStar;
       dynamic response = await apiCall.postRequest(
-          "${ApiMethodList.productCreateReview}$productId/", params);
+          "${ApiMethodList.productCreateReview}$slug/", params);
       bool status = CreateReviewModel.fromJson(response).success ?? false;
       if (status) {
         reviewStar = 0.0;
@@ -180,10 +196,10 @@ class ProductDetailController extends GetxController {
       reviewSubmitted = false;
       isLoading = true;
       update();
-      await getDetails(productId);
+      await getDetails(product?.slug ?? "");
       if (UserSingleton().redirectProductPage ?? false) {
         UserSingleton().redirectProductPage = false;
-        UserSingleton().productId = '';
+        UserSingleton().slug = '';
       }
       isLoading = false;
       update();
@@ -205,7 +221,7 @@ class ProductDetailController extends GetxController {
         reviewList.remove(review);
         Fluttertoast.showToast(msg: "Review deleted Successfully");
       }
-      await getDetails(productId);
+      await getDetails(slug);
       isLoading = false;
       update();
       // Get.forceAppUpdate();
@@ -242,11 +258,11 @@ class ProductDetailController extends GetxController {
     }
   }
 
-  getRecommendedProductList(String? productId) async {
+  getRecommendedProductList(String? slug) async {
     recommendedForYouList.clear();
     try {
       dynamic response = await apiCall
-          .getResponse("${ApiMethodList.recommendedProductById}$productId/");
+          .getResponse("${ApiMethodList.recommendedProductById}$slug/");
       recommendedForYouList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
     } catch (e) {

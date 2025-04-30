@@ -24,24 +24,24 @@ class AppArray {
   // Slider List
   var homeSliderList = [
     {
-      'text': 'Door and Windows',
+      'text': 'Bracelet',
       'cat_id': '930',
-      'image_asset': 'assets/image/door_and_windows.jpg',
+      'image_asset': 'assets/image/1.png',
     },
     {
-      'text': 'Fabrication Material',
+      'text': 'Pendant',
       'cat_id': '773',
-      'image_asset': 'assets/image/fabrication.jpg',
+      'image_asset': 'assets/image/2.png',
     },
     {
-      'text': 'Laminate Door',
+      'text': 'Kada',
       'cat_id': '638',
-      'image_asset': 'assets/image/laminated_door.jpeg',
+      'image_asset': 'assets/image/dapperz.png',
     },
     {
-      'text': 'Plywood',
+      'text': 'Key Chain',
       'cat_id': '202',
-      'image_asset': 'assets/image/plywood.jpg',
+      'image_asset': 'assets/image/mobile5.png',
     },
   ];
 

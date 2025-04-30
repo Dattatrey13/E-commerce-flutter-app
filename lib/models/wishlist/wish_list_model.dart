@@ -1,3 +1,4 @@
+
 class WishListModel {
   WishListModel({
     bool? success,
@@ -60,7 +61,7 @@ class Data {
     bool? onSale,
     String? expiration,
     num? quantity,
-    ProductId? productId,
+    Slug? slug,
     String? createdAt,
     List<num>? variations,
   }) {
@@ -70,7 +71,7 @@ class Data {
     _onSale = onSale;
     _expiration = expiration;
     _quantity = quantity;
-    _productId = productId;
+    _slug = slug;
     _createdAt = createdAt;
     _variations = variations;
   }
@@ -82,8 +83,8 @@ class Data {
     _onSale = json['on_sale'];
     _expiration = json['expiration'];
     _quantity = json['quantity'];
-    _productId = json['product_id'] != null
-        ? ProductId.fromJson(json['product_id'])
+    _slug = json['product_id'] != null
+        ? Slug.fromJson(json['product_id'])
         : null;
     _createdAt = json['created_at'];
     _variations =
@@ -96,7 +97,7 @@ class Data {
   bool? _onSale;
   String? _expiration;
   num? _quantity;
-  ProductId? _productId;
+  Slug? _slug;
   String? _createdAt;
   List<num>? _variations;
 
@@ -112,7 +113,7 @@ class Data {
 
   num? get quantity => _quantity;
 
-  ProductId? get productId => _productId;
+  Slug? get slug => _slug;
 
   String? get createdAt => _createdAt;
 
@@ -126,8 +127,8 @@ class Data {
     map['on_sale'] = _onSale;
     map['expiration'] = _expiration;
     map['quantity'] = _quantity;
-    if (_productId != null) {
-      map['product_id'] = _productId?.toJson();
+    if (_slug != null) {
+      map['product_id'] = _slug?.toJson();
     }
     map['created_at'] = _createdAt;
     map['variations'] = _variations;
@@ -135,11 +136,11 @@ class Data {
   }
 }
 
-class ProductId {
-  ProductId({
+class Slug {
+  Slug({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -157,7 +158,7 @@ class ProductId {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
@@ -174,10 +175,10 @@ class ProductId {
     _dateOnSaleTo = dateOnSaleTo;
   }
 
-  ProductId.fromJson(dynamic json) {
+  Slug.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -201,7 +202,7 @@ class ProductId {
 
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -221,7 +222,7 @@ class ProductId {
 
   String? get productTitle => _productTitle;
 
-  String? get productSlug => _productSlug;
+  String? get slug => _slug;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -255,7 +256,7 @@ class ProductId {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;

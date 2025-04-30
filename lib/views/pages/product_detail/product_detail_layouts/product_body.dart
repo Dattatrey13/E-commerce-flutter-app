@@ -55,7 +55,7 @@ class _ProductBodyState extends State<ProductBody> {
                               var data = {
                                 'name': 'Recommended Products',
                                 'cat_id': 'recommended_product_by_id',
-                                'product_id': productCtrl.productId
+                                'product_id': productCtrl.slug
                               };
                               Get.toNamed(routeName.shopPage, arguments: data);
                             },

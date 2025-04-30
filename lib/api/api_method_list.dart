@@ -33,7 +33,8 @@ class ApiMethodList {
 
   //region Product
   static String productList = "product/list/?is_mobile=true";
-  static String productById = "product/";
+  // static String productById = "product/";
+  static String productByslug = "product/";
   static String filters = "price-filters/";
   static String getProductReview = "product/review/";
   static String createReview = "product/review/"; //-- not in use

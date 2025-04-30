@@ -22,8 +22,8 @@ class CartList extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {
                                   cartCtrl.appCtrl.goToProductDetail(
-                                      productId:
-                                          e.value.productId!.id.toString());
+                                      slug:
+                                          e.value.slug!.id.toString());
                                 },
                                 child: Stack(
                                   alignment: Alignment.topRight,
@@ -32,7 +32,7 @@ class CartList extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(
                                           AppScreenUtil().borderRadius(3)),
                                       child: FadeInImageLayout(
-                                        image: e.value.productId!.imageId!.url,
+                                        image: e.value.slug!.imageId!.url,
                                         height: AppScreenUtil().size(110),
                                         width: AppScreenUtil().size(110),
                                       ),

@@ -24,7 +24,7 @@ class UserSingleton {
   String? couponsDiscount;
 
   bool? redirectProductPage = false;
-  String? productId;
+  String? slug;
 
   int wishListCount = 0;
   int cartCount = 0;
@@ -50,7 +50,7 @@ class UserSingleton {
     couponsDiscount = null;
 
     redirectProductPage = false;
-    productId = null;
+    slug = null;
 
     wishListCount = 0;
     cartCount = 0;

@@ -23,7 +23,7 @@ class CartDetail extends StatelessWidget {
         children: [
           Expanded(
             child: LatoFontStyle(
-              text: orderDetail!.productId!.productTitle,
+              text: orderDetail!.slug!.productTitle,
               fontSize: FontSizes.f14,
               color: appCtrl.appTheme.contentColor,
               softWrap: true,
@@ -31,17 +31,17 @@ class CartDetail extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           LatoFontStyle(
-            text: orderDetail!.productId!.productTitle == "Coupon Discount" ||
-                    orderDetail!.productId!.productTitle == "कूपन छूट"
+            text: orderDetail!.slug!.productTitle == "Coupon Discount" ||
+                    orderDetail!.slug!.productTitle == "कूपन छूट"
                 ? isApplyText!
                     ? val
                     : "-${appCtrl.priceSymbol}20.0"
                 : val,
             fontSize: FontSizes.f14,
-            color: orderDetail!.productId!.productTitle == "Bag savings"
+            color: orderDetail!.slug!.productTitle == "Bag savings"
                 ? appCtrl.appTheme.greenColor
-                : orderDetail!.productId!.productTitle == "Coupon Discount" ||
-                        orderDetail!.productId!.productTitle == "कूपन छूट"
+                : orderDetail!.slug!.productTitle == "Coupon Discount" ||
+                        orderDetail!.slug!.productTitle == "कूपन छूट"
                     ? isApplyText!
                         ? appCtrl.appTheme.primary
                         : appCtrl.appTheme.contentColor

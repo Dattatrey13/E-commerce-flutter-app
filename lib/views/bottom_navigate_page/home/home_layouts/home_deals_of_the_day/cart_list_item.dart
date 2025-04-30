@@ -30,7 +30,7 @@ class CartListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               LatoFontStyle(
-                text: data!.productId!.productTitle!,
+                text: data!.slug!.productTitle!,
                 fontWeight: FontWeight.w700,
                 color: appCtrl.appTheme.blackColor,
                 fontSize: FontSizes.f12,
@@ -48,8 +48,8 @@ class CartListItem extends StatelessWidget {
                 isDiscountShow: false,
                 // isDiscountShow: productCtrl.product!.discountPercentage != 0.0 && productCtrl.product!.discountPercentage != null ? true : false,
 
-                // totalPrice: data!.productId!.price,
-                // totalPrice: data!.variationId != null ? data!.productId!.price.toString() : '',
+                // totalPrice: data!.slug!.price,
+                // totalPrice: data!.variationId != null ? data!.slug!.price.toString() : '',
                 // mrp: data!.variationId!.isOnSale == true && data!.variationId!.salePrice != data!.variationId!.price
                 //     ? data!.variationId!.salePrice
                 //     : data!.variationId!.price,

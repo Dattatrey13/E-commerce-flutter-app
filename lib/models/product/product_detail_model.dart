@@ -74,7 +74,7 @@ class Data {
   Data({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -104,7 +104,7 @@ class Data {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
@@ -136,7 +136,7 @@ class Data {
   Data.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -192,7 +192,7 @@ class Data {
 
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -224,7 +224,7 @@ class Data {
 
   String? get productTitle => _productTitle;
 
-  String? get productSlug => _productSlug;
+  String? get slug => _slug;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -286,7 +286,7 @@ class Data {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;
@@ -384,7 +384,7 @@ class ProductVariations {
     String? weight,
     Dimensions? dimensions,
     String? taxStatus,
-    num? productId,
+    num? slug,
     dynamic taxClassId,
     dynamic shippingClassId,
   }) {
@@ -412,7 +412,7 @@ class ProductVariations {
     _weight = weight;
     _dimensions = dimensions;
     _taxStatus = taxStatus;
-    _productId = productId;
+    _slug = slug;
     _taxClassId = taxClassId;
     _shippingClassId = shippingClassId;
   }
@@ -454,7 +454,7 @@ class ProductVariations {
         ? Dimensions.fromJson(json['dimensions'])
         : null;
     _taxStatus = json['tax_status'];
-    _productId = json['product_id'];
+    _slug = json['product_id'];
     _taxClassId = json['tax_class_id'];
     _shippingClassId = json['shipping_class_id'];
   }
@@ -483,7 +483,7 @@ class ProductVariations {
   String? _weight;
   Dimensions? _dimensions;
   String? _taxStatus;
-  num? _productId;
+  num? _slug;
   dynamic _taxClassId;
   dynamic _shippingClassId;
 
@@ -535,7 +535,7 @@ class ProductVariations {
 
   String? get taxStatus => _taxStatus;
 
-  num? get productId => _productId;
+  num? get slug => _slug;
 
   dynamic get taxClassId => _taxClassId;
 
@@ -573,7 +573,7 @@ class ProductVariations {
       map['dimensions'] = _dimensions?.toJson();
     }
     map['tax_status'] = _taxStatus;
-    map['product_id'] = _productId;
+    map['product_id'] = _slug;
     map['tax_class_id'] = _taxClassId;
     map['shipping_class_id'] = _shippingClassId;
     return map;

@@ -93,7 +93,7 @@ class _FeaturedCategoriesLayoutState extends State<FeaturedCategoriesLayout> {
                   return GestureDetector(
                     onTap: () async {
                       await appCtrl.goToProductDetail(
-                          productId: homeCtrl.featuredCategoriesList[e.key].id!
+                          slug: homeCtrl.featuredCategoriesList[e.key].id!
                               .toString(),
                           homeCtrl: homeCtrl);
                     },
@@ -214,7 +214,7 @@ class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
                             return GestureDetector(
                               onTap: () {
                                 appCtrl.goToProductDetail(
-                                    productId: homeCtrl
+                                    slug: homeCtrl
                                         .recommendedForYouList[e.key].id
                                         .toString(),
                                     homeCtrl: homeCtrl);
@@ -342,7 +342,7 @@ class _BestSellingLayoutState extends State<BestSellingLayout> {
                             return GestureDetector(
                               onTap: () {
                                 appCtrl.goToProductDetail(
-                                    productId: homeCtrl
+                                    slug: homeCtrl
                                         .bestSellingProductList[e.key].id
                                         .toString(),
                                     homeCtrl: homeCtrl);
@@ -469,7 +469,7 @@ class _OnSaleLayoutState extends State<OnSaleLayout> {
                             return GestureDetector(
                               onTap: () {
                                 appCtrl.goToProductDetail(
-                                    productId: homeCtrl
+                                    slug: homeCtrl
                                         .onSaleProductList[e.key].id
                                         .toString(),
                                     homeCtrl: homeCtrl);
@@ -595,7 +595,7 @@ class _RecentlyViewedLayoutState extends State<RecentlyViewedLayout> {
                             return GestureDetector(
                               onTap: () {
                                 appCtrl.goToProductDetail(
-                                    productId: homeCtrl
+                                    slug: homeCtrl
                                         .recentlyViewedList[e.key].id
                                         .toString());
                               },

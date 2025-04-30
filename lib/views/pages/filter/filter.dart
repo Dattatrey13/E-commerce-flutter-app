@@ -2,10 +2,10 @@ import '../../../config.dart';
 
 class Filter extends StatelessWidget {
   final String? listType;
-  final String? productId;
+  final String? slug;
   final filterCtrl = Get.put(FilterController());
 
-  Filter({Key? key, this.listType, this.productId}) : super(key: key);
+  Filter({Key? key, this.listType, this.slug}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class Filter extends StatelessWidget {
                             }
                           else {
                             catId = listType!;
-                            // catIdString = productId!;
+                            // catIdString = slug!;
                           }
 
                           shopCtrl.applyFilter(catId, catIdString, filterString);

@@ -25,7 +25,7 @@ class ShopListLayout extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         appCtrl.goToProductDetail(
-                            productId:
+                            slug:
                                 shopCtrl.productList[index].id.toString());
                       },
                       child: DashboardProductCard(

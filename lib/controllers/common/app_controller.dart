@@ -61,19 +61,26 @@ class AppController extends GetxController {
   }
 
   //go to product detail screen
-  goToProductDetail({String? productId, HomeController? homeCtrl}) {
-    isNotification = false;
-    isSearch = false;
-    isCart = true;
-    isShare = false;
-    isHeart = true;
-    update();
-    Get.toNamed(routeName.productDetail,
-            arguments: productId, preventDuplicates: false)
-        ?.then((value) {
-      homeCtrl?.getRecentItemList();
-    });
-  }
+ goToProductDetail({
+  required String slug,
+  HomeController? homeCtrl,
+}) {
+  isNotification = false;
+  isSearch = false;
+  isCart = true;
+  isShare = false;
+  isHeart = true;
+  update();
+
+Get.toNamed(
+  routeName.productDetail,
+  arguments: slug,
+  preventDuplicates: false,
+)?.then((value) {
+    homeCtrl?.getRecentItemList();
+  });
+}
+
 
   //go to shop page
   goToShopPage(name) {

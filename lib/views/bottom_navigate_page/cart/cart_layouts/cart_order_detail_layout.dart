@@ -24,8 +24,8 @@ class CartOrderDetailLayout extends StatelessWidget {
               ...cartModelList!.data!.map(
                 (e) {
                   String val;
-                  if ((e.productId!.productTitle == "Bag savings" ||
-                      e.productId!.productTitle == "बैग बचत")) {
+                  if ((e.slug!.productTitle == "Bag savings" ||
+                      e.slug!.productTitle == "बैग बचत")) {
                     val = "-${appCtrl.priceSymbol}${(e.lineTotal)}";
                   }
                   // else if ((e.value == "Apply Coupon" || e.value == "कूपन लागू करें")) {

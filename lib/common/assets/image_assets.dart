@@ -1,5 +1,6 @@
 class ImageAssets {
   final String logo = 'assets/logo/Vertical_Full_Logo.png';
+  // final String logo = 'assets/logo/2.png';
   final String design = 'assets/image/design.png';
   final String noInternet = 'assets/images/nointernet.png';
   final String offerCornerBG = 'assets/image/offerCornerBG.png';

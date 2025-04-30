@@ -56,17 +56,17 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                   index: index,
                                   lastIndex: wishListCtrl.wishlist.length - 1,
                                   firstActionTap: () async {
-                                    if (wishListCtrl.wishlist[index].productId!
+                                    if (wishListCtrl.wishlist[index].slug!
                                             .isFeatured ??
                                         false) {
                                       Get.toNamed(routeName.getACall,
                                           arguments: wishListCtrl
-                                              .wishlist[index].productId!.id);
+                                              .wishlist[index].slug!.id);
                                     } else {
                                       HashMap<String, dynamic> params =
                                           HashMap();
                                       params['product_id'] = wishListCtrl
-                                          .wishlist[index].productId!.id
+                                          .wishlist[index].slug!.id
                                           .toString();
                                       params['quantity'] = "1".toString();
                                       if (wishListCtrl
@@ -82,7 +82,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                           await appCtrl.addToCart(params);
                                       if (cstatus.data != null &&
                                           cstatus.success != null &&
-                                          cstatus.data!.productId != null) {
+                                          cstatus.data!.slug != null) {
                                         bool? status = await wishListCtrl
                                             .removeItemFromWishList(wishListCtrl
                                                 .wishlist[index].wishlistToken

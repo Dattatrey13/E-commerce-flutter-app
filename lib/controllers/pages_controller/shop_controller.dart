@@ -26,7 +26,7 @@ class ShopController extends GetxController {
       : Get.put(DashboardController());
   String name = "";
   String listType = "";
-  String productId = "";
+  String slug = "";
   final storage = GetStorage();
   BaseApi apiCall = ApiServiceCall();
   bool isLoading = true;
@@ -58,7 +58,7 @@ class ShopController extends GetxController {
     name = Get.arguments['name'] ?? "All";
     listType = Get.arguments['cat_id'].toString();
     filterString = Get.arguments['filterString'] ?? "";
-    productId = Get.arguments['product_id'] ?? "";
+    slug = Get.arguments['product_id'] ?? "";
     if (name == "Search Result") {
       isBrand = false;
       await getProductList(
@@ -74,7 +74,7 @@ class ShopController extends GetxController {
     } else if (name == "Recommended Products") {
       isBrand = false;
       await getProductList(currentPage.toString(),
-          Get.arguments['cat_id'].toString(), productId, false, "");
+          Get.arguments['cat_id'].toString(), slug, false, "");
     } else if (Get.arguments['brand'] == true) {
       isBrand = true;
       await getProductList(currentPage.toString(),
@@ -99,7 +99,7 @@ class ShopController extends GetxController {
   Route createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          Filter(listType: listType, productId: productId),
+          Filter(listType: listType, slug: slug),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -180,7 +180,7 @@ class ShopController extends GetxController {
             "${ApiMethodList.recommendedProduct}&page=$currentPage&filter_type=recommended$temp$filterString");
       } else if (catId == 'recommended_product_by_id') {
         response = await apiCall.getResponse(
-            "${ApiMethodList.recommendedProductById}$productId/?page=$currentPage&filter_type=recommended$filterString");
+            "${ApiMethodList.recommendedProductById}$slug/?page=$currentPage&filter_type=recommended$filterString");
       } else {
         if (catId != "") {
           if (brand == true) {

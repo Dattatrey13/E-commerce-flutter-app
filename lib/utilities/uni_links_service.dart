@@ -5,13 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:uni_links/uni_links.dart';
 
 class UniLinksService {
-  static String _productId = '';
+  static String _slug = '';
 
-  static String get promoId => _productId;
+  static String get promoId => _slug;
 
-  static bool get hasPromoId => _productId.isNotEmpty;
+  static bool get hasPromoId => _slug.isNotEmpty;
 
-  static void reset() => _productId = '';
+  static void reset() => _slug = '';
 
   static Future<void> init({checkActualVersion = false}) async {
     // This is used for cases when: APP is not running and the user clicks on a link.
@@ -35,14 +35,14 @@ class UniLinksService {
     if (uri == null || uri.queryParameters.isEmpty) return;
     Map<String, String> params = uri.queryParameters;
 
-    String receivedProductId = params['product-id'] ?? '';
-    if (receivedProductId.isEmpty) return;
-    _productId = receivedProductId;
+    String receivedslug = params['product-id'] ?? '';
+    if (receivedslug.isEmpty) return;
+    _slug = receivedslug;
 
     UserSingleton().redirectProductPage = true;
-    UserSingleton().productId = _productId;
+    UserSingleton().slug = _slug;
 
     Get.toNamed(routeName.productDetail,
-        arguments: _productId, preventDuplicates: false);
+        arguments: _slug, preventDuplicates: false);
   }
 }

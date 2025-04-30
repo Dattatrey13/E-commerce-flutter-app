@@ -63,7 +63,7 @@ class Data {
   Data({
     num? id,
     num? cartId,
-    ProductId? productId,
+    Slug? slug,
     VariationId? variationId,
     num? quantity,
     num? lineSubtotal,
@@ -77,7 +77,7 @@ class Data {
   }) {
     _id = id;
     _cartId = cartId;
-    _productId = productId;
+    _slug = slug;
     _variationId = variationId;
     _quantity = quantity;
     _lineSubtotal = lineSubtotal;
@@ -93,8 +93,8 @@ class Data {
   Data.fromJson(dynamic json) {
     _id = json['id'];
     _cartId = json['cart_id'];
-    _productId = json['product_id'] != null
-        ? ProductId.fromJson(json['product_id'])
+    _slug = json['product_id'] != null
+        ? Slug.fromJson(json['product_id'])
         : null;
     _variationId = json['variation_id'] != null
         ? VariationId.fromJson(json['variation_id'])
@@ -112,7 +112,7 @@ class Data {
 
   num? _id;
   num? _cartId;
-  ProductId? _productId;
+  Slug? _slug;
   VariationId? _variationId;
   num? _quantity;
   num? _lineSubtotal;
@@ -128,7 +128,7 @@ class Data {
 
   num? get cartId => _cartId;
 
-  ProductId? get productId => _productId;
+  Slug? get slug => _slug;
 
   VariationId? get variationId => _variationId;
 
@@ -154,8 +154,8 @@ class Data {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['cart_id'] = _cartId;
-    if (_productId != null) {
-      map['product_id'] = _productId?.toJson();
+    if (_slug != null) {
+      map['product_id'] = _slug?.toJson();
     }
     if (_variationId != null) {
       map['variation_id'] = _variationId?.toJson();
@@ -189,7 +189,7 @@ class Data {
 class VariationId {
   VariationId({
     num? id,
-    num? productId,
+    num? slug,
     String? price,
     String? stockStatus,
     String? regularPrice,
@@ -198,7 +198,7 @@ class VariationId {
     ImageId? imageId,
   }) {
     _id = id;
-    _productId = productId;
+    _slug = slug;
     _price = price;
     _stockStatus = stockStatus;
     _regularPrice = regularPrice;
@@ -209,7 +209,7 @@ class VariationId {
 
   VariationId.fromJson(dynamic json) {
     _id = json['id'];
-    _productId = json['product_id'];
+    _slug = json['product_id'];
     _price = json['price'];
     _stockStatus = json['stock_status'];
     _regularPrice = json['regular_price'];
@@ -220,7 +220,7 @@ class VariationId {
   }
 
   num? _id;
-  num? _productId;
+  num? _slug;
   String? _price;
   String? _stockStatus;
   String? _regularPrice;
@@ -230,7 +230,7 @@ class VariationId {
 
   num? get id => _id;
 
-  num? get productId => _productId;
+  num? get slug => _slug;
 
   String? get price => _price;
 
@@ -247,7 +247,7 @@ class VariationId {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['product_id'] = _productId;
+    map['product_id'] = _slug;
     map['price'] = _price;
     map['stock_status'] = _stockStatus;
     map['regular_price'] = _regularPrice;
@@ -324,11 +324,11 @@ class ImageId {
 /// regular_price : "455.00"
 /// image_id : {"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}
 
-class ProductId {
-  ProductId({
+class Slug {
+  Slug({
     num? id,
     String? productTitle,
-    String? productSlug,
+    String? slug,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -336,17 +336,17 @@ class ProductId {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _productSlug = productSlug;
+    _slug = slug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
     _imageId = imageId;
   }
 
-  ProductId.fromJson(dynamic json) {
+  Slug.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _productSlug = json['product_slug'];
+    _slug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -356,7 +356,7 @@ class ProductId {
 
   num? _id;
   String? _productTitle;
-  String? _productSlug;
+  String? _slug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -366,7 +366,8 @@ class ProductId {
 
   String? get productTitle => _productTitle;
 
-  String? get productSlug => _productSlug;
+
+  String? get slug => _slug;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -380,7 +381,7 @@ class ProductId {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _productSlug;
+    map['product_slug'] = _slug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;
