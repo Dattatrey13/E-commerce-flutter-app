@@ -93,8 +93,8 @@ class _FeaturedCategoriesLayoutState extends State<FeaturedCategoriesLayout> {
                   return GestureDetector(
                     onTap: () async {
                       await appCtrl.goToProductDetail(
-                          slug: homeCtrl.featuredCategoriesList[e.key].id!
-                              .toString(),
+                          slug: homeCtrl.featuredCategoriesList[e.key].slug!,
+                              // .toString(),
                           homeCtrl: homeCtrl);
                     },
                     child: DashboardProductCard(
@@ -215,9 +215,8 @@ class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
                               onTap: () {
                                 appCtrl.goToProductDetail(
                                     slug: homeCtrl
-                                        .recommendedForYouList[e.key].id
-                                        .toString(),
-                                    homeCtrl: homeCtrl);
+                                        .recommendedForYouList[e.key].slug!,
+                                        homeCtrl: homeCtrl);
                               },
                               child: DashboardProductCard(
                                 data: homeCtrl.recommendedForYouList[e.key],
@@ -343,8 +342,8 @@ class _BestSellingLayoutState extends State<BestSellingLayout> {
                               onTap: () {
                                 appCtrl.goToProductDetail(
                                     slug: homeCtrl
-                                        .bestSellingProductList[e.key].id
-                                        .toString(),
+                                        .bestSellingProductList[e.key].slug!,
+                                        
                                     homeCtrl: homeCtrl);
                               },
                               child: DashboardProductCard(
@@ -470,8 +469,8 @@ class _OnSaleLayoutState extends State<OnSaleLayout> {
                               onTap: () {
                                 appCtrl.goToProductDetail(
                                     slug: homeCtrl
-                                        .onSaleProductList[e.key].id
-                                        .toString(),
+                                        .onSaleProductList[e.key].slug!,
+                                        
                                     homeCtrl: homeCtrl);
                               },
                               child: DashboardProductCard(
@@ -596,8 +595,9 @@ class _RecentlyViewedLayoutState extends State<RecentlyViewedLayout> {
                               onTap: () {
                                 appCtrl.goToProductDetail(
                                     slug: homeCtrl
-                                        .recentlyViewedList[e.key].id
-                                        .toString());
+                                        .recentlyViewedList[e.key].slug!,
+                                        // .toString()
+                                        );
                               },
                               child: DashboardProductCard(
                                 data: homeCtrl.recentlyViewedList[e.key],

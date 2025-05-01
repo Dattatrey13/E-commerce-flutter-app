@@ -23,7 +23,7 @@ class CartList extends StatelessWidget {
                                 onTap: () {
                                   cartCtrl.appCtrl.goToProductDetail(
                                       slug:
-                                          e.value.slug!.id.toString());
+                                          e.value.product_id!.id.toString());
                                 },
                                 child: Stack(
                                   alignment: Alignment.topRight,
@@ -32,7 +32,7 @@ class CartList extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(
                                           AppScreenUtil().borderRadius(3)),
                                       child: FadeInImageLayout(
-                                        image: e.value.slug!.imageId!.url,
+                                        image: e.value.product_id!.imageId!.url,
                                         height: AppScreenUtil().size(110),
                                         width: AppScreenUtil().size(110),
                                       ),

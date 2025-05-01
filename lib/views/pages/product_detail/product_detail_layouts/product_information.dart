@@ -115,7 +115,7 @@ class _ProductInformationState extends State<ProductInformation> {
             child: GestureDetector(
               onTap: () async {
                 HashMap<String, dynamic> params = HashMap();
-                params['product_id'] = productCtrl.product!.id!.toString();
+                params['product_slug'] = productCtrl.product!.id!.toString();
                 bool? addstatus = await appCtrl.addItemToWishlist(params);
                 if (addstatus != null && addstatus) {
                   Fluttertoast.showToast(

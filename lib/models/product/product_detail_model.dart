@@ -299,9 +299,13 @@ class Data {
       map['product_categories'] =
           _productCategories?.map((v) => v.toJson()).toList();
     }
+    // if (_productTags != null) {
+    //   map['product_tags'] = _productTags?.map((v) => v.toJson()).toList();
+    // }
     if (_productTags != null) {
-      map['product_tags'] = _productTags?.map((v) => v.toJson()).toList();
-    }
+  map['product_tags'] = _productTags;
+}
+
     map['brand_id'] = _brandId;
     map['is_multi_image'] = _isMultiImage;
     map['is_featured'] = _isFeatured;
@@ -454,7 +458,7 @@ class ProductVariations {
         ? Dimensions.fromJson(json['dimensions'])
         : null;
     _taxStatus = json['tax_status'];
-    _slug = json['product_id'];
+    _slug = json['product_slug'];
     _taxClassId = json['tax_class_id'];
     _shippingClassId = json['shipping_class_id'];
   }
@@ -573,7 +577,7 @@ class ProductVariations {
       map['dimensions'] = _dimensions?.toJson();
     }
     map['tax_status'] = _taxStatus;
-    map['product_id'] = _slug;
+    map['product_slug'] = _slug;
     map['tax_class_id'] = _taxClassId;
     map['shipping_class_id'] = _shippingClassId;
     return map;

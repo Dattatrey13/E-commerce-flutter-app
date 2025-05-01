@@ -1,7 +1,3 @@
-/// success : true
-/// message : "Data fetched successfully."
-/// data : [{"id":29,"cart_id":3,"product_id":{"id":79694,"product_title":"BATHROOT ACCESSORIES | Heavy-Duty Stainless Steel Tumbler holder for Bathroom Accessories","product_slug":"bathroot-accessories-heavy-duty-stainless-steel-tumbler-holder-for-bathroom-accessories-2","product_short_description":"<p>Brand &#8211; Bathroot Accessories<br />\nProduct Name &#8211; Tumbler holder<br />\nSeries &#8211; classic<br />\nColour &#8211; Multi Colours variation<br />\nMaterials &#8211; SS304</p>\n","price":"455","regular_price":"455.00","image_id":{"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}},"variation_id":{"id":12555,"product_id":79694,"price":"1055","stock_status":"instock","regular_price":"1055.00","sale_price":"455","is_on_sale":true,"image_id":{"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}},"quantity":15,"line_subtotal":6825,"line_total":6825,"line_tax":0,"cgst_tax":0,"sgst_tax":0,"tax_class_id":null,"shipping_class_id":null,"cart_item_key":"48e079bb-2a8c-4fe2-91ad-5b0da9dc15d5"},{"id":30,"cart_id":3,"product_id":{"id":78019,"product_title":"PARRYWARE T6002A1 ACCESSORIES STANDARD Towel Ring (dia 7”)","product_slug":"parryware-t6002a1-accessories-standard-towel-ring-dia-7","product_short_description":"<p>Brand &#8211; Parryware<br />\nProduct Code &#8211;  T6002A1<br />\nColour &#8211; Silver<br />\nMaterial &#8211; Stainless Steel<br />\nFinish Type &#8211; chrome</p>\n","price":"924","regular_price":"924.00","image_id":{"id":5257,"name":"T6002A1-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/T6002A1-1.jpg","caption":null}},"variation_id":null,"quantity":5,"line_subtotal":4620,"line_total":5451.6,"line_tax":831.6,"cgst_tax":415.8,"sgst_tax":415.8,"tax_class_id":7,"shipping_class_id":null,"cart_item_key":"cf194e84-f2b4-42df-98c3-0ac991ce029c"}]
-
 class CartListModel {
   CartListModel({
     bool? success,
@@ -44,26 +40,11 @@ class CartListModel {
     return map;
   }
 }
-
-/// id : 29
-/// cart_id : 3
-/// product_id : {"id":79694,"product_title":"BATHROOT ACCESSORIES | Heavy-Duty Stainless Steel Tumbler holder for Bathroom Accessories","product_slug":"bathroot-accessories-heavy-duty-stainless-steel-tumbler-holder-for-bathroom-accessories-2","product_short_description":"<p>Brand &#8211; Bathroot Accessories<br />\nProduct Name &#8211; Tumbler holder<br />\nSeries &#8211; classic<br />\nColour &#8211; Multi Colours variation<br />\nMaterials &#8211; SS304</p>\n","price":"455","regular_price":"455.00","image_id":{"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}}
-/// variation_id : {"id":12555,"product_id":79694,"price":"1055","stock_status":"instock","regular_price":"1055.00","sale_price":"455","is_on_sale":true,"image_id":{"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}}
-/// quantity : 15
-/// line_subtotal : 6825
-/// line_total : 6825
-/// line_tax : 0
-/// cgst_tax : 0
-/// sgst_tax : 0
-/// tax_class_id : null
-/// shipping_class_id : null
-/// cart_item_key : "48e079bb-2a8c-4fe2-91ad-5b0da9dc15d5"
-
 class Data {
   Data({
     num? id,
     num? cartId,
-    Slug? slug,
+    Product_Id? product_id,
     VariationId? variationId,
     num? quantity,
     num? lineSubtotal,
@@ -77,7 +58,7 @@ class Data {
   }) {
     _id = id;
     _cartId = cartId;
-    _slug = slug;
+    _product_id = product_id;
     _variationId = variationId;
     _quantity = quantity;
     _lineSubtotal = lineSubtotal;
@@ -93,8 +74,8 @@ class Data {
   Data.fromJson(dynamic json) {
     _id = json['id'];
     _cartId = json['cart_id'];
-    _slug = json['product_id'] != null
-        ? Slug.fromJson(json['product_id'])
+    _product_id = json['product_id'] != null
+        ? Product_Id.fromJson(json['product_id'])
         : null;
     _variationId = json['variation_id'] != null
         ? VariationId.fromJson(json['variation_id'])
@@ -112,7 +93,7 @@ class Data {
 
   num? _id;
   num? _cartId;
-  Slug? _slug;
+  Product_Id? _product_id;
   VariationId? _variationId;
   num? _quantity;
   num? _lineSubtotal;
@@ -128,7 +109,7 @@ class Data {
 
   num? get cartId => _cartId;
 
-  Slug? get slug => _slug;
+  Product_Id? get product_id => _product_id;
 
   VariationId? get variationId => _variationId;
 
@@ -154,8 +135,8 @@ class Data {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['cart_id'] = _cartId;
-    if (_slug != null) {
-      map['product_id'] = _slug?.toJson();
+    if (_product_id != null) {
+      map['product_id'] = _product_id?.toJson();
     }
     if (_variationId != null) {
       map['variation_id'] = _variationId?.toJson();
@@ -176,20 +157,10 @@ class Data {
     _quantity = num.parse(value);
   }
 }
-
-/// id : 12555
-/// product_id : 79694
-/// price : "1055"
-/// stock_status : "instock"
-/// regular_price : "1055.00"
-/// sale_price : "455"
-/// is_on_sale : true
-/// image_id : {"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}
-
 class VariationId {
   VariationId({
     num? id,
-    num? slug,
+    num? product_id,
     String? price,
     String? stockStatus,
     String? regularPrice,
@@ -198,7 +169,7 @@ class VariationId {
     ImageId? imageId,
   }) {
     _id = id;
-    _slug = slug;
+    _product_id = product_id;
     _price = price;
     _stockStatus = stockStatus;
     _regularPrice = regularPrice;
@@ -209,7 +180,7 @@ class VariationId {
 
   VariationId.fromJson(dynamic json) {
     _id = json['id'];
-    _slug = json['product_id'];
+    _product_id = json['product_id'];
     _price = json['price'];
     _stockStatus = json['stock_status'];
     _regularPrice = json['regular_price'];
@@ -220,7 +191,7 @@ class VariationId {
   }
 
   num? _id;
-  num? _slug;
+  num? _product_id;
   String? _price;
   String? _stockStatus;
   String? _regularPrice;
@@ -230,7 +201,7 @@ class VariationId {
 
   num? get id => _id;
 
-  num? get slug => _slug;
+  num? get Product_Id => _product_id;
 
   String? get price => _price;
 
@@ -247,7 +218,7 @@ class VariationId {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['product_id'] = _slug;
+    map['product_id'] = _product_id;
     map['price'] = _price;
     map['stock_status'] = _stockStatus;
     map['regular_price'] = _regularPrice;
@@ -259,13 +230,6 @@ class VariationId {
     return map;
   }
 }
-
-/// id : 34
-/// name : "02-1.jpg"
-/// alt : ""
-/// url : "https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg"
-/// caption : null
-
 class ImageId {
   ImageId({
     num? id,
@@ -315,20 +279,11 @@ class ImageId {
     return map;
   }
 }
-
-/// id : 79694
-/// product_title : "BATHROOT ACCESSORIES | Heavy-Duty Stainless Steel Tumbler holder for Bathroom Accessories"
-/// product_slug : "bathroot-accessories-heavy-duty-stainless-steel-tumbler-holder-for-bathroom-accessories-2"
-/// product_short_description : "<p>Brand &#8211; Bathroot Accessories<br />\nProduct Name &#8211; Tumbler holder<br />\nSeries &#8211; classic<br />\nColour &#8211; Multi Colours variation<br />\nMaterials &#8211; SS304</p>\n"
-/// price : "455"
-/// regular_price : "455.00"
-/// image_id : {"id":34,"name":"02-1.jpg","alt":"","url":"https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg","caption":null}
-
-class Slug {
-  Slug({
+class Product_Id {
+  product_id({
     num? id,
     String? productTitle,
-    String? slug,
+    String? product_id,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -336,17 +291,17 @@ class Slug {
   }) {
     _id = id;
     _productTitle = productTitle;
-    _slug = slug;
+    _product_id = product_id;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
     _imageId = imageId;
   }
 
-  Slug.fromJson(dynamic json) {
+  Product_Id.fromJson(dynamic json) {
     _id = json['id'];
     _productTitle = json['product_title'];
-    _slug = json['product_slug'];
+    _product_id = json['product_product_id'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -356,7 +311,7 @@ class Slug {
 
   num? _id;
   String? _productTitle;
-  String? _slug;
+  String? _product_id;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -367,7 +322,7 @@ class Slug {
   String? get productTitle => _productTitle;
 
 
-  String? get slug => _slug;
+  String? get productId => _product_id;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -381,7 +336,7 @@ class Slug {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _slug;
+    map['product_product_id'] = _product_id;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;
@@ -391,9 +346,3 @@ class Slug {
     return map;
   }
 }
-
-/// id : 34
-/// name : "02-1.jpg"
-/// alt : ""
-/// url : "https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/08/02-1.jpg"
-/// caption : null

@@ -82,7 +82,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                           await appCtrl.addToCart(params);
                                       if (cstatus.data != null &&
                                           cstatus.success != null &&
-                                          cstatus.data!.slug != null) {
+                                          cstatus.data!.id != null) {
                                         bool? status = await wishListCtrl
                                             .removeItemFromWishList(wishListCtrl
                                                 .wishlist[index].wishlistToken

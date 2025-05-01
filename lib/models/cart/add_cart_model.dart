@@ -1,12 +1,26 @@
 /// success : true
 /// message : "Success."
-/// data : {"id":214,"product_id":15353,"variation_id":null,"quantity":1,"line_subtotal":15728,"line_total":15728,"line_tax":2831.04,"cgst_tax":1415.52,"sgst_tax":1415.52,"tax_class_id":7,"shipping_class_id":null,"price":15728.0}
+/// data : {
+///   "id": 214,
+///   "product_id": 15353,
+///   "variation_id": null,
+///   "quantity": 1,
+///   "line_subtotal": 15728,
+///   "line_total": 15728,
+///   "line_tax": 2831.04,
+///   "cgst_tax": 1415.52,
+///   "sgst_tax": 1415.52,
+///   "tax_class_id": 7,
+///   "shipping_class_id": null,
+///   "price": 15728.0
+/// }
 
 class AddCartModel {
   AddCartModel({
     bool? success,
     String? message,
-    Data? data,}){
+    Data? data,
+  }) {
     _success = success;
     _message = message;
     _data = data;
@@ -17,6 +31,7 @@ class AddCartModel {
     _message = json['message'];
     _data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
+
   bool? _success;
   String? _message;
   Data? _data;
@@ -34,26 +49,12 @@ class AddCartModel {
     }
     return map;
   }
-
 }
-
-/// id : 214
-/// product_id : 15353
-/// variation_id : null
-/// quantity : 1
-/// line_subtotal : 15728
-/// line_total : 15728
-/// line_tax : 2831.04
-/// cgst_tax : 1415.52
-/// sgst_tax : 1415.52
-/// tax_class_id : 7
-/// shipping_class_id : null
-/// price : 15728.0
 
 class Data {
   Data({
     num? id,
-    num? slug,
+    num? productId,
     dynamic variationId,
     num? quantity,
     num? lineSubtotal,
@@ -63,9 +64,10 @@ class Data {
     num? sgstTax,
     num? taxClassId,
     dynamic shippingClassId,
-    num? price,}){
+    num? price,
+  }) {
     _id = id;
-    _slug = slug;
+    _productId = productId;
     _variationId = variationId;
     _quantity = quantity;
     _lineSubtotal = lineSubtotal;
@@ -80,7 +82,7 @@ class Data {
 
   Data.fromJson(dynamic json) {
     _id = json['id'];
-    _slug = json['product_id'];
+    _productId = json['product_id'];
     _variationId = json['variation_id'];
     _quantity = json['quantity'];
     _lineSubtotal = json['line_subtotal'];
@@ -92,8 +94,9 @@ class Data {
     _shippingClassId = json['shipping_class_id'];
     _price = json['price'];
   }
+
   num? _id;
-  num? _slug;
+  num? _productId;
   dynamic _variationId;
   num? _quantity;
   num? _lineSubtotal;
@@ -106,7 +109,7 @@ class Data {
   num? _price;
 
   num? get id => _id;
-  num? get slug => _slug;
+  num? get productId => _productId;
   dynamic get variationId => _variationId;
   num? get quantity => _quantity;
   num? get lineSubtotal => _lineSubtotal;
@@ -121,7 +124,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['product_id'] = _slug;
+    map['product_id'] = _productId;
     map['variation_id'] = _variationId;
     map['quantity'] = _quantity;
     map['line_subtotal'] = _lineSubtotal;
@@ -134,5 +137,4 @@ class Data {
     map['price'] = _price;
     return map;
   }
-
 }

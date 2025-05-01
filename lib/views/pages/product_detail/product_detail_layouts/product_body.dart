@@ -55,7 +55,7 @@ class _ProductBodyState extends State<ProductBody> {
                               var data = {
                                 'name': 'Recommended Products',
                                 'cat_id': 'recommended_product_by_id',
-                                'product_id': productCtrl.slug
+                                'product_slug': productCtrl.slug
                               };
                               Get.toNamed(routeName.shopPage, arguments: data);
                             },
@@ -80,7 +80,7 @@ class _ProductBodyState extends State<ProductBody> {
                                       Get.delete<ShopController>();
                                       Get.toNamed(routeName.productDetail,
                                           arguments: productCtrl
-                                              .recommendedForYouList[e.key].id
+                                              .recommendedForYouList[e.key].slug
                                               .toString(),
                                           preventDuplicates: false);
                                     },

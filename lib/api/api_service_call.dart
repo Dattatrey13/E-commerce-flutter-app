@@ -36,7 +36,9 @@ class ApiServiceCall implements BaseApi {
 
     try {
       final response = await http.get(Uri.parse('${ApiConfig.baseUrl}$url'),
+    
           headers: getHeaders());
+            print("GetREsponse: $url");
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet Connection');

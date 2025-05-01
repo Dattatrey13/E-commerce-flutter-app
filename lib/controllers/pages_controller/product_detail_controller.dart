@@ -61,32 +61,59 @@ class ProductDetailController extends GetxController {
 
   bool isLoading = true;
 
+  // @override
+  // void onReady() async {
+  //   slug  = Get.arguments; // Accept slug as argument instead of slug
+  //   reviewStar = 0.0;
+  //   reviewController.text = "";
+  //   await Future.delayed(DurationsClass.s1);
+  //   await getDetails(slug ); // Use slug here
+  //   if (UserSingleton().redirectProductPage ?? false) {
+  //     UserSingleton().redirectProductPage = false;
+  //     UserSingleton().slug = '';
+  //   }
+  //   isLoading = false;
+  //   update();
+  //   super.onReady();
+  // }
   @override
-  void onReady() async {
-    slug  = Get.arguments; // Accept slug as argument instead of slug
-    reviewStar = 0.0;
-    reviewController.text = "";
-    await Future.delayed(DurationsClass.s1);
-    await getDetails(slug ); // Use slug here
-    if (UserSingleton().redirectProductPage ?? false) {
-      UserSingleton().redirectProductPage = false;
-      UserSingleton().slug = '';
-    }
-    isLoading = false;
-    update();
-    super.onReady();
+void onReady() async {
+  super.onReady();
+
+  // Safely retrieve slug from Get.arguments
+  final String slug = Get.arguments as String;
+
+  if (slug.isEmpty) {
+    print("Error: Slug is empty");
+    return; // Early exit if slug is invalid
   }
 
-  getDetails(String slug) async {
-    await getProductDetails(slug ); // Use slug for product details
-    slug =
-        product?.id.toString() ?? ""; // Set slug after fetching details
-    await getProductReview("3", slug);
-    await getRecommendedProductList(slug);
-    if (UserSingleton().token != null) {
-      await getRecentProduct("1");
-    }
+  reviewStar = 0.0;
+  reviewController.text = "";
+
+  // You can delay for loading state if needed
+  await Future.delayed(DurationsClass.s1);
+
+  await getDetails(slug); // Pass the slug to fetch product details
+
+  if (UserSingleton().redirectProductPage ?? false) {
+    UserSingleton().redirectProductPage = false;
+    UserSingleton().slug = '';
   }
+
+  isLoading = false; // Set loading to false after data fetching
+  update();
+}
+
+
+getDetails(String slug) async {
+  await getProductDetails(slug); // use slug
+  await getProductReview("3", slug); // still use slug
+  await getRecommendedProductList(slug); // still use slug
+  if (UserSingleton().token != null) {
+    await getRecentProduct("1");
+  }
+}
 
   //on quantity increase
   quantityIncrease() {
@@ -130,7 +157,7 @@ class ProductDetailController extends GetxController {
         attributes.addAll(product!.attributeMapping!);
         productVariation.addAll(product!.productVariations!);
         url =
-            "Check out product ${ApiConfig.baseUrlWeb}product/${product!.slug}/?product-id=${product!.id}";
+            "Check out product ${ApiConfig.baseUrlWeb}product/${product!.slug}/?product-id=${product!.slug}";
       }
       if (product != null && product!.imageIds != null) {
         for (int i = 0; i < product!.imageIds!.length; i++) {
@@ -184,7 +211,7 @@ class ProductDetailController extends GetxController {
       params['review'] = reviewController.text.trim();
       params['rating'] = reviewStar;
       dynamic response = await apiCall.postRequest(
-          "${ApiMethodList.productCreateReview}$slug/", params);
+          "${ApiMethodList.productCreateReview}/product_id/", params);
       bool status = CreateReviewModel.fromJson(response).success ?? false;
       if (status) {
         reviewStar = 0.0;

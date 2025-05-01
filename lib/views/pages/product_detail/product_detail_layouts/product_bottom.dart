@@ -59,7 +59,7 @@ class ProductBottom extends StatelessWidget {
                                   await appCtrl.addToCart(params);
                               if (status.data != null &&
                                   status.success != null &&
-                                  status.data!.slug != null) {
+                                  status.data!.id != null) {
                                 Fluttertoast.showToast(
                                     msg: "Product Added to Cart Successfully");
                               } else {
@@ -126,7 +126,7 @@ class ProductBottom extends StatelessWidget {
                                     await appCtrl.addToCart(params);
                                 if (status.data != null &&
                                     status.success != null &&
-                                    status.data!.slug != null) {
+                                    status.data!.id != null) {
                                   showProgressDialog(true);
                                   productCtrl.getCartDetails();
                                 } else {}

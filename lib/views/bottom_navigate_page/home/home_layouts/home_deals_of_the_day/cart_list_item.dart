@@ -30,7 +30,7 @@ class CartListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               LatoFontStyle(
-                text: data!.slug!.productTitle!,
+                text: data!.product_id!.productTitle!,
                 fontWeight: FontWeight.w700,
                 color: appCtrl.appTheme.blackColor,
                 fontSize: FontSizes.f12,
@@ -100,3 +100,5 @@ class CartListItem extends StatelessWidget {
     });
   }
 }
+
+

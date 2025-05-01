@@ -86,7 +86,7 @@ class Data {
   }
 
   Data.fromJson(dynamic json) {
-    _slug = json['product_id'];
+    _slug = json['product_slug'];
     _sku = json['sku'];
     _virtual = json['virtual'];
     _downloadable = json['downloadable'];
@@ -180,7 +180,7 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['product_id'] = _slug;
+    map['product_slug'] = _slug;
     map['sku'] = _sku;
     map['virtual'] = _virtual;
     map['downloadable'] = _downloadable;

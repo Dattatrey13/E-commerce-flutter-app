@@ -58,7 +58,7 @@ class ShopController extends GetxController {
     name = Get.arguments['name'] ?? "All";
     listType = Get.arguments['cat_id'].toString();
     filterString = Get.arguments['filterString'] ?? "";
-    slug = Get.arguments['product_id'] ?? "";
+    slug = Get.arguments['product_slug'] ?? "";
     if (name == "Search Result") {
       isBrand = false;
       await getProductList(
