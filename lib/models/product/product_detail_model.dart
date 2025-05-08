@@ -101,6 +101,7 @@ class Data {
     bool? isInCart,
     dynamic wishlistToken,
     dynamic discountPercentage,
+    ImageIds? defaultImage,
   }) {
     _id = id;
     _productTitle = productTitle;
@@ -131,15 +132,20 @@ class Data {
     _isInCart = isInCart;
     _wishlistToken = wishlistToken;
     _discountPercentage = discountPercentage;
+    _defaultImage = defaultImage;
   }
 
   Data.fromJson(dynamic json) {
-    _id = json['id'];
+    // _id = json['id'];
+    _slug = json['slug'];
     _productTitle = json['product_title'];
-    _slug = json['product_slug'];
+    // _slug = json['product_slug'];
+    _slug = json['product_slug']?.toString();
     _productShortDescription = json['product_short_description'];
-    _price = json['price'];
-    _regularPrice = json['regular_price'];
+    // _price = json['price'];
+    price: json['price'] != null ? json['price'].toString() : null;
+    // _regularPrice = json['regular_price'];
+    _regularPrice = json['regular_price']?.toString();
     _productLongDescription = json['product_long_description'];
     _productType = json['product_type'];
     if (json['image_ids'] != null) {
@@ -148,6 +154,9 @@ class Data {
         _imageIds?.add(ImageIds.fromJson(v));
       });
     }
+    _defaultImage = json['default_image'] != null
+        ? ImageIds.fromJson(json['default_image'])
+        : null;
     if (json['product_categories'] != null) {
       _productCategories = [];
       json['product_categories'].forEach((v) {
@@ -219,6 +228,7 @@ class Data {
   bool? _isInCart;
   dynamic _wishlistToken;
   dynamic _discountPercentage;
+  ImageIds? _defaultImage;
 
   num? get id => _id;
 
@@ -278,13 +288,16 @@ class Data {
 
   dynamic get discountPercentage => _discountPercentage;
 
+  ImageIds? get defaultImage => _defaultImage;
+
   set setIsInWishlist(bool value) {
     _isInWishlist = value;
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = _id;
+    // map['id'] = _id;
+    map['slug'] = _slug;
     map['product_title'] = _productTitle;
     map['product_slug'] = _slug;
     map['product_short_description'] = _productShortDescription;
@@ -294,6 +307,9 @@ class Data {
     map['product_type'] = _productType;
     if (_imageIds != null) {
       map['image_ids'] = _imageIds?.map((v) => v.toJson()).toList();
+    }
+    if (_defaultImage != null) {
+      map['default_image'] = _defaultImage?.toJson(); // <-- ADD THIS
     }
     if (_productCategories != null) {
       map['product_categories'] =
@@ -421,46 +437,110 @@ class ProductVariations {
     _shippingClassId = shippingClassId;
   }
 
+  // ProductVariations.fromJson(dynamic json) {
+  //   _id = json['id'];
+  //   if (json['terms_ids'] != null) {
+  //     _termsIds = [];
+  //     json['terms_ids'].forEach((v) {
+  //       _termsIds?.add(TermsIds.fromJson(v));
+  //     });
+  //   }
+  //   if (json['image_ids'] != null) {
+  //     _imageIds = [];
+  //     json['image_ids'].forEach((v) {
+  //       _imageIds?.add(ImageIds.fromJson(v));
+  //     });
+  //   }
+  //   _discountPercentage = json['discount_percentage'];
+  //   _description = json['description'];
+  //   _productStatus = json['product_status'];
+  //   _isManageStock = json['is_manage_stock'];
+  //   _isDefault = json['is_default'];
+  //   _stockStatus = json['stock_status'];
+  //   _stockQuantity = json['stock_quantity'];
+  //   _isBackOrder = json['is_back_order'];
+  //   _backOrderStatus = json['back_order_status'];
+  //   _lowStockThreshold = json['low_stock_threshold'];
+  //   _sku = json['sku'];
+  //   _price = json['price'];
+  //   _regularPrice = json['regular_price'];
+  //   _salePrice = json['sale_price'];
+  //   _isOnSale = json['is_on_sale'];
+  //   _dateOnSaleFrom = json['date_on_sale_from'];
+  //   _dateOnSaleTo = json['date_on_sale_to'];
+  //   _experts = json['experts'];
+  //   _weight = json['weight'];
+  //   _dimensions = json['dimensions'] != null
+  //       ? Dimensions.fromJson(json['dimensions'])
+  //       : null;
+  //   _taxStatus = json['tax_status'];
+  //   _slug = json['product_slug'];
+  //   _taxClassId = json['tax_class_id'];
+  //   _shippingClassId = json['shipping_class_id'];
+  // }
   ProductVariations.fromJson(dynamic json) {
-    _id = json['id'];
+    _id = json['id'] != null ? num.tryParse(json['id'].toString()) : null;
+
     if (json['terms_ids'] != null) {
       _termsIds = [];
       json['terms_ids'].forEach((v) {
         _termsIds?.add(TermsIds.fromJson(v));
       });
     }
+
     if (json['image_ids'] != null) {
       _imageIds = [];
       json['image_ids'].forEach((v) {
         _imageIds?.add(ImageIds.fromJson(v));
       });
     }
-    _discountPercentage = json['discount_percentage'];
-    _description = json['description'];
-    _productStatus = json['product_status'];
-    _isManageStock = json['is_manage_stock'];
-    _isDefault = json['is_default'];
-    _stockStatus = json['stock_status'];
-    _stockQuantity = json['stock_quantity'];
-    _isBackOrder = json['is_back_order'];
-    _backOrderStatus = json['back_order_status'];
-    _lowStockThreshold = json['low_stock_threshold'];
-    _sku = json['sku'];
-    _price = json['price'];
-    _regularPrice = json['regular_price'];
-    _salePrice = json['sale_price'];
-    _isOnSale = json['is_on_sale'];
+
+    _discountPercentage = json['discount_percentage'] != null
+        ? num.tryParse(json['discount_percentage'].toString())
+        : null;
+
+    _description = json['description']?.toString();
+    _productStatus = json['product_status']?.toString();
+    _isManageStock = json['is_manage_stock'] is bool ? json['is_manage_stock'] : null;
+    _isDefault = json['is_default'] is bool ? json['is_default'] : null;
+    _stockStatus = json['stock_status']?.toString();
+
+    _stockQuantity = json['stock_quantity'] != null
+        ? int.tryParse(json['stock_quantity'].toString())
+        : null;
+
+    _isBackOrder = json['is_back_order'] is bool ? json['is_back_order'] : null;
+    _backOrderStatus = json['back_order_status']?.toString();
+
+    _lowStockThreshold = json['low_stock_threshold'] != null
+        ? int.tryParse(json['low_stock_threshold'].toString())
+        : null;
+
+    _sku = json['sku']?.toString();
+    _price = json['price']?.toString();
+    _regularPrice = json['regular_price']?.toString();
+    _salePrice = json['sale_price']?.toString();
+    _isOnSale = json['is_on_sale'] is bool ? json['is_on_sale'] : null;
+
     _dateOnSaleFrom = json['date_on_sale_from'];
     _dateOnSaleTo = json['date_on_sale_to'];
-    _experts = json['experts'];
-    _weight = json['weight'];
+    _experts = json['experts']?.toString();
+    _weight = json['weight']?.toString();
+
     _dimensions = json['dimensions'] != null
         ? Dimensions.fromJson(json['dimensions'])
         : null;
-    _taxStatus = json['tax_status'];
-    _slug = json['product_slug'];
-    _taxClassId = json['tax_class_id'];
-    _shippingClassId = json['shipping_class_id'];
+
+    _taxStatus = json['tax_status']?.toString();
+    _slug = json['product_slug'] != null ? num.tryParse(json['product_slug'].toString()) : null;
+
+    _taxClassId = json['tax_class_id'] != null
+        ? int.tryParse(json['tax_class_id'].toString())
+        : null;
+
+    _shippingClassId = json['shipping_class_id'] != null
+        ? int.tryParse(json['shipping_class_id'].toString())
+        : null;
   }
 
   num? _id;
@@ -707,6 +787,7 @@ class ImageIds {
     return map;
   }
 }
+
 
 /// card : "https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/61IXGLaJEBL._SX425__300*200.jpg"
 /// mobile : "https://dapperz.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/9/61IXGLaJEBL._SX425__375*250.jpg"

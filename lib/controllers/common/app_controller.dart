@@ -168,6 +168,7 @@ Get.toNamed(
       if (AddCartModel.fromJson(response).success ?? false) {
         getCartCount();
       }
+      print("Params being sent: $params");
       return AddCartModel.fromJson(response);
     } catch (e) {
       rethrow;

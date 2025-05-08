@@ -1,5 +1,5 @@
 import 'package:dapperz/models/dashboard/auto_complete_search_model.dart'
-    as acsm;
+as acsm;
 
 import '../../../../config.dart';
 
@@ -13,7 +13,7 @@ class RecentSearchCard extends StatelessWidget {
     return GetBuilder<AppController>(builder: (appCtrl) {
       return InkWell(
         onTap: () =>
-            {appCtrl.goToProductDetail(slug: data!.id.toString())},
+        {appCtrl.goToProductDetail(slug: data!.slug.toString())},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Row(

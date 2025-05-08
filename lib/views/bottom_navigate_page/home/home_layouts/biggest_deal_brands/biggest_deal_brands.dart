@@ -178,8 +178,8 @@ class _SliderDataState extends State<SliderData> {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    height: size.longestSide / 5.5,
-                    width: size.longestSide / 9,
+                    height: size.longestSide / 4.5,
+                    width: size.longestSide / 7.6,
                     margin: EdgeInsets.only(
                         left: AppScreenUtil().screenWidth(15),
                         right: AppScreenUtil().screenWidth(15),

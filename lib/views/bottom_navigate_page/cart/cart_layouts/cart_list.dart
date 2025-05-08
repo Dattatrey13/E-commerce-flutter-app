@@ -1,4 +1,5 @@
 import 'package:dapperz/config.dart';
+import 'package:dapperz/models/cart/cart_list_model.dart';
 import 'package:dapperz/views/bottom_navigate_page/home/home_layouts/home_deals_of_the_day/cart_list_item.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -23,7 +24,7 @@ class CartList extends StatelessWidget {
                                 onTap: () {
                                   cartCtrl.appCtrl.goToProductDetail(
                                       slug:
-                                          e.value.product_id!.id.toString());
+                                          e.value.slug.toString());
                                 },
                                 child: Stack(
                                   alignment: Alignment.topRight,
@@ -32,7 +33,12 @@ class CartList extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(
                                           AppScreenUtil().borderRadius(3)),
                                       child: FadeInImageLayout(
-                                        image: e.value.product_id!.imageId!.url,
+                                        // image: e.value.product_id!.imageId!.url,
+                                        image: e.value.product_id?.imageId == true
+                                            ? e.value.product_id!.imageId!.url
+                                            : '',
+                                        // slug: e.value.product_id?.slug ?? '',
+
                                         height: AppScreenUtil().size(110),
                                         width: AppScreenUtil().size(110),
                                       ),
@@ -92,3 +98,5 @@ class CartList extends StatelessWidget {
     });
   }
 }
+
+

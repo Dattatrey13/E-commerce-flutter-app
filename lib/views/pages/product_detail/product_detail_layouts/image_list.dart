@@ -13,7 +13,7 @@ class ImageList extends StatelessWidget {
           ? productCtrl.imagesList.length > 1
               ? CarouselSlider.builder(
                   options: CarouselOptions(
-                      height: AppScreenUtil().size(430),
+                      height: AppScreenUtil().size(300),
                       aspectRatio: 16 / 9,
                       disableCenter: false,
                       viewportFraction: .90,

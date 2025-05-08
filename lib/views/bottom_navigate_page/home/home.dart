@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             // const SizedBox(height: 15),
                             const HomeCategoryList(),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 20),
                             CarouselSlider(
                               items: homeCtrl.images.map((i) {
                                 return Builder(
@@ -154,23 +154,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 autoPlayCurve: Curves.fastOutSlowIn,
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
                             const BorderLineLayout(),
                             // Remaining
-                            const SliderData(),
+                            // const SliderData(),
                             const BorderLineLayout(),
                             if (homeCtrl.getAllCouponsModel != null &&
                                 homeCtrl.getAllCouponsModel!.data != null &&
                                 homeCtrl.getAllCouponsModel!.data!.isNotEmpty)
                               const OfferCorner(),
-                            const BorderLineLayout(),
+                            // const BorderLineLayout(),
                             // Remaining
                             // FeaturedCategoriesLayout(title: 'Discount for you'),
                             // BorderLineLayout(),
                             // Done
-                            const FeaturedCategoriesLayout(
-                                title: 'Featured Products'),
-                            const BorderLineLayout(),
+                            // const FeaturedCategoriesLayout(
+                            //     title: 'Featured Products'),
+                            // const BorderLineLayout(),
                             // Remaining
                             // const Brands(),
                             // const BorderLineLayout(),

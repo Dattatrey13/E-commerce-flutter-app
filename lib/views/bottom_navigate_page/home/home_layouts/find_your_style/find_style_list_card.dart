@@ -27,14 +27,24 @@ class DashboardProductCard extends StatelessWidget {
                 Stack(
                   alignment: Alignment.topRight,
                   children: [
+                    // SizedBox(
+                    //   height: 200,
+                    //   child: data!.imageIds!.isEmpty
+                    //       ? Image.asset(imageAssets.noData)
+                    //       : ProductImage(
+                    //           image: data!.imageIds!.first.url.toString(),
+                    //           isFit: isFit),
+                    // ),
                     SizedBox(
                       height: 200,
-                      child: data!.imageIds!.isEmpty
+                      child: (data?.defaultImage?.productImageMeta?.mobile ?? '').isEmpty
                           ? Image.asset(imageAssets.noData)
                           : ProductImage(
-                              image: data!.imageIds!.first.url.toString(),
-                              isFit: isFit),
+                        image: data!.defaultImage!.productImageMeta!.mobile!,
+                        isFit: isFit,
+                      ),
                     ),
+
                     Container(
                       child: LinkHeartIcon(
                         onTap: (bool val) async {
@@ -100,46 +110,69 @@ class DashboardProductCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ).paddingOnly(left: AppScreenUtil().screenWidth(5)),
             const Space(0, 5),
+            // data!.id != null && (data!.isFeatured ?? false)
+            //     ? Container()
+            //     : PriceLayout(
+            //         // totalPrice: data!.salePrice != null && data!.salePrice != "" && data!.salePrice != "null"
+            //         //     ? '${appCtrl.priceSymbol} ${(data!.salePrice!)}'
+            //         //     : "",
+            //   totalPrice: data!.isOnSale == true &&
+            //       data!.salePrice != data!.regularPrice &&
+            //       data!.regularPrice != "xyz"
+            //             ? data!.salePrice
+            //             : null,
+            //         // mrp: '${appCtrl.priceSymbol} ${data!.price}'
+            //         mrp: data!.price,
+            //         //  '${(data!.isAttribute! ? data!.priceRange : isInteger(num.parse(data!.regularPrice ?? "0")) ? num.parse(data!.regularPrice ?? "0").toStringAsFixed(0) : data!.regularPrice ?? "0")}'
+            //         //todo: set discount price
+            //         discount: data!.discountPercentage.toString(),
+            //         // data!.salePrice != null &&
+            //         //         data!.salePrice != "" &&
+            //         //         data!.salePrice != "null"
+            //         //     ? isInteger(num.parse(
+            //         //             (double.parse(data!.regularPrice!) - double.parse(data!.salePrice!)).toString()))
+            //         //         ? getDiscountPercentage(
+            //         //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
+            //         //             .toString()
+            //         //         : getDiscountPercentage(
+            //         //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
+            //         //             .toString()
+            //         //     : "",
+            //         fontSize: data!.regularPrice != null &&
+            //             data!.regularPrice != "" &&
+            //             data!.regularPrice != "xyz"
+            //             ? MediaQuery.of(context).size.width > 400
+            //                 ? FontSizes.f12
+            //                 : FontSizes.f12
+            //             : FontSizes.f12,
+            //         isDiscountShow: data!.discountPercentage != 0.0 &&
+            //                 data!.discountPercentage != null
+            //             ? true
+            //             : false,
+            //       ),
             data!.id != null && (data!.isFeatured ?? false)
                 ? Container()
                 : PriceLayout(
-                    // totalPrice: data!.salePrice != null && data!.salePrice != "" && data!.salePrice != "null"
-                    //     ? '${appCtrl.priceSymbol} ${(data!.salePrice!)}'
-                    //     : "",
-                    totalPrice: data!.isOnSale == true &&
-                            data!.salePrice != data!.price &&
-                            data!.salePrice != ""
-                        ? data!.salePrice
-                        : null,
-                    // mrp: '${appCtrl.priceSymbol} ${data!.price}'
-                    mrp: data!.price,
-                    //  '${(data!.isAttribute! ? data!.priceRange : isInteger(num.parse(data!.regularPrice ?? "0")) ? num.parse(data!.regularPrice ?? "0").toStringAsFixed(0) : data!.regularPrice ?? "0")}'
-                    //todo: set discount price
-                    discount: data!.discountPercentage.toString(),
-                    // data!.salePrice != null &&
-                    //         data!.salePrice != "" &&
-                    //         data!.salePrice != "null"
-                    //     ? isInteger(num.parse(
-                    //             (double.parse(data!.regularPrice!) - double.parse(data!.salePrice!)).toString()))
-                    //         ? getDiscountPercentage(
-                    //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
-                    //             .toString()
-                    //         : getDiscountPercentage(
-                    //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
-                    //             .toString()
-                    //     : "",
-                    fontSize: data!.salePrice != null &&
-                            data!.salePrice != "" &&
-                            data!.salePrice != "null"
-                        ? MediaQuery.of(context).size.width > 400
-                            ? FontSizes.f12
-                            : FontSizes.f12
-                        : FontSizes.f12,
-                    isDiscountShow: data!.discountPercentage != 0.0 &&
-                            data!.discountPercentage != null
-                        ? true
-                        : false,
-                  ),
+              totalPrice: data!.isOnSale == true &&
+                  data!.salePrice != data!.regularPrice &&
+                  data!.regularPrice != "xyz"
+                  ? data!.salePrice
+                  : null,
+              mrp: data!.regularPrice,
+              discount: data!.discountPercentage.toString(),
+              fontSize: data!.regularPrice != null &&
+                  data!.regularPrice != "" &&
+                  data!.regularPrice != "xyz"
+                  ? MediaQuery.of(context).size.width > 400
+                  ? FontSizes.f12
+                  : FontSizes.f12
+                  : FontSizes.f12,
+              isDiscountShow: data!.discountPercentage != 0.0 &&
+                  data!.discountPercentage != null
+                  ? true
+                  : false,
+            ),
+
           ],
         ),
       );

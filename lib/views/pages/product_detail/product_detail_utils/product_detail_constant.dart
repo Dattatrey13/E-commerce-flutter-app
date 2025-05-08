@@ -13,7 +13,8 @@ class ProductDetailFont {
   String pinCode = "pinCode".tr;
   String check = "check".tr;
   String similarProducts = "similarProducts".tr;
-  String wishList = "wishList".tr;
+  String
+  wishList = "wishList".tr;
   String addToBag = "addToBag".tr;
   String selectType = "selectType".tr;
   String sizeChart = "sizeChart".tr;

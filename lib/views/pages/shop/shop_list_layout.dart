@@ -26,7 +26,7 @@ class ShopListLayout extends StatelessWidget {
                       onTap: () {
                         appCtrl.goToProductDetail(
                             slug:
-                                shopCtrl.productList[index].id.toString());
+                                shopCtrl.productList[index].slug.toString());
                       },
                       child: DashboardProductCard(
                               data: shopCtrl.productList[index], isFit: true)

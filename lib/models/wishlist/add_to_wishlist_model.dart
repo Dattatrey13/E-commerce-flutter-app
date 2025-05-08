@@ -50,7 +50,7 @@ class Data {
     String? createdAt,
     bool? onSale,
     dynamic expiration,
-    num? slug,
+    num? productId,
     dynamic userId,
   }) {
     _id = id;
@@ -61,7 +61,7 @@ class Data {
     _createdAt = createdAt;
     _onSale = onSale;
     _expiration = expiration;
-    _slug = slug;
+    _productId = productId;
     _userId = userId;
   }
 
@@ -74,7 +74,7 @@ class Data {
     _createdAt = json['created_at'];
     _onSale = json['on_sale'];
     _expiration = json['expiration'];
-    _slug = json['product_id'];
+    _productId = json['product_id'];
     _userId = json['user_id'];
   }
 
@@ -86,7 +86,7 @@ class Data {
   String? _createdAt;
   bool? _onSale;
   dynamic _expiration;
-  num? _slug;
+  num? _productId;
   dynamic _userId;
 
   num? get id => _id;
@@ -105,7 +105,7 @@ class Data {
 
   String? get expiration => _expiration;
 
-  num? get slug => _slug;
+  num? get productId => _productId;
 
   dynamic get userId => _userId;
 
@@ -119,7 +119,7 @@ class Data {
     map['created_at'] = _createdAt;
     map['on_sale'] = _onSale;
     map['expiration'] = _expiration;
-    map['product_id'] = _slug;
+    map['product_id'] = _productId;
     map['user_id'] = _userId;
     return map;
   }

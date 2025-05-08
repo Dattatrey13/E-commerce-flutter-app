@@ -1,4 +1,3 @@
-
 class WishListModel {
   WishListModel({
     bool? success,
@@ -56,52 +55,58 @@ class WishListModel {
 class Data {
   Data({
     num? id,
+    String? slug,
     String? originalPrice,
     String? wishlistToken,
     bool? onSale,
     String? expiration,
     num? quantity,
-    Slug? slug,
+    ProductId? productId,
     String? createdAt,
     List<num>? variations,
   }) {
     _id = id;
+    _slug = slug;
     _originalPrice = originalPrice;
     _wishlistToken = wishlistToken;
     _onSale = onSale;
     _expiration = expiration;
     _quantity = quantity;
-    _slug = slug;
+    _productId = productId;
     _createdAt = createdAt;
     _variations = variations;
   }
 
   Data.fromJson(dynamic json) {
     _id = json['id'];
+    _slug = json['slug'];
     _originalPrice = json['original_price'];
     _wishlistToken = json['wishlist_token'];
     _onSale = json['on_sale'];
     _expiration = json['expiration'];
     _quantity = json['quantity'];
-    _slug = json['product_id'] != null
-        ? Slug.fromJson(json['product_id'])
+    _productId = json['product_id'] != null
+        ? ProductId.fromJson(json['product_id'])
         : null;
     _createdAt = json['created_at'];
     _variations =
-        json['variations'] != null ? json['variations'].cast<num>() : [];
+    json['variations'] != null ? json['variations'].cast<num>() : [];
   }
 
   num? _id;
+  String? _slug;
   String? _originalPrice;
   String? _wishlistToken;
   bool? _onSale;
   String? _expiration;
   num? _quantity;
-  Slug? _slug;
+  ProductId? _productId;
   String? _createdAt;
   List<num>? _variations;
 
   num? get id => _id;
+
+  String? get slug => _slug;
 
   String? get originalPrice => _originalPrice;
 
@@ -113,7 +118,7 @@ class Data {
 
   num? get quantity => _quantity;
 
-  Slug? get slug => _slug;
+  ProductId? get productId => _productId;
 
   String? get createdAt => _createdAt;
 
@@ -127,8 +132,8 @@ class Data {
     map['on_sale'] = _onSale;
     map['expiration'] = _expiration;
     map['quantity'] = _quantity;
-    if (_slug != null) {
-      map['product_id'] = _slug?.toJson();
+    if (_productId != null) {
+      map['product_id'] = _productId?.toJson();
     }
     map['created_at'] = _createdAt;
     map['variations'] = _variations;
@@ -136,11 +141,12 @@ class Data {
   }
 }
 
-class Slug {
-  Slug({
+class ProductId {
+  ProductId({
     num? id,
-    String? productTitle,
     String? slug,
+    String? productTitle,
+    String? productSlug,
     String? productShortDescription,
     String? price,
     String? regularPrice,
@@ -155,10 +161,11 @@ class Slug {
     bool? isOnSale,
     dynamic dateOnSaleFrom,
     dynamic dateOnSaleTo,
+    ImageIds? defaultImage,
   }) {
     _id = id;
     _productTitle = productTitle;
-    _slug = slug;
+    _productSlug = productSlug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
@@ -173,12 +180,14 @@ class Slug {
     _isOnSale = isOnSale;
     _dateOnSaleFrom = dateOnSaleFrom;
     _dateOnSaleTo = dateOnSaleTo;
+    _defaultImage = defaultImage;
   }
 
-  Slug.fromJson(dynamic json) {
+  ProductId.fromJson(dynamic json) {
     _id = json['id'];
+    _slug: json['slug'];
     _productTitle = json['product_title'];
-    _slug = json['product_slug'];
+    _productSlug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
@@ -188,6 +197,9 @@ class Slug {
         _imageIds?.add(ImageIds.fromJson(v));
       });
     }
+    _defaultImage = json['default_image'] != null
+        ?ImageIds.fromJson(json['default_image'])
+        :null;
     _productType = json['product_type'];
     _brandId = json['brand_id'];
     _isMultiImage = json['is_multi_image'];
@@ -201,8 +213,9 @@ class Slug {
   }
 
   num? _id;
-  String? _productTitle;
   String? _slug;
+  String? _productTitle;
+  String? _productSlug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
@@ -217,12 +230,13 @@ class Slug {
   bool? _isOnSale;
   dynamic _dateOnSaleFrom;
   dynamic _dateOnSaleTo;
+  ImageIds? _defaultImage;
 
   num? get id => _id;
 
   String? get productTitle => _productTitle;
 
-  String? get slug => _slug;
+  String? get productSlug => _productSlug;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -252,16 +266,23 @@ class Slug {
 
   dynamic get dateOnSaleTo => _dateOnSaleTo;
 
+  ImageIds? get defaultImage => _defaultImage;
+
+  get slug => null;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
-    map['product_slug'] = _slug;
+    map['product_slug'] = _productSlug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;
     if (_imageIds != null) {
       map['image_ids'] = _imageIds?.map((v) => v.toJson()).toList();
+    }
+    if (_defaultImage != null) {
+      map['default_image'] = _defaultImage?.toJson(); // <--- NEW
     }
     map['product_type'] = _productType;
     map['brand_id'] = _brandId;

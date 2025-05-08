@@ -70,42 +70,75 @@ class _ProductInformationState extends State<ProductInformation> {
           // rating layout
           const RatingLayout(),
           // price layout
-          productCtrl.product != null && (productCtrl.product!.isFeatured!)
-              ? Container()
-              : Container(
-                  child: PriceLayout(
-                    totalPrice: productCtrl.selectedVariationId != null
-                        ? productCtrl.selectedVariation!.isOnSale == true &&
-                                productCtrl.selectedVariation!.salePrice !=
-                                    productCtrl.selectedVariation!.price &&
-                                productCtrl.selectedVariation!.salePrice != ""
-                            ? productCtrl.selectedVariation!.salePrice
-                            : null
-                        : productCtrl.product!.isOnSale == true &&
-                                productCtrl.product!.salePrice !=
-                                    productCtrl.product!.price &&
-                                productCtrl.product!.salePrice != ""
-                            ? productCtrl.product!.salePrice
-                            : null,
-                    mrp: productCtrl.selectedVariationId != null
-                        ? productCtrl.selectedVariation!.price
-                        : productCtrl.product!.price,
-                    discount: productCtrl.selectedVariationId != null
-                        ? productCtrl.selectedVariation!.discountPercentage
-                            .toString()
-                        : productCtrl.product!.discountPercentage.toString(),
-                    fontSize: FontSizes.f16,
-                    isBold: false,
-                    isDiscountShow:
-                        productCtrl.product!.discountPercentage != 0.0 &&
-                                productCtrl.product!.discountPercentage != null
-                            ? true
-                            : false,
-                  ).marginOnly(
-                      left: AppScreenUtil().screenWidth(10),
-                      right: AppScreenUtil().screenWidth(10)),
-                ),
-          // inclusive of all taxes layout
+          // productCtrl.product != null && (productCtrl.product!.isFeatured!)
+          //     ? Container()
+          //     : Container(
+          //         child: PriceLayout(
+          //           totalPrice: productCtrl.selectedVariationId != null
+          //               ? productCtrl.selectedVariation!.isOnSale == true &&
+          //                       productCtrl.selectedVariation!.salePrice !=
+          //                           productCtrl.selectedVariation!.price &&
+          //                       productCtrl.selectedVariation!.salePrice != ""
+          //                   ? productCtrl.selectedVariation!.salePrice
+          //                   : null
+          //               : productCtrl.product!.isOnSale == true &&
+          //                       productCtrl.product!.salePrice !=
+          //                           productCtrl.product!.price &&
+          //                       productCtrl.product!.salePrice != ""
+          //                   ? productCtrl.product!.salePrice
+          //                   : null,
+          //           mrp: productCtrl.selectedVariationId != null
+          //               ? productCtrl.selectedVariation!.price
+          //               : productCtrl.product!.price,
+          //           discount: productCtrl.selectedVariationId != null
+          //               ? productCtrl.selectedVariation!.discountPercentage
+          //                   .toString()
+          //               : productCtrl.product!.discountPercentage.toString(),
+          //           fontSize: FontSizes.f16,
+          //           isBold: false,
+          //           isDiscountShow:
+          //               productCtrl.product!.discountPercentage != 0.0 &&
+          //                       productCtrl.product!.discountPercentage != null
+          //                   ? true
+          //                   : false,
+          //         ).marginOnly(
+          //             left: AppScreenUtil().screenWidth(10),
+          //             right: AppScreenUtil().screenWidth(10)),
+          //       ),
+      productCtrl.product != null && productCtrl.product!.isFeatured!
+      ? Container()
+          : Container(
+      child: PriceLayout(
+      totalPrice: productCtrl.selectedVariationId != null
+      ? productCtrl.selectedVariation!.isOnSale == true &&
+      productCtrl.selectedVariation!.salePrice !=
+      productCtrl.selectedVariation!.regularPrice &&
+      productCtrl.selectedVariation!.salePrice != ""
+      ? productCtrl.selectedVariation!.salePrice
+          : null
+          : productCtrl.product!.isOnSale == true &&
+      productCtrl.product!.salePrice !=
+      productCtrl.product!.regularPrice &&
+      productCtrl.product!.salePrice != ""
+      ? productCtrl.product!.salePrice
+          : null,
+      mrp: productCtrl.selectedVariationId != null
+      ? productCtrl.selectedVariation!.regularPrice
+          : productCtrl.product!.regularPrice,
+      discount: productCtrl.selectedVariationId != null
+      ? productCtrl.selectedVariation!.discountPercentage.toString()
+          : productCtrl.product!.discountPercentage.toString(),
+      fontSize: FontSizes.f16,
+      isBold: false,
+      isDiscountShow: productCtrl.product!.discountPercentage != 0.0 &&
+      productCtrl.product!.discountPercentage != null
+      ? true
+          : false,
+      ).marginOnly(
+      left: AppScreenUtil().screenWidth(10),
+      right: AppScreenUtil().screenWidth(10)),
+      ),
+      // inclusive of all taxes layout
           productCtrl.product != null &&
                   (productCtrl.product!.isFeatured ?? false)
               ? const SizedBox(height: 10)
@@ -115,7 +148,7 @@ class _ProductInformationState extends State<ProductInformation> {
             child: GestureDetector(
               onTap: () async {
                 HashMap<String, dynamic> params = HashMap();
-                params['product_slug'] = productCtrl.product!.id!.toString();
+                params['product_id'] = productCtrl.product!.id!.toString();
                 bool? addstatus = await appCtrl.addItemToWishlist(params);
                 if (addstatus != null && addstatus) {
                   Fluttertoast.showToast(

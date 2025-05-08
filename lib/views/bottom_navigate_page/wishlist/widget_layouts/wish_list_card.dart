@@ -28,14 +28,16 @@ class WishListCard extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () => appCtrl.goToProductDetail(
-                      slug: wishlistItemDetail!.slug!.id.toString()),
+                    slug: wishlistItemDetail!.productId!.slug.toString(),
+                  ),
                   child: Stack(children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(
                           AppScreenUtil().borderRadius(3)),
                       child: FadeInImageLayout(
-                        image:
-                            wishlistItemDetail!.slug!.imageIds!.first.url,
+                        // image:
+                        // wishlistItemDetail!.productId!.imageIds!.first.url,
+                        image: wishlistItemDetail?.productId?.defaultImage?.productImageMeta?.mobile ?? imageAssets.noData,
                         height: AppScreenUtil().size(110),
                         width: AppScreenUtil().size(110),
                       ),
@@ -61,3 +63,4 @@ class WishListCard extends StatelessWidget {
     });
   }
 }
+

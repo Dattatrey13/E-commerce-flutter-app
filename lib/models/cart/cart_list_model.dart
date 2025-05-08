@@ -55,6 +55,7 @@ class Data {
     dynamic taxClassId,
     dynamic shippingClassId,
     String? cartItemKey,
+    String? slug,
   }) {
     _id = id;
     _cartId = cartId;
@@ -69,6 +70,7 @@ class Data {
     _taxClassId = taxClassId;
     _shippingClassId = shippingClassId;
     _cartItemKey = cartItemKey;
+    _slug = slug;
   }
 
   Data.fromJson(dynamic json) {
@@ -89,6 +91,7 @@ class Data {
     _taxClassId = json['tax_class_id'];
     _shippingClassId = json['shipping_class_id'];
     _cartItemKey = json['cart_item_key'];
+    _slug = json['slug'];
   }
 
   num? _id;
@@ -104,6 +107,7 @@ class Data {
   dynamic _taxClassId;
   dynamic _shippingClassId;
   String? _cartItemKey;
+  String? _slug;
 
   num? get id => _id;
 
@@ -130,6 +134,8 @@ class Data {
   dynamic get shippingClassId => _shippingClassId;
 
   String? get cartItemKey => _cartItemKey;
+
+  String? get slug => _slug;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -296,6 +302,7 @@ class Product_Id {
     _price = price;
     _regularPrice = regularPrice;
     _imageId = imageId;
+
   }
 
   Product_Id.fromJson(dynamic json) {

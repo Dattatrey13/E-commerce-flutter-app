@@ -34,106 +34,106 @@ class _WishlistScreenState extends State<WishlistScreen> {
             child: wishListCtrl.appCtrl.isShimmer
                 ? const WishListShimmer()
                 : WillPopScope(
-                    onWillPop: () async {
-                      appCtrl.isHeart = true;
-                      appCtrl.isCart = true;
-                      appCtrl.isShare = false;
-                      appCtrl.isSearch = true;
-                      appCtrl.isNotification = false;
-                      appCtrl.selectedIndex = 0;
-                      appCtrl.update();
-                      wishListCtrl.homeCtrl.getData();
-                      Get.forceAppUpdate();
-                      return true;
-                    },
-                    child: wishListCtrl.wishlist.isNotEmpty
-                        ? ListView.builder(
-                            itemCount: wishListCtrl.wishlist.length,
-                            itemBuilder: (context, index) {
-                              return WishListCard(
-                                  wishlistItemDetail:
-                                      wishListCtrl.wishlist[index],
-                                  index: index,
-                                  lastIndex: wishListCtrl.wishlist.length - 1,
-                                  firstActionTap: () async {
-                                    if (wishListCtrl.wishlist[index].slug!
-                                            .isFeatured ??
-                                        false) {
-                                      Get.toNamed(routeName.getACall,
-                                          arguments: wishListCtrl
-                                              .wishlist[index].slug!.id);
-                                    } else {
-                                      HashMap<String, dynamic> params =
-                                          HashMap();
-                                      params['product_id'] = wishListCtrl
-                                          .wishlist[index].slug!.id
-                                          .toString();
-                                      params['quantity'] = "1".toString();
-                                      if (wishListCtrl
-                                                  .wishlist[index].variations !=
-                                              null &&
-                                          wishListCtrl.wishlist[index]
-                                              .variations!.isNotEmpty) {
-                                        params['variation_id'] = wishListCtrl
-                                            .wishlist[index].variations!.first
-                                            .toString();
-                                      }
-                                      AddCartModel? cstatus =
-                                          await appCtrl.addToCart(params);
-                                      if (cstatus.data != null &&
-                                          cstatus.success != null &&
-                                          cstatus.data!.id != null) {
-                                        bool? status = await wishListCtrl
-                                            .removeItemFromWishList(wishListCtrl
-                                                .wishlist[index].wishlistToken
-                                                .toString());
-                                        if (status != null && status) {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Product moved to Cart Successfully");
-                                          wishListCtrl.wishlist.removeAt(index);
-                                          wishListCtrl.update();
-                                          Get.forceAppUpdate();
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Unable to move product from Wishlist");
-                                        }
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Unable to move product from Wishlist");
-                                      }
-                                    }
-                                  },
-                                  secondActionTap: () async {
-                                    bool? status = await wishListCtrl
-                                        .removeItemFromWishList(wishListCtrl
-                                            .wishlist[index].wishlistToken
-                                            .toString());
-                                    if (status != null && status) {
-                                      Fluttertoast.showToast(
-                                          msg: "Item removed from wishlist");
-                                      wishListCtrl.wishlist.removeAt(index);
-                                      wishListCtrl.update();
-                                    } else {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Unable to remove product from Wishlist");
-                                    }
-                                  });
-                            },
-                          )
-                        : ListView(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            children: const [
-                              Center(
-                                child: Text('Your Wishlist is Empty'),
-                              ),
-                            ],
-                          ),
+              onWillPop: () async {
+                appCtrl.isHeart = true;
+                appCtrl.isCart = true;
+                appCtrl.isShare = false;
+                appCtrl.isSearch = true;
+                appCtrl.isNotification = false;
+                appCtrl.selectedIndex = 0;
+                appCtrl.update();
+                wishListCtrl.homeCtrl.getData();
+                Get.forceAppUpdate();
+                return true;
+              },
+              child: wishListCtrl.wishlist.isNotEmpty
+                  ? ListView.builder(
+                itemCount: wishListCtrl.wishlist.length,
+                itemBuilder: (context, index) {
+                  return WishListCard(
+                      wishlistItemDetail:
+                      wishListCtrl.wishlist[index],
+                      index: index,
+                      lastIndex: wishListCtrl.wishlist.length - 1,
+                      firstActionTap: () async {
+                        if (wishListCtrl.wishlist[index].productId!
+                            .isFeatured ??
+                            false) {
+                          Get.toNamed(routeName.getACall,
+                              arguments: wishListCtrl
+                                  .wishlist[index].productId!.id);
+                        } else {
+                          HashMap<String, dynamic> params =
+                          HashMap();
+                          params['product_id'] = wishListCtrl
+                              .wishlist[index].productId!.id
+                              .toString();
+                          params['quantity'] = "1".toString();
+                          if (wishListCtrl
+                              .wishlist[index].variations !=
+                              null &&
+                              wishListCtrl.wishlist[index]
+                                  .variations!.isNotEmpty) {
+                            params['variation_id'] = wishListCtrl
+                                .wishlist[index].variations!.first
+                                .toString();
+                          }
+                          AddCartModel? cstatus =
+                          await appCtrl.addToCart(params);
+                          if (cstatus.data != null &&
+                              cstatus.success != null &&
+                              cstatus.data!.productId != null) {
+                            bool? status = await wishListCtrl
+                                .removeItemFromWishList(wishListCtrl
+                                .wishlist[index].wishlistToken
+                                .toString());
+                            if (status != null && status) {
+                              Fluttertoast.showToast(
+                                  msg:
+                                  "Product moved to Cart Successfully");
+                              wishListCtrl.wishlist.removeAt(index);
+                              wishListCtrl.update();
+                              Get.forceAppUpdate();
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg:
+                                  "Unable to move product from Wishlist");
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg:
+                                "Unable to move product from Wishlist");
+                          }
+                        }
+                      },
+                      secondActionTap: () async {
+                        bool? status = await wishListCtrl
+                            .removeItemFromWishList(wishListCtrl
+                            .wishlist[index].wishlistToken
+                            .toString());
+                        if (status != null && status) {
+                          Fluttertoast.showToast(
+                              msg: "Item removed from wishlist");
+                          wishListCtrl.wishlist.removeAt(index);
+                          wishListCtrl.update();
+                        } else {
+                          Fluttertoast.showToast(
+                              msg:
+                              "Unable to remove product from Wishlist");
+                        }
+                      });
+                },
+              )
+                  : ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: const [
+                  Center(
+                    child: Text('Your Wishlist is Empty'),
                   ),
+                ],
+              ),
+            ),
           ),
         );
       },

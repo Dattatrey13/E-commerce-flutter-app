@@ -52,7 +52,7 @@ class AppBarActionLayout extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: Color.fromRGBO(210, 239, 154, 1.0),
                           borderRadius: BorderRadius.circular(25)),
                       constraints:
                           const BoxConstraints(minWidth: 20, minHeight: 20),
@@ -81,7 +81,7 @@ class AppBarActionLayout extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: Color.fromRGBO(210, 239, 154, 1.0),
                           borderRadius: BorderRadius.circular(25)),
                       constraints:
                           const BoxConstraints(minWidth: 20, minHeight: 20),

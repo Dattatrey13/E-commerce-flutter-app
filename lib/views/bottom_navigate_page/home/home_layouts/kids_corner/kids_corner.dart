@@ -194,6 +194,7 @@ class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
                             ?.then((value) {
                           homeCtrl.getRecentItemList();
                         });
+                      
                       },
                       child: Text('View More',
                           style: TextStyle(
