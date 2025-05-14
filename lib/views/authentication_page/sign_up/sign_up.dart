@@ -41,33 +41,23 @@ class SignUpScreen extends StatelessWidget {
                     const SignupNameTextForm(),
                     const Space(0, 15),
                     //email text box layout
-                    const SignUpEmailPhoneTextForm(),
+                    const SignUpEmailTextForm (),
                     const Space(0, 15),
                     //password text box layout
-                    // const SignUpPasswordTextForm(),
-                    // const Space(0, 35),
+                    const SignUpPasswordTextForm(),
+                    const Space(0, 35),
                     //button layout
                     CustomButton(
                       title: SignUpFont().signUp.toUpperCase(),
-                      onTap: () async {
-                        if (signUpCtrl.txtName.text.isEmpty) {
-                          Fluttertoast.showToast(msg: "Please Enter Name");
-                          return;
-                        } else {
-                          UserSingleton().isRegister = true;
-                          if (signUpCtrl.signupFormKey.currentState!
-                              .validate()) {
-                            bool userExist = await signUpCtrl.checkMobileExist(
-                                signUpCtrl.txtMobileNo.text.trim());
-                            if (!userExist) {
-                              signUpCtrl
-                                  .sendOTP(signUpCtrl.txtMobileNo.text.trim());
-                            } else {
-                              Fluttertoast.showToast(msg: "User Already Exist");
-                            }
-                          }
-                        }
-                      },
+      onTap: () async {
+      if (signUpCtrl.txtName.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Please Enter Name");
+      return;
+      } else {
+      UserSingleton().isRegister = true;
+      await signUpCtrl.signRegister(); // Directly call signRegister
+      }
+      }
                     ),
                     const Space(0, 20),
                     //or sign in with text layout
@@ -95,3 +85,4 @@ class SignUpScreen extends StatelessWidget {
     });
   }
 }
+

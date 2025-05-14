@@ -32,7 +32,8 @@ class FadeInImageLayout extends StatelessWidget {
           )
         : CachedNetworkImage(
             cacheKey: getAWSS3BaseImageUrl(image!),
-            imageUrl: image!,
+            // imageUrl: image!,
+            imageUrl: getAWSS3BaseImageUrl(image!),
             fit: fit,
             height: height,
             alignment: Alignment.center,

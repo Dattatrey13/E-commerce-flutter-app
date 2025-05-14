@@ -19,7 +19,7 @@ final dynamic en = {
   //login
   "hey": 'Hey',
   "loginNow": 'Login Now',
-  "signInCapital": 'SEND OTP',
+  "signInCapital": 'SingnIn',
   'mobileNo': "Mobile Number",
   'password': "Password",
   "userFieldError": "Mobile Number is Required",

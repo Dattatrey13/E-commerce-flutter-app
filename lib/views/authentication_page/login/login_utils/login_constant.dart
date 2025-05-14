@@ -7,5 +7,8 @@ class LoginFont {
   String signInCapital = 'signInCapital'.tr;
   String userNameOrEmail = 'mobileNo'.tr;
   String forgotPassword = "forgotPassword".tr;
+  // String emailAddress = "email".tr;
+
+  get email => null;
 }
 

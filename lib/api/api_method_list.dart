@@ -7,7 +7,7 @@ class ApiMethodList {
 
   //new
   static String userAddress = "user/address/";
-  static String userLogin = "user/login/";
+  static String serLoginu = "user/login/";
   static String subCategory = "category/item/";
 
   //endregion

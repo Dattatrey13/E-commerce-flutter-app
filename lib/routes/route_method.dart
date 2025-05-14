@@ -53,9 +53,9 @@ class AppRoute {
         page: () => const RefundAndReturnsPolicy()),
     GetPage(
         name: _routeName.shippingPolicy, page: () => const ShippingPolicy()),
-    GetPage(
-        name: _routeName.otp,
-        page: () => OtpScreen(mobileNo: '', verificationId: '')),
+    // GetPage(
+    //     name: _routeName.otp,
+    //     page: () => OtpScreen(mobileNo: '', verificationId: '')),
     GetPage(name: _routeName.emptyCart, page: () => const EmptyCart()),
     GetPage(name: _routeName.emptyHistory, page: () => const EmptyHistory()),
     GetPage(name: _routeName.allReviews, page: () => AllReviews()),

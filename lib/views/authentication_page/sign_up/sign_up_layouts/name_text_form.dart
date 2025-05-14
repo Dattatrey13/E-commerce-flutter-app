@@ -15,10 +15,10 @@ class SignupNameTextForm extends StatelessWidget {
           controller: signUpCtrl.txtName,
           focusNode: signUpCtrl.nameFocus,
           keyboardType: TextInputType.text,
-          onFieldSubmitted: (value) {
-            SignUpWidget().fieldFocusChange(
-                context, signUpCtrl.nameFocus, signUpCtrl.mobileNoFocus);
-          },
+          // onFieldSubmitted: (value) {
+          //   SignUpWidget().fieldFocusChange(
+          //       context, signUpCtrl.nameFocus, signUpCtrl.mobileNoFocus);
+          // },
         ),
       );
     });

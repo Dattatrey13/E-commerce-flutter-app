@@ -31,15 +31,25 @@ class CommonValidation {
 
 
 // Check Email Validation
-  String? checkEmailValidation(value) {
-    if (value.isEmpty) {
+  String? checkEmailValidation(String? value) {
+    if (value == null || value.trim().isEmpty) {
       return CommonTextFont().userFieldError;
-    } else if (CommonValidation().isEmail(value) == false) {
+    } else if (!isEmail(value.trim())) {
       return CommonTextFont().inCorrectUsername;
-    }else {
+    } else {
       return null;
     }
   }
+
+//   String? checkEmailValidation(value) {
+//     if (value.isEmpty) {
+//       return CommonTextFont().userFieldError;
+//     } else if (CommonValidation().isEmail(value) == false) {
+//       return CommonTextFont().inCorrectUsername;
+//     }else {
+//       return null;
+//     }
+//   }
 
 // Check Mobile Validation
   String? checkMobileValidation(value) {

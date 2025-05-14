@@ -164,7 +164,7 @@ sendOtp(String mobileNo, String verificationId) async {
           height: AppScreenUtil().screenHeight(260),
           margin:
               EdgeInsets.symmetric(horizontal: AppScreenUtil().screenWidth(12)),
-          child: OtpScreen(mobileNo: mobileNo, verificationId: verificationId),
+          // child: OtpScreen(mobileNo: mobileNo, verificationId: verificationId),
         ),
       );
     },

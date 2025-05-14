@@ -36,19 +36,57 @@ class SaveAddressController extends GetxController {
     super.onReady();
   }
 
+  // getAddress() async {
+  //   try {
+  //     isLoading = true;
+  //     update();
+  //     dynamic response =
+  //         await apiCall.getResponse(ApiMethodList.userAddressList);
+  //     deliveryDetail = AddressListModel.fromJson(response);
+  //     isLoading = false;
+  //     update();
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
   getAddress() async {
     try {
       isLoading = true;
       update();
-      dynamic response =
-          await apiCall.getResponse(ApiMethodList.userAddressList);
-      deliveryDetail = AddressListModel.fromJson(response);
+
+      // Make the API call to fetch the address list
+      dynamic response = await apiCall.getResponse(ApiMethodList.userAddressList);
+
+      print("Address Response: $response");
+
+      // Check if response is valid (not null or empty)
+      if (response != null && response is Map) {
+        // Check if the response contains the expected key
+        if (response.containsKey('is_success') && response.containsKey('data')) {
+          // Parse the response into the AddressListModel
+          deliveryDetail = AddressListModel.fromJson(response);
+        } else {
+          // Handle error if expected keys are not found
+          deliveryDetail = AddressListModel(isSuccess: false, data: [], message: 'Invalid response structure');
+          Fluttertoast.showToast(msg: 'Failed to load addresses.');
+        }
+      } else {
+        // Handle case where the response is null or not a map
+        deliveryDetail = AddressListModel(isSuccess: false, data: [], message: 'No data received.');
+        Fluttertoast.showToast(msg: 'Failed to load addresses.');
+      }
+
       isLoading = false;
       update();
     } catch (e) {
-      rethrow;
+      isLoading = false;
+      update();
+      // Handle any other errors during the request
+      Fluttertoast.showToast(msg: 'Error fetching addresses: $e');
+      rethrow; // Optional: rethrow to handle in calling code
     }
   }
+
 
   deleteAddress(String id) async {
     try {

@@ -14,7 +14,7 @@ class MobileNumberLayout extends StatelessWidget {
             text: '+91-$mobileNo',
             fontWeight: FontWeight.normal,
             color: appCtrl.appTheme.contentColor,
-            fontSize: FontSizes.f16,
+            fontSize: FontSizes.f10,
           ),
           const Space(15, 0),
           Image.asset(

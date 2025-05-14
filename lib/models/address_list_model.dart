@@ -11,13 +11,14 @@ class AddressListModel {
 
   AddressListModel.fromJson(dynamic json) {
     _isSuccess = json['is_success'];
-    if (json['data'] != null) {
+    // Ensure that 'data' is a List and not null
+    if (json['data'] != null && json['data'] is List) {
       _data = [];
       json['data'].forEach((v) {
         _data?.add(Data.fromJson(v));
       });
     }
-    _message = json['message'];
+    _message = json['message'] ?? ''; // Set default empty message
   }
 
   bool? _isSuccess;
@@ -166,4 +167,6 @@ class Data {
     map['is_default'] = _isDefault;
     return map;
   }
+
+
 }
