@@ -242,12 +242,14 @@ class ImageId {
     String? name,
     String? alt,
     String? url,
+    ProductImageMeta? productImageMeta,
     dynamic caption,
   }) {
     _id = id;
     _name = name;
     _alt = alt;
     _url = url;
+    _productImageMeta = productImageMeta;
     _caption = caption;
   }
 
@@ -256,6 +258,9 @@ class ImageId {
     _name = json['name'];
     _alt = json['alt'];
     _url = json['url'];
+    _productImageMeta = json['product_image_meta'] != null
+        ? ProductImageMeta.fromJson(json['product_image_meta'])
+        : null;
     _caption = json['caption'];
   }
 
@@ -263,6 +268,7 @@ class ImageId {
   String? _name;
   String? _alt;
   String? _url;
+  ProductImageMeta? _productImageMeta;
   dynamic _caption;
 
   num? get id => _id;
@@ -273,6 +279,8 @@ class ImageId {
 
   String? get url => _url;
 
+  ProductImageMeta? get productImageMeta => _productImageMeta;
+
   dynamic get caption => _caption;
 
   Map<String, dynamic> toJson() {
@@ -281,55 +289,122 @@ class ImageId {
     map['name'] = _name;
     map['alt'] = _alt;
     map['url'] = _url;
+    if (_productImageMeta != null) {
+      map['product_image_meta'] = _productImageMeta?.toJson();
+    }
     map['caption'] = _caption;
     return map;
   }
 }
+
+class ProductImageMeta {
+  ProductImageMeta({
+    String? card,
+    String? mobile,
+    String? tablet,
+    String? product,
+    String? original,
+  }) {
+    _card = card;
+    _mobile = mobile;
+    _tablet = tablet;
+    _product = product;
+    _original = original;
+  }
+
+  ProductImageMeta.fromJson(dynamic json) {
+    _card = json['card'];
+    _mobile = json['mobile'];
+    _tablet = json['tablet'];
+    _product = json['product'];
+    _original = json['original'];
+  }
+
+  String? _card;
+  String? _mobile;
+  String? _tablet;
+  String? _product;
+  String? _original;
+
+  String? get card => _card;
+
+  String? get mobile => _mobile;
+
+  String? get tablet => _tablet;
+
+  String? get product => _product;
+
+  String? get original => _original;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['card'] = _card;
+    map['mobile'] = _mobile;
+    map['tablet'] = _tablet;
+    map['product'] = _product;
+    map['original'] = _original;
+    return map;
+  }
+}
+
 class Product_Id {
   product_id({
     num? id,
+    String? slug,
     String? productTitle,
-    String? product_id,
+    String? productSlug,
+    num? product_id,
     String? productShortDescription,
     String? price,
     String? regularPrice,
-    ImageId? imageId,
+    ImageId? defaultImage,
   }) {
     _id = id;
     _productTitle = productTitle;
     _product_id = product_id;
+    _productSlug = productSlug;
     _productShortDescription = productShortDescription;
     _price = price;
     _regularPrice = regularPrice;
-    _imageId = imageId;
+    // _imageId = imageId;
+    _defaultImage = defaultImage;
 
   }
 
   Product_Id.fromJson(dynamic json) {
     _id = json['id'];
+    _slug: json['slug'];
     _productTitle = json['product_title'];
     _product_id = json['product_product_id'];
+    _productSlug = json['product_slug'];
     _productShortDescription = json['product_short_description'];
     _price = json['price'];
     _regularPrice = json['regular_price'];
-    _imageId =
-        json['image_id'] != null ? ImageId.fromJson(json['image_id']) : null;
+    // _imageId =
+    //     json['image_id'] != null ? ImageId.fromJson(json['image_id']) : null;
+    _defaultImage = json['default_image'] != null
+        ?ImageId.fromJson(json['default_image'])
+        :null;
   }
 
   num? _id;
+  String? _slug;
   String? _productTitle;
-  String? _product_id;
+  num? _product_id;
+  String? _productSlug;
   String? _productShortDescription;
   String? _price;
   String? _regularPrice;
-  ImageId? _imageId;
+  // ImageId? _imageId;
+  ImageId? _defaultImage;
 
   num? get id => _id;
 
   String? get productTitle => _productTitle;
 
+  String? get productSlug => _productSlug;
 
-  String? get productId => _product_id;
+  num? get productId => _product_id;
 
   String? get productShortDescription => _productShortDescription;
 
@@ -337,18 +412,25 @@ class Product_Id {
 
   String? get regularPrice => _regularPrice;
 
-  ImageId? get imageId => _imageId;
+  // ImageId? get imageId => _imageId;
+  ImageId? get defaultImage => _defaultImage;
+
+  get slug => null;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['product_title'] = _productTitle;
     map['product_product_id'] = _product_id;
+    map['product_slug'] = _productSlug;
     map['product_short_description'] = _productShortDescription;
     map['price'] = _price;
     map['regular_price'] = _regularPrice;
-    if (_imageId != null) {
-      map['image_id'] = _imageId?.toJson();
+    // if (_imageId != null) {
+    //   map['image_id'] = _imageId?.toJson();
+    // }
+    if (_defaultImage != null) {
+      map['default_image'] = _defaultImage?.toJson(); // <--- NEW
     }
     return map;
   }

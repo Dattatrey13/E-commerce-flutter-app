@@ -52,6 +52,7 @@ class DashboardProductCard extends StatelessWidget {
                           params['product_id'] = data!.id!.toString();
                           bool? status =
                               await appCtrl.addItemToWishlist(params);
+
                           if (status != null && status) {
                             data!.setIsWishList =
                                 !(data!.isInWishlist ?? false);

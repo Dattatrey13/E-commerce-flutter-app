@@ -259,6 +259,7 @@ List<String> images = [
   getWishlistCount() async {
     try {
       dynamic response = await apiCall.getResponse(ApiMethodList.wishlistCount);
+      print("WishList is Home: $response");
       UserSingleton().wishListCount =
           (CountModel.fromJson(response).data!.total ?? 0).toInt();
     } catch (e) {

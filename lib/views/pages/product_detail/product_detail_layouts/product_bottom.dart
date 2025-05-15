@@ -43,7 +43,7 @@ class ProductBottom extends StatelessWidget {
                             onTap: () async {
                               HashMap<String, dynamic> params = HashMap();
                               params['product_id'] =
-                                  productCtrl.product!.id!.toString();
+                                  productCtrl.product!.id.toString();
                               params['quantity'] =
                                   productCtrl.quantity.toString();
                               if (productCtrl.selectedIndex.isNotEmpty) {

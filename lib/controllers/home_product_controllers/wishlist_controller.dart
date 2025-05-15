@@ -50,16 +50,41 @@ class WishlistController extends GetxController {
     Get.forceAppUpdate();
   }
 
+  // getWishList() async {
+  //   try {
+  //     dynamic response =
+  //         await apiCall.getResponse(ApiMethodList.getWishListForUser);
+  //     print("WishList Data $response");
+  //     wishlist.clear();
+  //     wishlist.addAll(wl.WishListModel.fromJson(response).data!);
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
   getWishList() async {
     try {
-      dynamic response =
-          await apiCall.getResponse(ApiMethodList.getWishListForUser);
-      wishlist.clear();
-      wishlist.addAll(wl.WishListModel.fromJson(response).data!);
-    } catch (e) {
-      rethrow;
+      dynamic response = await apiCall.getResponse(ApiMethodList.getWishListForUser);
+      print("Raw WishList API Response: $response");
+
+      if (response != null && response['success'] == true && response['data'] != null) {
+        wishlist.clear();
+        var parsedData = wl.WishListModel.fromJson(response);
+        wishlist.addAll(parsedData.data!);
+        print("WishList parsedData: ${parsedData.data}");
+        print("Parsed WishList Items Count: ${wishlist.length}");
+        for (var item in wishlist) {
+          print("Wishlist Item: ${item.toJson()}");
+        }
+      } else {
+        print("Failed to fetch wishlist: ${response['message']}");
+      }
+
+    } catch (e, stacktrace) {
+      print("Error in getWishList(): $e");
+      print("Stacktrace: $stacktrace");
     }
   }
+
 
   removeItemFromWishList(String id) async {
     try {
@@ -77,6 +102,7 @@ class WishlistController extends GetxController {
   getWishlistCount() async {
     try {
       dynamic response = await apiCall.getResponse(ApiMethodList.wishlistCount);
+      print("WishList Data $response");
       UserSingleton().wishListCount =
           (CountModel.fromJson(response).data!.total ?? 0).toInt();
       Get.forceAppUpdate();

@@ -10,24 +10,58 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServiceCall implements BaseApi {
+  // Map<String, String> getHeaders() {
+  //   return {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': UserSingleton().token != null
+  //         ? 'Bearer ${UserSingleton().token!}'
+  //         : "",
+  //     'Location': UserSingleton().selectedLocation != null
+  //         ? UserSingleton().selectedLocation!.toLowerCase()
+  //         : "",
+  //     'session-key': UserSingleton().uuidForGuest != null
+  //         ? UserSingleton().uuidForGuest!
+  //         : UserSingleton().uuidFcm != null
+  //             ? UserSingleton().uuidFcm!
+  //             : "",
+  //     'app': 'consumer',
+  //     'is-mobile': 'true'
+  //   };
+  // }
   Map<String, String> getHeaders() {
-    return {
+    final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': UserSingleton().token != null
-          ? 'Bearer ${UserSingleton().token!}'
-          : "",
-      'Location': UserSingleton().selectedLocation != null
-          ? UserSingleton().selectedLocation!.toLowerCase()
-          : "",
-      'session-key': UserSingleton().uuidForGuest != null
-          ? UserSingleton().uuidForGuest!
-          : UserSingleton().uuidFcm != null
-              ? UserSingleton().uuidFcm!
-              : "",
       'app': 'consumer',
-      'is-mobile': 'true'
+      'is-mobile': 'true',
     };
+
+    final token = UserSingleton().token;
+    final guestUUID = UserSingleton().uuidForGuest;
+    final fcmUUID = UserSingleton().uuidFcm;
+    final location = UserSingleton().selectedLocation;
+
+    if (token != null && token.isNotEmpty) {
+      headers['Authorization'] =
+      'Token $token'; // or 'Bearer' if your backend requires it
+      print("Token Header: ${headers['Authorization']}");
+    }
+
+    if ((guestUUID != null && guestUUID.isNotEmpty) ||
+        (fcmUUID != null && fcmUUID.isNotEmpty)) {
+      headers['session-key'] =
+      guestUUID?.isNotEmpty == true ? guestUUID! : fcmUUID!;
+      print("Session-Key Header: ${headers['session-key']}");
+    }else{
+      print("Session Key is missing");
+    }
+
+    if (location != null && location.isNotEmpty) {
+      headers['Location'] = location.toLowerCase();
+    }
+
+    return headers;
   }
 
   @override
@@ -55,6 +89,7 @@ class ApiServiceCall implements BaseApi {
       final response = await http.post(Uri.parse('${ApiConfig.baseUrl}$url'),
           headers: getHeaders(), body: jsonEncode(params));
       responseJson = returnResponse(response);
+      print("Post Response in api_service: $responseJson");
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }
@@ -69,6 +104,7 @@ class ApiServiceCall implements BaseApi {
     try {
       final response = await http.get(Uri.parse('${ApiConfig.baseUrl}$url'));
       responseJson = returnResponse(response);
+      print("Get Response in api_service: $responseJson");
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }

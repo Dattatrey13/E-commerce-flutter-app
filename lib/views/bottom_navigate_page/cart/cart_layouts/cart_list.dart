@@ -20,30 +20,56 @@ class CartList extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     cartCtrl.appCtrl.goToProductDetail(
+                              //         slug:
+                              //             e.value.slug.toString());
+                              //   },
+                              //   child: Stack(
+                              //     alignment: Alignment.topRight,
+                              //     children: [
+                              //       ClipRRect(
+                              //         borderRadius: BorderRadius.circular(
+                              //             AppScreenUtil().borderRadius(3)),
+                              //         child: FadeInImageLayout(
+                              //           // image: e.value.product_id!.imageId!.url,
+                              //           image: e.value.product_id?.imageId == true
+                              //               ? e.value.product_id!.imageId!.url
+                              //               : '',
+                              //           // slug: e.value.product_id?.slug ?? '',
+                              //
+                              //           height: AppScreenUtil().size(110),
+                              //           width: AppScreenUtil().size(110),
+                              //         ),
+                              //       ),
+                              //       // if (e.value.isTrending!) const TrendingButton()
+                              //     ],
+                              //   ),
+                              // ),
                               GestureDetector(
                                 onTap: () {
                                   cartCtrl.appCtrl.goToProductDetail(
-                                      slug:
-                                          e.value.slug.toString());
+                                    slug: e.value!.product_id!.slug.toString(),
+                                  );
                                 },
                                 child: Stack(
                                   alignment: Alignment.topRight,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          AppScreenUtil().borderRadius(3)),
-                                      child: FadeInImageLayout(
-                                        // image: e.value.product_id!.imageId!.url,
-                                        image: e.value.product_id?.imageId == true
-                                            ? e.value.product_id!.imageId!.url
-                                            : '',
-                                        // slug: e.value.product_id?.slug ?? '',
+                                ClipRRect(
+                                borderRadius: BorderRadius.circular(AppScreenUtil().borderRadius(3)),
+      child: FadeInImageLayout(
+      image: e.value.product_id?.defaultImage?.productImageMeta?.mobile ??
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA2oASENe7GdCli1KnAl6cnDnuD6lGT60txQ&s",
+      height: AppScreenUtil().size(110),
+      width: AppScreenUtil().size(110),
+      ),
+      )
 
-                                        height: AppScreenUtil().size(110),
-                                        width: AppScreenUtil().size(110),
-                                      ),
-                                    ),
-                                    // if (e.value.isTrending!) const TrendingButton()
+
+
+                                    //if (e.value.isTrending!) const TrendingButton()
+
                                   ],
                                 ),
                               ),

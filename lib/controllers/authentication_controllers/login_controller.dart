@@ -139,14 +139,22 @@
 // }
 
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get_storage/get_storage.dart';
+import 'dart:collection';
+
+import 'package:dapperz/api/api_method_list.dart';
 import 'package:dapperz/api/api_service_call.dart';
 import 'package:dapperz/api/base_api_call.dart';
 import 'package:dapperz/config.dart';
 import 'package:dapperz/dependency_injection.dart';
 import 'package:dapperz/main.dart';
+import 'package:dapperz/models/login/check_mobile_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_storage/get_storage.dart';
+
+import '../../common/config/session.dart';
+import '../../models/login/login_model.dart';
+import '../../user_singleton.dart';
 
 class LoginController extends GetxController {
   final appCtrl = Get.isRegistered<AppController>()
@@ -213,6 +221,80 @@ class LoginController extends GetxController {
       update();
     }
   }
+  // Future<void> login() async {
+  //   final email = txtEmail.text.trim();
+  //   final password = txtPassword.text.trim();
+  //
+  //   if (email.isEmpty || password.isEmpty) {
+  //     socialLoginCtrl.showToast('Email and Password are required');
+  //     return;
+  //   }
+  //
+  //   socialLoginCtrl.showLoading();
+  //   update();
+  //
+  //   try {
+  //     if (auth == null) {
+  //       socialLoginCtrl.showToast('Firebase Auth is not initialized');
+  //       return;
+  //     }
+  //
+  //     final userCredential = await auth!.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //
+  //     final user = userCredential.user;
+  //     if (user == null) {
+  //       socialLoginCtrl.showToast("Login failed: User not found");
+  //       return;
+  //     }
+  //
+  //     final firebaseIdToken = await user.getIdToken();
+  //
+  //     // Send Firebase token to your backend for app token & session
+  //     final params = HashMap<String, dynamic>();
+  //     params['firebase_token'] = firebaseIdToken;
+  //
+  //     final response = await apiCall.postRequest(ApiMethodList.userLogin, params);
+  //     final loginModel = LoginModel.fromJson(response);
+  //
+  //     if (loginModel.isSuccess == true) {
+  //       UserSingleton().isGuest = false;
+  //       UserSingleton().token = loginModel.data!.access;
+  //       UserSingleton().uuidFcm = loginModel.data!.userData!.uuid;
+  //       UserSingleton().firstName = loginModel.data!.userData!.firstName ?? "";
+  //
+  //       await storage.write(Session.isGuest, false);
+  //       await storage.write(Session.isGuestLoginToken, "");
+  //       await storage.write(Session.isLogin, true);
+  //       await storage.write(Session.isRegularLoginToken, UserSingleton().token);
+  //       await storage.write(Session.id, UserSingleton().uuidFcm);
+  //       await storage.write(Session.userName, UserSingleton().firstName);
+  //
+  //       txtEmail.clear();
+  //       txtPassword.clear();
+  //
+  //       Get.offAllNamed(routeName.dashboard);
+  //     } else {
+  //       socialLoginCtrl.showToast("Login failed. Please check credentials.");
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'wrong-password') {
+  //       socialLoginCtrl.showToast('Incorrect Password');
+  //     } else if (e.code == 'user-not-found') {
+  //       socialLoginCtrl.showToast('Email not found');
+  //     } else {
+  //       socialLoginCtrl.showToast(e.message ?? 'Login failed');
+  //     }
+  //   } catch (e) {
+  //     print('Login error: $e');
+  //     socialLoginCtrl.showToast('An unexpected error occurred');
+  //   } finally {
+  //     socialLoginCtrl.hideLoading();
+  //     update();
+  //   }
+  // }
 
   @override
   void onReady() {

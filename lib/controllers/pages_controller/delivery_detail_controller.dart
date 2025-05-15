@@ -124,76 +124,76 @@ class DeliveryDetailController extends GetxController {
     }
   }
 
-  getShippingAddress() async {
-    try {
-      isLoading = true;
-      update();
-      dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.userAddressList}?is_on_checkout=true&is_shipping=true");
-      shippingDetail = AddressListModel.fromJson(response);
-      for (int i = 0; i < shippingDetail!.data!.length; i++) {
-        selectedSAddress = shippingDetail!.data![i].isDefault! == true
-            ? shippingDetail!.data![i]
-            : shippingDetail!.data![0];
-        shippingSelectRadio =
-            shippingDetail!.data![i].isDefault! == true ? i : 0;
-      }
-      isLoading = false;
-      update();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   // getShippingAddress() async {
   //   try {
   //     isLoading = true;
   //     update();
-  //
   //     dynamic response = await apiCall.getResponse(
   //         "${ApiMethodList.userAddressList}?is_on_checkout=true&is_shipping=true");
-  //
-  //     if (response == null) {
-  //       Get.snackbar(
-  //         "Session Expired",
-  //         "Server error or session timeout. Please login again.",
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: Colors.redAccent,
-  //         colorText: Colors.white,
-  //       );
-  //       Get.offAllNamed('/login'); // optional redirect
-  //       return;
-  //     }
-  //
   //     shippingDetail = AddressListModel.fromJson(response);
-  //
-  //     if (shippingDetail?.data?.isNotEmpty ?? false) {
-  //       for (int i = 0; i < shippingDetail!.data!.length; i++) {
-  //         if (shippingDetail!.data![i].isDefault == true) {
-  //           selectedSAddress = shippingDetail!.data![i];
-  //           shippingSelectRadio = i;
-  //           break;
-  //         }
-  //       }
-  //
-  //       selectedSAddress ??= shippingDetail!.data!.first;
-  //       shippingSelectRadio ??= 0;
+  //     for (int i = 0; i < shippingDetail!.data!.length; i++) {
+  //       selectedSAddress = shippingDetail!.data![i].isDefault! == true
+  //           ? shippingDetail!.data![i]
+  //           : shippingDetail!.data![0];
+  //       shippingSelectRadio =
+  //           shippingDetail!.data![i].isDefault! == true ? i : 0;
   //     }
-  //
   //     isLoading = false;
   //     update();
   //   } catch (e) {
-  //     isLoading = false;
-  //     update();
-  //     Get.snackbar(
-  //       "Error",
-  //       "Failed to load shipping address: $e",
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.redAccent,
-  //       colorText: Colors.white,
-  //     );
+  //     rethrow;
   //   }
   // }
+
+  getShippingAddress() async {
+    try {
+      isLoading = true;
+      update();
+
+      dynamic response = await apiCall.getResponse(
+          "${ApiMethodList.userAddressList}?is_on_checkout=true&is_shipping=true");
+
+      if (response == null) {
+        Get.snackbar(
+          "Session Expired",
+          "Server error or session timeout. Please login again.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        Get.offAllNamed('/login'); // optional redirect
+        return;
+      }
+
+      shippingDetail = AddressListModel.fromJson(response);
+
+      if (shippingDetail?.data?.isNotEmpty ?? false) {
+        for (int i = 0; i < shippingDetail!.data!.length; i++) {
+          if (shippingDetail!.data![i].isDefault == true) {
+            selectedSAddress = shippingDetail!.data![i];
+            shippingSelectRadio = i;
+            break;
+          }
+        }
+
+        selectedSAddress ??= shippingDetail!.data!.first;
+        shippingSelectRadio ??= 0;
+      }
+
+      isLoading = false;
+      update();
+    } catch (e) {
+      isLoading = false;
+      update();
+      Get.snackbar(
+        "Error",
+        "Failed to load shipping address: $e",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+    }
+  }
 
 // checkPincode() async {
 //   try {
@@ -213,5 +213,5 @@ class DeliveryDetailController extends GetxController {
 //   } catch (e) {
 //     rethrow;
 //   }
-// }
 }
+
