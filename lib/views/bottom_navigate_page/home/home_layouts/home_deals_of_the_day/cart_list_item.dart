@@ -30,7 +30,7 @@ class CartListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               LatoFontStyle(
-                text: data!.product_id!.productTitle!,
+                text: data!.productId!.productTitle!,
                 fontWeight: FontWeight.w700,
                 color: appCtrl.appTheme.blackColor,
                 fontSize: FontSizes.f12,

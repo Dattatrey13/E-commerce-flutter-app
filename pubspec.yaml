@@ -73,6 +73,7 @@ dependencies:
   path_provider: ^2.0.11
   just_audio: ^0.9.46
   audio_session: ^0.1.25
+  flutter_staggered_grid_view: ^0.7.0
 
 
 dev_dependencies:

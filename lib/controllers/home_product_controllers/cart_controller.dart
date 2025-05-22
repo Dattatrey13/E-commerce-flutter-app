@@ -44,6 +44,7 @@ class CartController extends GetxController {
     txtCouponApplied.text =
         UserSingleton().coupons != null ? UserSingleton().coupons ?? "" : "";
     super.onReady();
+    print("Cart Data: $getData()");
   }
 
   // common bottom sheet
@@ -62,18 +63,36 @@ class CartController extends GetxController {
     isLoading = true;
     appCtrl.isShimmer = true;
     update();
+
     await getCouponsList();
 
     try {
-      dynamic response =
-          await apiCall.getResponse(ApiMethodList.getUserCartDetails);
-      cartModelList = CartListModel.fromJson(response);
-      cartList = cartModelList!;
-    } catch (e) {
+      dynamic response = await apiCall.getResponse(ApiMethodList.getUserCartDetails);
+      print("Raw Cart API Response: $response");
+
+      if (response != null && response['success'] == true && response['data'] != null) {
+        cartModelList = CartListModel.fromJson(response);
+        cartList = cartModelList!;
+        print("Parsed Cart Items Count: ${cartList.data?.length ?? 0}");
+
+        // Iterate and print each cart item details
+        for (var item in cartList.data ?? []) {
+          print("Cart Item: ${item.toJson()}");
+        }
+
+      } else {
+        print("Failed to fetch cart data: ${response['message']}");
+      }
+
+    } catch (e, stacktrace) {
+      print("Error in getData(): $e");
+      print("Stacktrace: $stacktrace");
       rethrow;
     }
+
     await getCartCount();
     await getCartTotal();
+
     isLoading = false;
     isPriceLoading = false;
     appCtrl.isShimmer = false;
@@ -90,6 +109,8 @@ class CartController extends GetxController {
       cartModelList = CartListModel.fromJson(response);
       cartList = cartModelList!;
       update();
+      print("GetCart without Loading Data: $response");
+
     } catch (e) {
       rethrow;
     }

@@ -29,6 +29,41 @@ class ApiServiceCall implements BaseApi {
   //     'is-mobile': 'true'
   //   };
   // }
+
+  // Map<String, String> getHeaders() {
+  //   print('Token: ${UserSingleton().token}');
+  //   print('Selected Location: ${UserSingleton().selectedLocation}');
+  //   print('UUID For Guest: ${UserSingleton().uuidForGuest}');
+  //   print('UUID FCM: ${UserSingleton().uuidFcm}');
+  //
+  //   final headers = {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': UserSingleton().token != null
+  //         ? 'Bearer ${UserSingleton().token!}'
+  //         : "",
+  //     'Location': UserSingleton().selectedLocation != null
+  //         ? UserSingleton().selectedLocation!.toLowerCase()
+  //         : "",
+  //     'session-key': UserSingleton().uuidForGuest != null
+  //         ? UserSingleton().uuidForGuest!
+  //         : UserSingleton().uuidFcm != null
+  //         ? UserSingleton().uuidFcm!
+  //         : "",
+  //     'app': 'consumer',
+  //     'is-mobile': 'true'
+  //   };
+  //
+  //   print('Request Headers: $headers');
+  //   print('======== API Headers ========');
+  //   print('Authorization: Bearer ${UserSingleton().token}');
+  //   print('Session-Key: ${UserSingleton().uuidForGuest ?? UserSingleton().uuidFcm}');
+  //   print('Location: ${UserSingleton().selectedLocation}');
+  //   print('Token saved in UserSingleton: ${UserSingleton().token}');
+  //
+  //   return headers;
+  // }
+
   Map<String, String> getHeaders() {
     final headers = {
       'Content-Type': 'application/json',
@@ -45,7 +80,7 @@ class ApiServiceCall implements BaseApi {
     if (token != null && token.isNotEmpty) {
       headers['Authorization'] =
       'Token $token'; // or 'Bearer' if your backend requires it
-      print("Token Header: ${headers['Authorization']}");
+      // print("Token Header: ${headers['Authorization']}");
     }
 
     if ((guestUUID != null && guestUUID.isNotEmpty) ||
@@ -61,6 +96,13 @@ class ApiServiceCall implements BaseApi {
       headers['Location'] = location.toLowerCase();
     }
 
+    // print('Request Headers: $headers');
+    print('======== API Headers ========');
+    // print('Authorization: Bearer ${UserSingleton().token}');
+    // print('Session-Key: ${UserSingleton().uuidForGuest ?? UserSingleton().uuidFcm}');
+    // print('Location: ${UserSingleton().selectedLocation}');
+    // print('Token saved in UserSingleton: ${UserSingleton().token}');
+
     return headers;
   }
 
@@ -72,12 +114,14 @@ class ApiServiceCall implements BaseApi {
       final response = await http.get(Uri.parse('${ApiConfig.baseUrl}$url'),
     
           headers: getHeaders());
-            print("GetREsponse: $url");
+            // print("GetREsponse: $url");
+
+      // print("Session Key Header: ${UserSingleton().uuidForGuest ?? UserSingleton().uuidFcm ?? 'Not set'}");
       responseJson = returnResponse(response);
+      // print("Get Response Service_call: $responseJson");
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }
-
     return responseJson;
   }
 
@@ -193,19 +237,18 @@ class ApiServiceCall implements BaseApi {
             return jsonDecode(responseBody);
 
           case 401:
-            Fluttertoast.showToast(msg: "Session Expired");
-            break;
+
           case 403:
-            if (UserSingleton().token != null) {
+            if (UserSingleton().token != null || response.statusCode == 401) {
               Fluttertoast.showToast(msg: "Session Expired");
+              // AppController appCtrl = AppController();
+              AppController appCtrl = Get.find<AppController>();
+              appCtrl.selectedIndex = 0;
+              appCtrl.storage.erase();
+              UserSingleton().token = null;
+              UserSingleton().selectedLocation = null;
+              Get.offAllNamed(routeName.login);
             }
-            AppController appCtrl = AppController();
-            appCtrl.selectedIndex = 0;
-            appCtrl.storage.erase();
-            Get.forceAppUpdate();
-            UserSingleton().token = null;
-            UserSingleton().selectedLocation = null;
-            Get.offAllNamed(routeName.login);
             break;
           case 404:
             Fluttertoast.showToast(msg: "Not Found");

@@ -5,8 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../models/product/delete_review_model.dart';
 
+
 class CartList extends StatelessWidget {
   const CartList({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,27 +51,22 @@ class CartList extends StatelessWidget {
                               // ),
                               GestureDetector(
                                 onTap: () {
-                                  cartCtrl.appCtrl.goToProductDetail(
-                                    slug: e.value!.product_id!.slug.toString(),
-                                  );
+                                  final slug = e.value.productId?.slug;
+                                  if (slug != null) {
+                                    cartCtrl.appCtrl.goToProductDetail(slug: slug);
+                                  }
                                 },
                                 child: Stack(
                                   alignment: Alignment.topRight,
                                   children: [
-                                ClipRRect(
-                                borderRadius: BorderRadius.circular(AppScreenUtil().borderRadius(3)),
-      child: FadeInImageLayout(
-      image: e.value.product_id?.defaultImage?.productImageMeta?.mobile ??
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA2oASENe7GdCli1KnAl6cnDnuD6lGT60txQ&s",
-      height: AppScreenUtil().size(110),
-      width: AppScreenUtil().size(110),
-      ),
-      )
-
-
-
-                                    //if (e.value.isTrending!) const TrendingButton()
-
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(AppScreenUtil().borderRadius(3)),
+                                      child: FadeInImageLayout(
+                                        image: e.value.productId?.defaultImage?.url ?? imageAssets.noData,
+                                        height: AppScreenUtil().size(110),
+                                        width: AppScreenUtil().size(110),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

@@ -197,15 +197,30 @@ class LoginController extends GetxController {
 
       final user = userCredential?.user;
       if (user != null) {
-        await user.getIdToken();
-        await storage.write('id', user.uid);
+        final idToken = await user.getIdToken();
+
+        // ✅ Clear previous session data (optional)
+        await storage.erase();
+
+        // ✅ Save to GetStorage
+        await storage.write('token', idToken);
+        await storage.write('uuidForGuest', user.uid);
+        await storage.write('id', user.uid); // if needed elsewhere
+
+        // ✅ Set in UserSingleton
+        UserSingleton().token = idToken;
+        UserSingleton().uuidForGuest = user.uid;
+
+        print('Set Token: $idToken');
+        print('Set UUID For Guest: ${user.uid}');
 
         txtEmail.clear();
         txtPassword.clear();
 
-        socialLoginCtrl.saveData(user.uid);
+        socialLoginCtrl.saveData(user.uid); // your custom logic
         Get.toNamed(routeName.dashboard);
       }
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
         socialLoginCtrl.showToast('Incorrect Password');
@@ -221,6 +236,7 @@ class LoginController extends GetxController {
       update();
     }
   }
+
   // Future<void> login() async {
   //   final email = txtEmail.text.trim();
   //   final password = txtPassword.text.trim();

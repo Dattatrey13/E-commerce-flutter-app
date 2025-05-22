@@ -70,10 +70,10 @@ class WishlistController extends GetxController {
         wishlist.clear();
         var parsedData = wl.WishListModel.fromJson(response);
         wishlist.addAll(parsedData.data!);
-        print("WishList parsedData: ${parsedData.data}");
-        print("Parsed WishList Items Count: ${wishlist.length}");
+        // print("WishList parsedData: ${parsedData.data}");
+        // print("Parsed WishList Items Count: ${wishlist.length}");
         for (var item in wishlist) {
-          print("Wishlist Item: ${item.toJson()}");
+          // print("Wishlist Item: ${item.toJson()}");
         }
       } else {
         print("Failed to fetch wishlist: ${response['message']}");

@@ -80,20 +80,36 @@ class Data {
     _price = price;
   }
 
+  // Data.fromJson(dynamic json) {
+  //   _id = json['id'];
+  //   _productId = json['product_id'];
+  //   _variationId = json['variation_id'];
+  //   _quantity = json['quantity'];
+  //   _lineSubtotal = json['line_subtotal'];
+  //   _lineTotal = json['line_total'];
+  //   _lineTax = json['line_tax'];
+  //   _cgstTax = json['cgst_tax'];
+  //   _sgstTax = json['sgst_tax'];
+  //   _taxClassId = json['tax_class_id'];
+  //   _shippingClassId = json['shipping_class_id'];
+  //   _price = json['price'];
+  // }
   Data.fromJson(dynamic json) {
-    _id = json['id'];
-    _productId = json['product_id'];
+    _id = int.tryParse(json['id'].toString());
+    _productId = int.tryParse(json['product_id'].toString());
     _variationId = json['variation_id'];
-    _quantity = json['quantity'];
-    _lineSubtotal = json['line_subtotal'];
-    _lineTotal = json['line_total'];
-    _lineTax = json['line_tax'];
-    _cgstTax = json['cgst_tax'];
-    _sgstTax = json['sgst_tax'];
-    _taxClassId = json['tax_class_id'];
+    _quantity = int.tryParse(json['quantity'].toString());
+    _lineSubtotal = double.tryParse(json['line_subtotal'].toString());
+    _lineTotal = double.tryParse(json['line_total'].toString());
+    _lineTax = double.tryParse(json['line_tax'].toString());
+    _cgstTax = double.tryParse(json['cgst_tax'].toString());
+    _sgstTax = double.tryParse(json['sgst_tax'].toString());
+    _taxClassId = int.tryParse(json['tax_class_id'].toString());
     _shippingClassId = json['shipping_class_id'];
-    _price = json['price'];
+    _price = double.tryParse(json['price'].toString());
   }
+
+
 
   num? _id;
   num? _productId;

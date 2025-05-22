@@ -77,6 +77,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             params['variation_id'] = wishListCtrl
                                 .wishlist[index].variations!.first
                                 .toString();
+                            print("Add To Cart in wishList: $params");
                           }
                           AddCartModel? cstatus =
                           await appCtrl.addToCart(params);

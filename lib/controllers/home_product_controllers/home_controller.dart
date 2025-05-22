@@ -69,7 +69,7 @@ List<String> images = [
 
 
 
-  //get data list
+//   // get data list
 //   getData({bool getLocation = false}) async {
 //   appCtrl.isShimmer = true;
 //   appCtrl.update();
@@ -78,25 +78,27 @@ List<String> images = [
 //   recommendedForYouList.clear();
 //   bestSellingProductList.clear();
 //   onSaleProductList.clear();
-
+//
 //   try {
 //     if (!UserSingleton().isGuest!) {
 //       await getRecommendedProductList("1");
 //       update();
 //     }
-
+//
 //     await getFeaturedCategoryList("1");
 //     update();
-
+//
+//
 //     await getBestSellingList("1");
 //     update();
-
+//
 //     await getOnSaleList("1");
 //     update();
 //   } catch (e) {
 //     print("⚠️ Error loading product data: $e");
 //   }
-
+//   print("Home data: $getData");
+//
 //   appCtrl.isShimmer = false;
 //   appCtrl.update();
 // }
@@ -113,7 +115,7 @@ List<String> images = [
     bestSellingProductList.clear();
     onSaleProductList.clear();
     recentlyViewedList.clear();
-   
+
     if (!UserSingleton().isGuest!) {
       await getRecommendedProductList("1");
       update();
@@ -157,6 +159,7 @@ List<String> images = [
       AppArray()
           .homeCategory
           .addAll(pcm.ParentCategoryModel.fromJson(response).data ?? []);
+      print("Parent Category in home: $response");
     } catch (e) {
       rethrow;
     }

@@ -1,5 +1,5 @@
 import 'package:dapperz/common_methods.dart';
-
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../config.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -35,32 +35,35 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     Get.forceAppUpdate();
                     return true;
                   },
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        // category list
-                        ...categoryCtrl.categoryList.asMap().entries.map((e) {
-                          return CategoryCardLayout(
-                            categoryModel: categoryCtrl.categoryList[e.key],
-                            index: e.key,
-                            isEven: e.key.isEven,
-                            onTap: () async {
-                              categoryCtrl.appCtrl.isShimmer = true;
-                              categoryCtrl.appCtrl.update();
-                              var data = categoryCtrl.categoryList[e.key];
-                              Get.toNamed(routeName.innerCategory,
-                                  arguments: data);
-                              await Future.delayed(DurationsClass.s1);
-                              categoryCtrl.appCtrl.isShimmer = false;
-                              categoryCtrl.appCtrl.update();
-                              Get.forceAppUpdate();
-                            },
-                          );
-                        }).toList()
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: MasonryGridView.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      itemCount: categoryCtrl.categoryList.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return CategoryCardLayout(
+                          categoryModel: categoryCtrl.categoryList[index],
+                          index: index,
+                          isEven: index.isEven,
+                          onTap: () async {
+                            categoryCtrl.appCtrl.isShimmer = true;
+                            categoryCtrl.appCtrl.update();
+                            var data = categoryCtrl.categoryList[index];
+                            Get.toNamed(routeName.innerCategory, arguments: data);
+                            await Future.delayed(DurationsClass.s1);
+                            categoryCtrl.appCtrl.isShimmer = false;
+                            categoryCtrl.appCtrl.update();
+                            Get.forceAppUpdate();
+                          },
+                        );
+                      },
                     ),
                   ),
-                ),
+          ),
         ),
       );
     });

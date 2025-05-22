@@ -27,14 +27,15 @@ class DashboardProductCard extends StatelessWidget {
                 Stack(
                   alignment: Alignment.topRight,
                   children: [
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: data!.imageIds!.isEmpty
-                    //       ? Image.asset(imageAssets.noData)
-                    //       : ProductImage(
-                    //           image: data!.imageIds!.first.url.toString(),
-                    //           isFit: isFit),
-                    // ),
+                    SizedBox(
+                      height: 200,
+                      child: data!.imageIds!.isEmpty
+                          ? Image.asset(imageAssets.noData)
+                          : ProductImage(
+                              // image: data!.imageIds!.first.url.toString(),
+                          image: data!.defaultImage!.productImageMeta!.mobile!,
+                          isFit: isFit),
+                    ),
                     SizedBox(
                       height: 200,
                       child: (data?.defaultImage?.productImageMeta?.mobile ?? '').isEmpty
@@ -69,6 +70,27 @@ class DashboardProductCard extends StatelessWidget {
                 ),
                 // if (data!.isNew) const NewLayout()
                 //if (false) const NewLayout()
+
+                if ((data?.discountPercentage ?? 0) > 0)
+                  Positioned(
+                    top: 5,
+                    left: 5,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFD2EF9A),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        "-${data!.discountPercentage!.toStringAsFixed(0)}%",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
             const Space(0, 5),
@@ -160,7 +182,7 @@ class DashboardProductCard extends StatelessWidget {
                   ? data!.salePrice
                   : null,
               mrp: data!.regularPrice,
-              discount: data!.discountPercentage.toString(),
+              // discount: data!.discountPercentage.toString(),
               fontSize: data!.regularPrice != null &&
                   data!.regularPrice != "" &&
                   data!.regularPrice != "xyz"
@@ -168,10 +190,10 @@ class DashboardProductCard extends StatelessWidget {
                   ? FontSizes.f12
                   : FontSizes.f12
                   : FontSizes.f12,
-              isDiscountShow: data!.discountPercentage != 0.0 &&
-                  data!.discountPercentage != null
-                  ? true
-                  : false,
+              // isDiscountShow: data!.discountPercentage != 0.0 &&
+              //     data!.discountPercentage != null
+              //     ? true
+              //     : false,
             ),
 
           ],
