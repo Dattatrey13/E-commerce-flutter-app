@@ -83,7 +83,7 @@ class _PaymentState extends State<Payment> {
                                         UserSingleton().coupons
                                       ];
                                       params['is_buy_now'] =
-                                          UserSingleton().isBuyNow.toString();
+                                          UserSingleton().isBuyNow;
                                       await paymentCtrl.removeCoupon(
                                           params, "", "", false);
                                       await paymentCtrl.getCartTotal();
@@ -132,8 +132,7 @@ class _PaymentState extends State<Payment> {
                                               .cartTotalData!.data!.uniqueId;
                                           params2['is_buy_now'] =
                                               UserSingleton()
-                                                  .isBuyNow
-                                                  .toString();
+                                                  .isBuyNow;
                                           if (UserSingleton().coupons != null &&
                                               UserSingleton().coupons != "") {
                                             params['unique_id'] = paymentCtrl
@@ -143,8 +142,7 @@ class _PaymentState extends State<Payment> {
                                             ];
                                             params['is_buy_now'] =
                                                 UserSingleton()
-                                                    .isBuyNow
-                                                    .toString();
+                                                    .isBuyNow;
                                             await paymentCtrl.removeCoupon(
                                                 params, params2, e, true);
                                           } else {

@@ -1,20 +1,3 @@
-/// success : true
-/// message : "Success."
-/// data : {
-///   "id": 214,
-///   "product_id": 15353,
-///   "variation_id": null,
-///   "quantity": 1,
-///   "line_subtotal": 15728,
-///   "line_total": 15728,
-///   "line_tax": 2831.04,
-///   "cgst_tax": 1415.52,
-///   "sgst_tax": 1415.52,
-///   "tax_class_id": 7,
-///   "shipping_class_id": null,
-///   "price": 15728.0
-/// }
-
 class AddCartModel {
   AddCartModel({
     bool? success,
@@ -80,20 +63,6 @@ class Data {
     _price = price;
   }
 
-  // Data.fromJson(dynamic json) {
-  //   _id = json['id'];
-  //   _productId = json['product_id'];
-  //   _variationId = json['variation_id'];
-  //   _quantity = json['quantity'];
-  //   _lineSubtotal = json['line_subtotal'];
-  //   _lineTotal = json['line_total'];
-  //   _lineTax = json['line_tax'];
-  //   _cgstTax = json['cgst_tax'];
-  //   _sgstTax = json['sgst_tax'];
-  //   _taxClassId = json['tax_class_id'];
-  //   _shippingClassId = json['shipping_class_id'];
-  //   _price = json['price'];
-  // }
   Data.fromJson(dynamic json) {
     _id = int.tryParse(json['id'].toString());
     _productId = int.tryParse(json['product_id'].toString());

@@ -10,6 +10,7 @@ export 'package:dapperz/widgets/common/social_login_layout.dart';
 export 'package:dapperz/widgets/common_validation.dart';
 export 'package:dapperz/views/authentication_page/authentication_title_text.dart';
 export 'package:dapperz/widgets/common/password_text_form.dart';
+export 'package:dapperz/widgets/common/email_text_form.dart';
 export 'package:dapperz/widgets/common/sign_in_with.dart';
 export 'package:dapperz/widgets/common_app_bar/action_layout.dart';
 export 'package:dapperz/widgets/common_icons/menu_rounded_icon.dart';

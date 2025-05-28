@@ -78,7 +78,7 @@ class PaymentController extends GetxController {
       HashMap<String, dynamic> params = HashMap();
       params['payment_method'] = "cod";
       params['payment_method_title'] = "Cash on delivery";
-      // params['set_paid'] = "false";
+      params['set_paid'] = "false";
       HashMap<String, dynamic> billingParams = HashMap();
       billingParams['first_name'] = billingAddress!.firstName;
       billingParams['last_name'] = billingAddress!.lastName;
@@ -110,10 +110,15 @@ class PaymentController extends GetxController {
       }
       params['line_items'] = product;
       params['note'] = orderNote;
-      params['is_buy_now'] = UserSingleton().isBuyNow.toString();
+      params['is_buy_now'] = UserSingleton().isBuyNow;
       dynamic response =
           await apiCall.postRequest(ApiMethodList.userOrderCheckout, params);
       OrderCheckoutModel? status = OrderCheckoutModel.fromJson(response);
+
+      print("COD Response: $response");
+
+      print("Sending params: $params");
+
       if ((status.success ?? false)) {
         UserSingleton().isBuyNow = false;
         showProgressDialog(false);
@@ -138,7 +143,7 @@ class PaymentController extends GetxController {
       HashMap<String, dynamic> params = HashMap();
       params['payment_method'] = "payeasebuzz";
       params['payment_method_title'] = "Pay Online";
-      // params['set_paid'] = "true";
+      params['set_paid'] = "true";
       HashMap<String, dynamic> billingParams = HashMap();
       billingParams['first_name'] = billingAddress!.firstName;
       billingParams['last_name'] = billingAddress!.lastName;
@@ -170,7 +175,7 @@ class PaymentController extends GetxController {
       }
       params['line_items'] = product;
       params['note'] = orderNote;
-      params['is_buy_now'] = UserSingleton().isBuyNow.toString();
+      params['is_buy_now'] = UserSingleton().isBuyNow;
       dynamic response =
           await apiCall.postRequest(ApiMethodList.userOrderCheckout, params);
       if (OrderOnlineCheckoutModel.fromJson(response).success == true &&
@@ -309,6 +314,8 @@ class PaymentController extends GetxController {
     try {
       dynamic response = await apiCall.getResponse(ApiMethodList.getAllCoupons);
       getAllCouponsModel = GetAllCouponsModel.fromJson(response);
+
+      print("Payment Coupons: $response");
     } catch (e) {
       rethrow;
     }

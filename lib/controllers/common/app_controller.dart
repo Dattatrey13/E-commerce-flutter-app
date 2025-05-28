@@ -101,6 +101,8 @@ Get.toNamed(
 
   //get data from storage
   getData() async {
+    String? token = storage.read(Session.isRegularLoginToken);
+    bool isLogin = storage.read(Session.isLogin) ?? false;
     String? languageCode = storage.read(Session.languageCode);
     languageVal = storage.read(Session.languageCode) ?? 'en';
     String? countryCode = storage.read(Session.countryCode);
@@ -119,6 +121,14 @@ Get.toNamed(
       isTheme = true;
     } else {
       isTheme = false;
+    }
+
+    if (isLogin && token != null && token.isNotEmpty) {
+      print("User is logged in with token: $token");
+      UserSingleton().token = token;
+      // Load user info from storage if needed
+    } else {
+      print("User not logged in or token missing");
     }
 
     update();
@@ -161,20 +171,43 @@ Get.toNamed(
     }
   }
 
-  Future<AddCartModel> addToCart(HashMap<String, dynamic> params) async {
+  // Future<AddCartModel> addToCart(HashMap<String, dynamic> params) async {
+  //   try {
+  //     dynamic response =
+  //         await apiCall.postRequest(ApiMethodList.userAddCart, params);
+  //     if (AddCartModel.fromJson(response).success ?? false) {
+  //       getCartCount();
+  //     }
+  //     print("Cart Response: $response");
+  //     print("Params being sent: $params");
+  //     return AddCartModel.fromJson(response);
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+  Future<AddCartModel?> addToCart(HashMap<String, dynamic> params) async {
     try {
-      dynamic response =
-          await apiCall.postRequest(ApiMethodList.userAddCart, params);
-      if (AddCartModel.fromJson(response).success ?? false) {
+      final response = await apiCall.postRequest(ApiMethodList.userAddCart, params);
+
+      final model = AddCartModel.fromJson(response);
+      if (model.success ?? false) {
         getCartCount();
       }
-      print("Cart Response: $response");
-      print("Params being sent: $params");
-      return AddCartModel.fromJson(response);
-    } catch (e) {
-      rethrow;
+
+      print("Add to Cart - Params: $params");
+      print("Add to Cart - Response: $response");
+
+      print("Add to Cart - Params: ${params.toString()}");
+      // print("Add to Cart - Response: ${jsonEncode(response)}");
+
+      return model;
+    } catch (e, stackTrace) {
+      print("Error in addToCart: $e");
+      print("StackTrace: $stackTrace");
+      return null; // Optional: or rethrow if you want to handle it at a higher level
     }
   }
+
 
   getWishlistCount() async {
     try {

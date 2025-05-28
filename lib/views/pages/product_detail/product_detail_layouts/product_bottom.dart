@@ -42,7 +42,7 @@ class ProductBottom extends StatelessWidget {
                           child: InkWell(
                             onTap: () async {
                               HashMap<String, dynamic> params = HashMap();
-                              params['product_id'] =
+                              params['productId'] =
                                   productCtrl.product!.id.toString();
                               params['quantity'] =
                                   productCtrl.quantity.toString();
@@ -52,14 +52,14 @@ class ProductBottom extends StatelessWidget {
                                       msg: "Please Select Variant");
                                   return;
                                 }
-                                params['variation_id'] =
+                                params['variationId'] =
                                     productCtrl.selectedVariationId;
                               }
                               AddCartModel? status =
                                   await appCtrl.addToCart(params);
-                              if (status.data != null &&
-                                  status.success != null &&
-                                  status.data!.id != null) {
+                              if (status?.data != null &&
+                                  status?.success != null &&
+                                  status?.data!.productId != null) {
                                 Fluttertoast.showToast(
                                     msg: "Product Added to Cart Successfully");
                               } else {
@@ -109,7 +109,7 @@ class ProductBottom extends StatelessWidget {
                               } else {
                                 HashMap<String, dynamic> params = HashMap();
                                 params['product_id'] =
-                                    productCtrl.product!.id!.toString();
+                                    productCtrl.product!.id.toString();
                                 params['quantity'] =
                                     productCtrl.quantity.toString();
                                 params['is_buy_now'] = "true";
@@ -124,9 +124,9 @@ class ProductBottom extends StatelessWidget {
                                 }
                                 AddCartModel? status =
                                     await appCtrl.addToCart(params);
-                                if (status.data != null &&
-                                    status.success != null &&
-                                    status.data!.id != null) {
+                                if (status?.data != null &&
+                                    status?.success != null &&
+                                    status?.data!.productId != null) {
                                   showProgressDialog(true);
                                   productCtrl.getCartDetails();
                                 } else {}
@@ -144,7 +144,8 @@ class ProductBottom extends StatelessWidget {
                                 LatoFontStyle(
                                     text: UserSingleton().isGuest!
                                         ? "LOGIN"
-                                        : ProductDetailFont().addToBag,
+                                        : ProductDetailFont().placeOrder,
+                                        // : ProductDetailFont().addToBag,
                                     fontWeight: FontWeight.w600,
                                     fontSize: FontSizes.f14)
                               ],

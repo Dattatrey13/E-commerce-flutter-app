@@ -21,10 +21,16 @@ import '../../models/order/get_cart_total.dart';
 import '../../models/product/delete_review_model.dart';
 import '../../models/product/product_detail_model.dart' as pm;
 
+import 'package:get_storage/get_storage.dart';
+
+
 class ProductDetailController extends GetxController {
   final appCtrl = Get.isRegistered<AppController>()
       ? Get.find<AppController>()
       : Get.put(AppController());
+
+  final storage = GetStorage();
+  CartModel? cartModelList;
 
   TextEditingController controller = TextEditingController();
   pm.Data? product;
@@ -37,7 +43,7 @@ class ProductDetailController extends GetxController {
   int selectedColor = 0;
   int quantity = 1;
   String slug = "";
-  String Slug  = "";
+  // String Slug  = "";
   num? selectedVariationId;
 
   double reviewStar = 0.0;
@@ -260,19 +266,34 @@ getDetails(String slug) async {
     }
   }
 
+  // setVariable(String value) async {
+  //   for (var element in productVariation) {
+  //     for (var name in element.termsIds!) {
+  //       if (value == name.termName) {
+  //         selectedVariationId = element.id;
+  //         selectedVariation = element;
+  //         // newPrice = element.price!;
+  //         outOfStock = element.stockStatus!;
+  //         update();
+  //       }
+  //     }
+  //   }
+  // }
   setVariable(String value) async {
     for (var element in productVariation) {
-      for (var name in element.termsIds!) {
+      for (var name in element.termsIds ?? []) {
         if (value == name.termName) {
           selectedVariationId = element.id;
           selectedVariation = element;
-          newPrice = element.price!;
-          outOfStock = element.stockStatus!;
+          // newPrice = element.price ?? '0'; // Safely set a fallback value
+          outOfStock = element.stockStatus ?? "out_of_stock";
           update();
+          return; // stop loop once found
         }
       }
     }
   }
+
 
   getACallSubmit(HashMap<String, dynamic> params) async {
     try {

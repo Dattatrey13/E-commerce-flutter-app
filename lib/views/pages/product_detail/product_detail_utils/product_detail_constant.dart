@@ -20,4 +20,5 @@ class ProductDetailFont {
   String sizeChart = "sizeChart".tr;
   String tapToCopy = "tapToCopy".tr;
   String ratings = "ratings".tr;
+  String placeOrder = "placeOrder".tr;
 }

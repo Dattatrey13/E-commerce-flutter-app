@@ -106,7 +106,8 @@ class CustomTextFormField extends StatelessWidget {
               ? formatters
               : [],
       decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+        // floatingLabelBehavior: FloatingLabelBehavior.always,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
         enabledBorder: inputBorder,
         disabledBorder: inputBorder,
         border: inputBorder,

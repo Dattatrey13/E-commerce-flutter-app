@@ -263,7 +263,7 @@ Future<void> notification(RemoteMessage event) async {
       MaterialPageRoute(
         builder: (context) => ChatScreen(
           id: payload!['support_id'],
-          name: "Civilis Smart Support",
+          name: "Dapperz Support",
         ),
       ),
     );

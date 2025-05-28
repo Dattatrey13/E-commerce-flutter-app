@@ -1,7 +1,3 @@
-/// is_success : true
-/// data : {"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODMyNjEzOSwiaWF0IjoxNzI1NzM0MTM5LCJqdGkiOiJiOWJiNjMwYzc0ZDc0YzI1YWExZGVmMjRjNjgzN2Q2NSIsInVzZXJfaWQiOjMxfQ.Wy_3OCwhcO3aZUgEUUGQHJWmflrQKzz_i8qRjfeeCQI","access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NTk4MTM5LCJpYXQiOjE3MjU3MzQxMzksImp0aSI6Ijg4NjA1MjQ5NDFkZTQ5MWQ4YjQ4ZjFjNTZjNmFkMzMwIiwidXNlcl9pZCI6MzF9.j4TViYgicqrjOJT6WnCLsNcR-PfNP2-WpUKzey_60-U","user_data":{"id":31,"first_name":"rishi","email":"","phone_number":7048704208,"country_code":"+91","uuid":"Xkz15tzd9XTqNABBsjsbxTdcQDY2","roles":[{"id":2,"name":"consumer"}]}}
-/// message : "Login successful!"
-
 class LoginModel {
   LoginModel({
     bool? isSuccess,
@@ -14,7 +10,7 @@ class LoginModel {
   }
 
   LoginModel.fromJson(dynamic json) {
-    _isSuccess = json['is_success'];
+    _isSuccess = json['is_success'] ?? json['success'];
     _data = json['data'] != null ? Data.fromJson(json['data']) : null;
     _message = json['message'];
   }
@@ -40,60 +36,64 @@ class LoginModel {
   }
 }
 
-/// refresh : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODMyNjEzOSwiaWF0IjoxNzI1NzM0MTM5LCJqdGkiOiJiOWJiNjMwYzc0ZDc0YzI1YWExZGVmMjRjNjgzN2Q2NSIsInVzZXJfaWQiOjMxfQ.Wy_3OCwhcO3aZUgEUUGQHJWmflrQKzz_i8qRjfeeCQI"
-/// access : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NTk4MTM5LCJpYXQiOjE3MjU3MzQxMzksImp0aSI6Ijg4NjA1MjQ5NDFkZTQ5MWQ4YjQ4ZjFjNTZjNmFkMzMwIiwidXNlcl9pZCI6MzF9.j4TViYgicqrjOJT6WnCLsNcR-PfNP2-WpUKzey_60-U"
-/// user_data : {"id":31,"first_name":"rishi","email":"","phone_number":7048704208,"country_code":"+91","uuid":"Xkz15tzd9XTqNABBsjsbxTdcQDY2","roles":[{"id":2,"name":"consumer"}]}
-
 class Data {
   Data({
     String? refresh,
     String? access,
+    String? username,
     UserData? userData,
+    String? role,
   }) {
     _refresh = refresh;
     _access = access;
     _userData = userData;
+    _username = username;
+    _role = role;
   }
 
   Data.fromJson(dynamic json) {
     _refresh = json['refresh'];
     _access = json['access'];
     _userData = json['user_data'] != null ? UserData.fromJson(json['user_data']) : null;
+    _role = json['role'];
+    _username = json['username']; // <-- add this
   }
 
   String? _refresh;
   String? _access;
+  String? _role;
+  String? _username;
   UserData? _userData;
+
 
   String? get refresh => _refresh;
 
   String? get access => _access;
 
+  String? get username => _username;
+
   UserData? get userData => _userData;
+
+  String? get role => _role;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['refresh'] = _refresh;
     map['access'] = _access;
+    map['username'] = _username;
     if (_userData != null) {
       map['user_data'] = _userData?.toJson();
     }
+    map['role'] = _role;
     return map;
   }
 }
-
-/// id : 31
-/// first_name : "rishi"
-/// email : ""
-/// phone_number : 7048704208
-/// country_code : "+91"
-/// uuid : "Xkz15tzd9XTqNABBsjsbxTdcQDY2"
-/// roles : [{"id":2,"name":"consumer"}]
 
 class UserData {
   UserData({
     num? id,
     String? firstName,
+    String? username,
     String? email,
     num? phoneNumber,
     String? countryCode,
@@ -103,6 +103,7 @@ class UserData {
     _id = id;
     _firstName = firstName;
     _email = email;
+    _username = username;
     _phoneNumber = phoneNumber;
     _countryCode = countryCode;
     _uuid = uuid;
@@ -113,6 +114,7 @@ class UserData {
     _id = json['id'];
     _firstName = json['first_name'];
     _email = json['email'];
+    _username = json['username'];
     _phoneNumber = json['phone_number'];
     _countryCode = json['country_code'];
     _uuid = json['uuid'];
@@ -127,6 +129,7 @@ class UserData {
   num? _id;
   String? _firstName;
   String? _email;
+  String? _username;
   num? _phoneNumber;
   String? _countryCode;
   String? _uuid;
@@ -137,6 +140,8 @@ class UserData {
   String? get firstName => _firstName;
 
   String? get email => _email;
+
+  String? get username => _username;
 
   num? get phoneNumber => _phoneNumber;
 
@@ -151,6 +156,7 @@ class UserData {
     map['id'] = _id;
     map['first_name'] = _firstName;
     map['email'] = _email;
+    map['username'] = _username;
     map['phone_number'] = _phoneNumber;
     map['country_code'] = _countryCode;
     map['uuid'] = _uuid;
@@ -160,9 +166,6 @@ class UserData {
     return map;
   }
 }
-
-/// id : 2
-/// name : "consumer"
 
 class Roles {
   Roles({
