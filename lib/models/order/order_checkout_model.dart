@@ -12,9 +12,10 @@ class OrderCheckoutModel {
   OrderCheckoutModel.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null && json['data'].isNotEmpty
-        ? Data.fromJson(json['data'])
-        : null;
+    // _data = json['data'] != null && json['data'].isNotEmpty
+    //     ? Data.fromJson(json['data'])
+    //     : null;
+    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   bool? _success;
@@ -157,9 +158,9 @@ class Data {
     _dateCompleted = json['date_completed'];
     if (json['meta_data'] != null) {
       _metaData = [];
-      // json['meta_data'].forEach((v) {
-      //   _metaData?.add(Dynamic.fromJson(v));
-      // });
+      json['meta_data'].forEach((v) {
+        _metaData?.add(Map<String, dynamic>.from(v));
+      });
     }
     if (json['line_items'] != null) {
       _lineItems = [];

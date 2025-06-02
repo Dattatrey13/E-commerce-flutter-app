@@ -55,9 +55,9 @@ class HomeController extends GetxController {
   late PageController pageController;
 
 List<String> images = [
-  'assets/image/home_5.png',
-  'assets/image/home_1.png',
-  'assets/image/home_2.png',
+  // 'assets/video/slider.mp4',
+  'assets/video/DapperBannerVideoMobile.mp4',
+
 ];
 
   @override

@@ -45,55 +45,36 @@ class SignUpController extends GetxController {
       socialLoginCtrl.showLoading();
 
       try {
-        // Step 1: Firebase account creation
-        final credential = await auth.createUserWithEmailAndPassword(
-          email: txtEmail.text.trim(),
-          password: txtPassword.text.trim(),
-        );
-
-        await credential.user?.updateDisplayName(txtName.text.trim());
-        await credential.user?.reload();
-
-              print("signUp_controller: $credential");
-
-
-        final user = credential.user;
-        if (user == null) throw Exception("Firebase user creation failed");
-
-        final firebaseToken = await user.getIdToken();
-
-        // Step 2: Call your backend to register the user
         final params = {
-          "firebase_token": firebaseToken,
           "first_name": txtName.text.trim(),
           "email": txtEmail.text.trim(),
           "password": txtPassword.text.trim(),
         };
 
-        print("signup_controller: $firebaseToken");
+        print("Sending signup request: $params");
 
         final response = await apiCall.postRequest(ApiMethodList.userRegister, params);
-        final loginModel = RegisterNewUserModel.fromJson(response);
+        final registerModel = RegisterNewUserModel.fromJson(response);
 
-        print("Sign_controller: $response");
+        print("Signup response: $response");
 
-        if (loginModel.isSuccess == true) {
-
-          // Store in UserSingleton
+        if (registerModel.isSuccess == true) {
+          // Store user info
           UserSingleton().isGuest = false;
-          UserSingleton().token = loginModel.data!.access;
-          UserSingleton().uuidFcm = loginModel.data!.userData!.uuid;
-          UserSingleton().firstName = loginModel.data!.userData!.firstName ?? "";
+          UserSingleton().token = registerModel.data!.access;
+          UserSingleton().uuidFcm = registerModel.data!.userData!.uuid;
+          UserSingleton().firstName = registerModel.data!.userData!.firstName ?? "";
 
-          // Save session
-          appCtrl.storage.write(Session.isGuest, false);
-          appCtrl.storage.write(Session.isLogin, true);
-          appCtrl.storage.write(Session.isGuestLoginToken, "");
-          appCtrl.storage.write(Session.isRegularLoginToken, UserSingleton().token);
-          appCtrl.storage.write(Session.id, UserSingleton().uuidFcm);
-          appCtrl.storage.write(Session.userName, UserSingleton().firstName);appCtrl.storage.write(Session.password, txtPassword.text.trim());
+          // Save session data
+          await appCtrl.storage.write(Session.isGuest, false);
+          await appCtrl.storage.write(Session.isLogin, true);
+          await appCtrl.storage.write(Session.isGuestLoginToken, "");
+          await appCtrl.storage.write(Session.isRegularLoginToken, UserSingleton().token);
+          await appCtrl.storage.write(Session.id, UserSingleton().uuidFcm);
+          await appCtrl.storage.write(Session.userName, UserSingleton().firstName);
+          await appCtrl.storage.write(Session.password, txtPassword.text.trim());
 
-          // App state flags
+          // Optional UI flags
           appCtrl.isHeart = true;
           appCtrl.isCart = true;
           appCtrl.isShare = false;
@@ -101,23 +82,102 @@ class SignUpController extends GetxController {
           appCtrl.isNotification = false;
 
           Fluttertoast.showToast(msg: "User Registered Successfully");
-          Get.toNamed(routeName.dashboard);
+          Get.offAllNamed(routeName.dashboard);
         } else {
-          Fluttertoast.showToast(msg: "Backend registration failed");
+          Fluttertoast.showToast(msg: "Registration failed. Try again.");
         }
-      } on FirebaseAuthException catch (e) {
-        Fluttertoast.showToast(msg: e.message ?? "Registration failed");
       } catch (e) {
-        log("Sign up error: $e");
-        Fluttertoast.showToast(msg: "Something went wrong");
+        print("Signup error: $e");
+        Fluttertoast.showToast(msg: "An unexpected error occurred");
       } finally {
         socialLoginCtrl.hideLoading();
         update();
       }
     } else {
-      log('Form not valid');
+      print("Form not valid");
     }
   }
+
+  // Future<void> signRegister() async {
+  //   if (signupFormKey.currentState!.validate()) {
+  //     FocusScope.of(Get.context!).unfocus();
+  //     update();
+  //     socialLoginCtrl.showLoading();
+  //
+  //     try {
+  //       // Step 1: Firebase account creation
+  //       final credential = await auth.createUserWithEmailAndPassword(
+  //         email: txtEmail.text.trim(),
+  //         password: txtPassword.text.trim(),
+  //       );
+  //
+  //       await credential.user?.updateDisplayName(txtName.text.trim());
+  //       await credential.user?.reload();
+  //
+  //             print("signUp_controller: $credential");
+  //
+  //
+  //       final user = credential.user;
+  //       if (user == null) throw Exception("Firebase user creation failed");
+  //
+  //       final firebaseToken = await user.getIdToken();
+  //
+  //       // Step 2: Call your backend to register the user
+  //       final params = {
+  //         "firebase_token": firebaseToken,
+  //         "first_name": txtName.text.trim(),
+  //         "email": txtEmail.text.trim(),
+  //         "password": txtPassword.text.trim(),
+  //       };
+  //
+  //       print("signup_controller: $firebaseToken");
+  //
+  //       final response = await apiCall.postRequest(ApiMethodList.userRegister, params);
+  //       final loginModel = RegisterNewUserModel.fromJson(response);
+  //
+  //       print("Sign_controller: $response");
+  //
+  //       if (loginModel.isSuccess == true) {
+  //
+  //         // Store in UserSingleton
+  //         UserSingleton().isGuest = false;
+  //         UserSingleton().token = loginModel.data!.access;
+  //         UserSingleton().uuidFcm = loginModel.data!.userData!.uuid;
+  //         UserSingleton().firstName = loginModel.data!.userData!.firstName ?? "";
+  //
+  //         // Save session
+  //         appCtrl.storage.write(Session.isGuest, false);
+  //         appCtrl.storage.write(Session.isLogin, true);
+  //         appCtrl.storage.write(Session.isGuestLoginToken, "");
+  //         appCtrl.storage.write(Session.isRegularLoginToken, UserSingleton().token);
+  //         appCtrl.storage.write(Session.id, UserSingleton().uuidFcm);
+  //         appCtrl.storage.write(Session.userName, UserSingleton().firstName);appCtrl.storage.write(Session.password, txtPassword.text.trim());
+  //
+  //         // App state flags
+  //         appCtrl.isHeart = true;
+  //         appCtrl.isCart = true;
+  //         appCtrl.isShare = false;
+  //         appCtrl.isSearch = true;
+  //         appCtrl.isNotification = false;
+  //
+  //         Fluttertoast.showToast(msg: "User Registered Successfully");
+  //         Get.toNamed(routeName.dashboard);
+  //       } else {
+  //         Fluttertoast.showToast(msg: "Backend registration failed");
+  //       }
+  //     } on FirebaseAuthException catch (e) {
+  //       Fluttertoast.showToast(msg: e.message ?? "Registration failed");
+  //     } catch (e) {
+  //       log("Sign up error: $e");
+  //       Fluttertoast.showToast(msg: "Something went wrong");
+  //     } finally {
+  //       socialLoginCtrl.hideLoading();
+  //       update();
+  //     }
+  //   } else {
+  //     log('Form not valid');
+  //   }
+  // }
 
 
   Future<void> signInClick() async {

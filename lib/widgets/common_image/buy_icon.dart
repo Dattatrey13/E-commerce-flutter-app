@@ -20,6 +20,7 @@ class BuyIcon extends StatelessWidget {
             appCtrl.isNotification = false;
             Get.toNamed(routeName.dashboard);
             await Future.delayed(DurationsClass.s1);
+            // appCtrl.isShimmer = false;
             appCtrl.isShimmer = false;
             appCtrl.update();
             Get.forceAppUpdate();

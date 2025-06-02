@@ -6,6 +6,9 @@ import 'package:dapperz/config.dart';
 import 'package:dapperz/main.dart';
 import 'package:dapperz/user_singleton.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:video_player/video_player.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,10 +20,26 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final homeCtrl = Get.put(HomeController());
 
+  VideoPlayerController? _videoPlayerController;
+  Future<void>? _initializeVideoPlayerFuture;
+
   @override
   void initState() {
-    listen();
     super.initState();
+    _videoPlayerController = VideoPlayerController.asset('assets/video/DapperBannerVidefoMobile.mp4')
+      ..setLooping(true)
+      ..setVolume(1.0);
+
+    _initializeVideoPlayerFuture = _videoPlayerController!.initialize().then((_) {
+      _videoPlayerController!.play();
+      setState(() {}); // This rebuilds after initialization
+    });
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,10 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
             return false;
           },
           child: Directionality(
-            textDirection:
-                homeCtrl.appCtrl.isRTL || homeCtrl.appCtrl.languageVal == "ar"
-                    ? TextDirection.rtl
-                    : TextDirection.ltr,
+            textDirection: homeCtrl.appCtrl.isRTL || homeCtrl.appCtrl.languageVal == "ar"
+                ? TextDirection.rtl
+                : TextDirection.ltr,
             child: RefreshIndicator(
               displacement: 100,
               backgroundColor: Colors.white,
@@ -85,118 +103,87 @@ class _HomeScreenState extends State<HomeScreen> {
                 body: homeCtrl.appCtrl.isShimmer
                     ? const HomerShimmer()
                     : SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            // Done
-                            GestureDetector(
-                              onTap: () async {
-                                await homeCtrl.getLocationList();
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      // GestureDetector(
+                      //   onTap: () async {
+                      //     await homeCtrl.getLocationList();
+                      //   },
+                      //   child: Container(
+                      //     height: size.height / 18,
+                      //     padding: const EdgeInsets.only(left: 15),
+                      //     child: Row(
+                      //       children: [
+                      //         const Icon(Icons.location_on),
+                      //         const SizedBox(width: 7),
+                      //         Text(
+                      //           UserSingleton().selectedLocation != null
+                      //               ? "Deliver to ${UserSingleton().selectedLocation}"
+                      //               : 'Select Location',
+                      //           style: TextStyle(
+                      //               fontSize: size.height / 55,
+                      //               fontWeight: FontWeight.bold),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 20),
+                      const HomeCategoryList(),
+                      const SizedBox(height: 20),
+                      Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        clipBehavior: Clip.hardEdge,
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(routeName.buildYourHome);
+                            },
+                            child: _videoPlayerController == null
+                                ? const Center(child: CircularProgressIndicator())
+                                : FutureBuilder(
+                              future: _initializeVideoPlayerFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.done) {
+                                  return VideoPlayer(_videoPlayerController!);
+                                } else {
+                                  return const Center(child: CircularProgressIndicator());
+                                }
                               },
-                              child: Container(
-                                // color: Colors.green,
-                                height: size.height / 18,
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.location_on),
-                                    const SizedBox(width: 7),
-                                    Text(
-                                      UserSingleton().selectedLocation != null
-                                          ? "Deliver to ${UserSingleton().selectedLocation}"
-                                          : 'Select Location',
-                                      style: TextStyle(
-                                          fontSize: size.height / 55,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ),
-                            // const SizedBox(height: 15),
-                            const HomeCategoryList(),
-                            const SizedBox(height: 20),
-                            CarouselSlider(
-                              items: homeCtrl.images.map((i) {
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        int index = homeCtrl.images.indexOf(i);
-                                        if (index == 0) {
-                                          Get.toNamed(routeName.buildYourHome);
-                                        } else if (index == 1) {
-                                          Get.toNamed(routeName.getQuote);
-                                        }
-                                      },
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        clipBehavior: Clip.hardEdge,
-                                        child:
-                                            // Image.network(i, fit: BoxFit.fill),
-                                            Image.asset(i, fit: BoxFit.cover,width: double.infinity),
-                                        //overlay text
-
-                                      ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                              options: CarouselOptions(
-                                height: size.longestSide / tabletMobile,
-                                autoPlay: true,
-                                autoPlayInterval: const Duration(seconds: 3),
-                                autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            const BorderLineLayout(),
-                            // Remaining
-                            // const SliderData(),
-                            const BorderLineLayout(),
-                            if (homeCtrl.getAllCouponsModel != null &&
-                                homeCtrl.getAllCouponsModel!.data != null &&
-                                homeCtrl.getAllCouponsModel!.data!.isNotEmpty)
-                              const OfferCorner(),
-                            // const BorderLineLayout(),
-                            // Remaining
-                            // FeaturedCategoriesLayout(title: 'Discount for you'),
-                            // BorderLineLayout(),
-                            // Done
-                            // const FeaturedCategoriesLayout(
-                            //     title: 'Featured Products'),
-                            // const BorderLineLayout(),
-                            // Remaining
-                            // const Brands(),
-                            // const BorderLineLayout(),
-                            const BestSellingLayout(
-                                title: 'Best Selling Products'),
-                            const BorderLineLayout(),
-                            homeCtrl.onSaleProductList.isNotEmpty
-                                ? const OnSaleLayout(title: 'Sale Products')
-                                : Container(),
-                            Visibility(
-                              visible: UserSingleton().token != null,
-                              child: const Column(
-                                children: [
-                                  BorderLineLayout(),
-                                  RecommendedForYouLayout(
-                                      title: 'Recommended For You'),
-                                  BorderLineLayout(),
-                                  RecentlyViewedLayout(
-                                      title: 'Recently Viewed'),
-                                  BorderLineLayout(),
-                                ],
-                              ),
-                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const BorderLineLayout(),
+                      const BorderLineLayout(),
+                      if (homeCtrl.getAllCouponsModel != null &&
+                          homeCtrl.getAllCouponsModel!.data != null &&
+                          homeCtrl.getAllCouponsModel!.data!.isNotEmpty)
+                        const OfferCorner(),
+                      const BestSellingLayout(title: 'Best Selling Products'),
+                      const BorderLineLayout(),
+                      homeCtrl.onSaleProductList.isNotEmpty
+                          ? const OnSaleLayout(title: 'Sale Products')
+                          : Container(),
+                      Visibility(
+                        visible: UserSingleton().token != null,
+                        child: const Column(
+                          children: [
+                            BorderLineLayout(),
+                            RecommendedForYouLayout(title: 'Recommended For You'),
+                            BorderLineLayout(),
+                            RecentlyViewedLayout(title: 'Recently Viewed'),
+                            BorderLineLayout(),
                           ],
                         ),
                       ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -211,7 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
         await notification(message);
       }
     });
-    awesomeNotifications!
-        .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    awesomeNotifications!.setListeners(onActionReceivedMethod: onActionReceivedMethod);
   }
 }

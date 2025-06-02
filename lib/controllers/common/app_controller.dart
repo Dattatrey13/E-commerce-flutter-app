@@ -189,17 +189,15 @@ Get.toNamed(
     try {
       final response = await apiCall.postRequest(ApiMethodList.userAddCart, params);
 
+      print("Add to Cart - Params: $params");
+      print("Add to Cart - Response: $response");
+
       final model = AddCartModel.fromJson(response);
       if (model.success ?? false) {
         getCartCount();
       }
 
-      print("Add to Cart - Params: $params");
-      print("Add to Cart - Response: $response");
-
       print("Add to Cart - Params: ${params.toString()}");
-      // print("Add to Cart - Response: ${jsonEncode(response)}");
-
       return model;
     } catch (e, stackTrace) {
       print("Error in addToCart: $e");

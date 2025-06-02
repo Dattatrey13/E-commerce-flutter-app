@@ -20,9 +20,8 @@ import '../../models/cart/cart_list_model.dart';
 import '../../models/order/get_cart_total.dart';
 import '../../models/product/delete_review_model.dart';
 import '../../models/product/product_detail_model.dart' as pm;
-
+import '../../models/cart/add_cart_model.dart';
 import 'package:get_storage/get_storage.dart';
-
 
 class ProductDetailController extends GetxController {
   final appCtrl = Get.isRegistered<AppController>()
@@ -42,6 +41,7 @@ class ProductDetailController extends GetxController {
   int currentLast = 0;
   int selectedColor = 0;
   int quantity = 1;
+  int? productId;
   String slug = "";
   // String Slug  = "";
   num? selectedVariationId;
@@ -64,29 +64,12 @@ class ProductDetailController extends GetxController {
   bool optionSelected = false;
   String newPrice = "";
   String outOfStock = "";
-
   bool isLoading = true;
 
-  // @override
-  // void onReady() async {
-  //   slug  = Get.arguments; // Accept slug as argument instead of slug
-  //   reviewStar = 0.0;
-  //   reviewController.text = "";
-  //   await Future.delayed(DurationsClass.s1);
-  //   await getDetails(slug ); // Use slug here
-  //   if (UserSingleton().redirectProductPage ?? false) {
-  //     UserSingleton().redirectProductPage = false;
-  //     UserSingleton().slug = '';
-  //   }
-  //   isLoading = false;
-  //   update();
-  //   super.onReady();
-  // }
   @override
-void onReady() async {
+  void onReady() async {
   super.onReady();
 
-  // Safely retrieve slug from Get.arguments
   final String slug = Get.arguments as String;
 
   if (slug.isEmpty) {
@@ -97,10 +80,9 @@ void onReady() async {
   reviewStar = 0.0;
   reviewController.text = "";
 
-  // You can delay for loading state if needed
   await Future.delayed(DurationsClass.s1);
 
-  await getDetails(slug); // Pass the slug to fetch product details
+  await getDetails(slug);
 
   if (UserSingleton().redirectProductPage ?? false) {
     UserSingleton().redirectProductPage = false;
@@ -266,19 +248,6 @@ getDetails(String slug) async {
     }
   }
 
-  // setVariable(String value) async {
-  //   for (var element in productVariation) {
-  //     for (var name in element.termsIds!) {
-  //       if (value == name.termName) {
-  //         selectedVariationId = element.id;
-  //         selectedVariation = element;
-  //         // newPrice = element.price!;
-  //         outOfStock = element.stockStatus!;
-  //         update();
-  //       }
-  //     }
-  //   }
-  // }
   setVariable(String value) async {
     for (var element in productVariation) {
       for (var name in element.termsIds ?? []) {
@@ -333,6 +302,7 @@ getDetails(String slug) async {
     try {
       dynamic response = await apiCall
           .getResponse("${ApiMethodList.userCartTotal}?is_buy_now=true");
+      print("Cart Total Response: $response");
       cartTotal = GetCartTotal.fromJson(response);
       showProgressDialog(false);
       if (cartTotal.data != null) {
@@ -353,6 +323,7 @@ getDetails(String slug) async {
     try {
       dynamic response = await apiCall
           .getResponse("${ApiMethodList.getUserCartDetails}?is_buy_now=true");
+      print("Cart Response in ProsuctDetalis page: $response");
       cartList = CartListModel.fromJson(response);
       await getCartTotal();
     } catch (e) {

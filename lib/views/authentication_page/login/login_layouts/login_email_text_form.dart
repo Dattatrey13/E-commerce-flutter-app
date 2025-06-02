@@ -8,7 +8,8 @@ class LoginEmailTextForm extends StatelessWidget {
     return GetBuilder<LoginController>(builder: (loginCtrl) {
       return EmailTextForm(
         controller: loginCtrl.txtEmail,
-        label: LoginFont().email,
+        // label: LoginFont().email,
+        label:  CommonTextFont().email,
         emailFocus: loginCtrl.emailFocus,
         onFieldSubmitted: (value) {
           // Optionally shift focus to password

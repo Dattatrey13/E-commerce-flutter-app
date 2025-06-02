@@ -128,6 +128,11 @@ class PaymentController extends GetxController {
         params['type'] = 1; // For Cash On Delivery
         params['shippingAddress'] = shippingAddress;
         Get.offAndToNamed(routeName.orderSuccess, arguments: params);
+
+        print("Parsed model: ${status.toJson()}");
+
+        print("Order Data: ${status.data}");
+
       } else {
         showProgressDialog(false);
         Fluttertoast.showToast(msg: status.message ?? "Unable to Place Order");

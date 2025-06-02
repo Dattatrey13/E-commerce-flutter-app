@@ -67,13 +67,13 @@ class PriceLayout extends StatelessWidget {
                         ),
                 ),
                 const Space(5, 0),
-                if (isDiscountShow)
-                  LatoFontStyle(
-                    text: '($discount % ${CommonTextFont().off})',
-                    fontSize: fontSize,
-                    fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
-                    color: appCtrl.appTheme.blackColor,
-                  ),
+                // if (isDiscountShow)
+                //   LatoFontStyle(
+                //     text: '($discount % ${CommonTextFont().off})',
+                //     fontSize: fontSize,
+                //     fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
+                //     color: appCtrl.appTheme.blackColor,
+                //   ),
               ],
             ).paddingOnly(left: AppScreenUtil().screenWidth(5)),
           ],

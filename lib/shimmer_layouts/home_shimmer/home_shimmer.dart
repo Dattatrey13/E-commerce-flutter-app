@@ -1,4 +1,5 @@
 import '../../config.dart';
+import 'package:video_player/video_player.dart';
 
 class HomerShimmer extends StatelessWidget {
   const HomerShimmer({Key? key}) : super(key: key);
@@ -6,14 +7,21 @@ class HomerShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(builder: (appCtrl) {
-      return Shimmer.fromColors(
-        baseColor: appCtrl.appTheme.greyLight25,
-        highlightColor: appCtrl.appTheme.gray,
-        child: SingleChildScrollView(
-          primary: true,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            //home category shimmer
-            const HomeCategoryShimmer(),
+      return SingleChildScrollView(
+        primary: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ✅ Replaced with your specified GIF
+            Center(
+              child: Image.asset(
+                'assets/gif/dapper.gif',
+                width: 100,
+                height: 100,
+                fit: BoxFit.contain,
+              ),
+            ),
+            const Space(0, 20),
             HomeShimmerWidget().textShimmer(),
             HomeShimmerWidget().textInRowShimmer(),
             const Space(0, 10),
@@ -38,22 +46,24 @@ class HomerShimmer extends StatelessWidget {
               child: Row(
                 children: [
                   ...AppArray().featuredProductList.map((e) {
-                    return ProductShimmer(width: MediaQuery.of(context).size.width / 3).marginOnly(right: AppScreenUtil().screenWidth(10));
-                  }).toList()
+                    return ProductShimmer(
+                      width: MediaQuery.of(context).size.width / 3,
+                    ).marginOnly(right: AppScreenUtil().screenWidth(10));
+                  }).toList(),
                 ],
               ),
             ).marginSymmetric(horizontal: AppScreenUtil().screenWidth(15)),
             const Space(0, 30),
             CommonShimmer(
-                    height: 10,
-                    width: 100,
-                    borderRadius: 2,
-                    color: appCtrl.appTheme.lightGray.withOpacity(.3),
-                    borderColor: appCtrl.appTheme.lightGray.withOpacity(.3))
-                .marginSymmetric(horizontal: AppScreenUtil().screenWidth(15)),
+              height: 10,
+              width: 100,
+              borderRadius: 2,
+              color: appCtrl.appTheme.lightGray.withOpacity(.3),
+              borderColor: appCtrl.appTheme.lightGray.withOpacity(.3),
+            ).marginSymmetric(horizontal: AppScreenUtil().screenWidth(15)),
             const Space(0, 30),
-            const GridViewShimmer(crossAxisCount: 2, count: 4)
-          ]),
+            const GridViewShimmer(crossAxisCount: 2, count: 4),
+          ],
         ),
       );
     });

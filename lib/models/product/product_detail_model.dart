@@ -40,6 +40,163 @@ class ProductDetailModel {
   }
 }
 
+class ProductId {
+  ProductId({
+    num? id,
+    String? slug,
+    String? productTitle,
+    String? productSlug,
+    String? productShortDescription,
+    String? price,
+    String? regularPrice,
+    List<ImageIds>? imageIds,
+    String? productType,
+    num? brandId,
+    bool? isMultiImage,
+    bool? isFeatured,
+    num? averageRating,
+    num? ratingCount,
+    String? salePrice,
+    bool? isOnSale,
+    dynamic dateOnSaleFrom,
+    dynamic dateOnSaleTo,
+    ImageIds? defaultImage,
+  }) {
+    _id = id;
+    _productTitle = productTitle;
+    _productSlug = productSlug;
+    _productShortDescription = productShortDescription;
+    _price = price;
+    _regularPrice = regularPrice;
+    _imageIds = imageIds;
+    _productType = productType;
+    _brandId = brandId;
+    _isMultiImage = isMultiImage;
+    _isFeatured = isFeatured;
+    _averageRating = averageRating;
+    _ratingCount = ratingCount;
+    _salePrice = salePrice;
+    _isOnSale = isOnSale;
+    _dateOnSaleFrom = dateOnSaleFrom;
+    _dateOnSaleTo = dateOnSaleTo;
+    _defaultImage = defaultImage;
+  }
+
+  ProductId.fromJson(dynamic json) {
+    _id = json['id'];
+    _slug = json['slug'];
+    _productTitle = json['product_title'];
+    _productSlug = json['product_slug'];
+    _productShortDescription = json['product_short_description'];
+    _price = json['price'];
+    _regularPrice = json['regular_price'];
+    if (json['image_ids'] != null) {
+      _imageIds = [];
+      json['image_ids'].forEach((v) {
+        _imageIds?.add(ImageIds.fromJson(v));
+      });
+    }
+    _defaultImage = json['default_image'] != null
+        ?ImageIds.fromJson(json['default_image'])
+        :null;
+    _productType = json['product_type'];
+    _brandId = json['brand_id'];
+    _isMultiImage = json['is_multi_image'];
+    _isFeatured = json['is_featured'];
+    _averageRating = json['average_rating'];
+    _ratingCount = json['rating_count'];
+    _salePrice = json['sale_price'];
+    _isOnSale = json['is_on_sale'];
+    _dateOnSaleFrom = json['date_on_sale_from'];
+    _dateOnSaleTo = json['date_on_sale_to'];
+  }
+
+  num? _id;
+  String? _slug;
+  String? _productTitle;
+  String? _productSlug;
+  String? _productShortDescription;
+  String? _price;
+  String? _regularPrice;
+  List<ImageIds>? _imageIds;
+  String? _productType;
+  num? _brandId;
+  bool? _isMultiImage;
+  bool? _isFeatured;
+  num? _averageRating;
+  num? _ratingCount;
+  String? _salePrice;
+  bool? _isOnSale;
+  dynamic _dateOnSaleFrom;
+  dynamic _dateOnSaleTo;
+  ImageIds? _defaultImage;
+
+  num? get id => _id;
+
+  String? get productTitle => _productTitle;
+
+  String? get productSlug => _productSlug;
+
+  String? get productShortDescription => _productShortDescription;
+
+  String? get price => _price;
+
+  String? get regularPrice => _regularPrice;
+
+  List<ImageIds>? get imageIds => _imageIds;
+
+  String? get productType => _productType;
+
+  num? get brandId => _brandId;
+
+  bool? get isMultiImage => _isMultiImage;
+
+  bool? get isFeatured => _isFeatured;
+
+  num? get averageRating => _averageRating;
+
+  num? get ratingCount => _ratingCount;
+
+  String? get salePrice => _salePrice;
+
+  bool? get isOnSale => _isOnSale;
+
+  dynamic get dateOnSaleFrom => _dateOnSaleFrom;
+
+  dynamic get dateOnSaleTo => _dateOnSaleTo;
+
+  ImageIds? get defaultImage => _defaultImage;
+
+  get slug => null;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
+    map['product_title'] = _productTitle;
+    map['product_slug'] = _productSlug;
+    map['product_short_description'] = _productShortDescription;
+    map['price'] = _price;
+    map['regular_price'] = _regularPrice;
+    if (_imageIds != null) {
+      map['image_ids'] = _imageIds?.map((v) => v.toJson()).toList();
+    }
+    if (_defaultImage != null) {
+      map['default_image'] = _defaultImage?.toJson(); // <--- NEW
+    }
+    map['product_type'] = _productType;
+    map['brand_id'] = _brandId;
+    map['is_multi_image'] = _isMultiImage;
+    map['is_featured'] = _isFeatured;
+    map['average_rating'] = _averageRating;
+    map['rating_count'] = _ratingCount;
+    map['sale_price'] = _salePrice;
+    map['is_on_sale'] = _isOnSale;
+    map['date_on_sale_from'] = _dateOnSaleFrom;
+    map['date_on_sale_to'] = _dateOnSaleTo;
+    return map;
+  }
+}
+
 /// id : 80372
 /// product_title : "HAVELLS HIGH WATTAGE (PC BATTENS) LED Pride Essential Batten|Tubelight| Cool White"
 /// product_slug : "havells-high-wattage-pc-battens-led-pride-essential-battentubelight-cool-white"
@@ -88,6 +245,7 @@ class Data {
     bool? isFeatured,
     num? averageRating,
     num? ratingCount,
+    ProductId? productId,
     String? salePrice,
     bool? isOnSale,
     dynamic dateOnSaleFrom,
@@ -111,6 +269,7 @@ class Data {
     _regularPrice = regularPrice;
     _productLongDescription = productLongDescription;
     _productType = productType;
+    _productId = productId;
     _imageIds = imageIds;
     _productCategories = productCategories;
     _productTags = productTags;
@@ -139,11 +298,14 @@ class Data {
     // _id = json['id'];
     _slug = json['slug'];
     _productTitle = json['product_title'];
-    // _slug = json['product_slug'];
-    _slug = json['product_slug']?.toString();
+    _slug = json['product_slug'];
+    // _slug = json['product_slug']?.toString();
     _productShortDescription = json['product_short_description'];
+    _productId = json['product_id'] != null
+          ? ProductId.fromJson(json['product_id'])
+          : null;
     // _price = json['price'];
-    price: json['price'] != null ? json['price'].toString() : null;
+    _price= json['price'] != null ? json['price'].toString() : null;
     // _regularPrice = json['regular_price'];
     _regularPrice = json['regular_price']?.toString();
     _productLongDescription = json['product_long_description'];
@@ -215,6 +377,7 @@ class Data {
   bool? _isFeatured;
   num? _averageRating;
   num? _ratingCount;
+  ProductId? _productId;
   String? _salePrice;
   bool? _isOnSale;
   dynamic _dateOnSaleFrom;
@@ -261,6 +424,8 @@ class Data {
   num? get averageRating => _averageRating;
 
   num? get ratingCount => _ratingCount;
+
+  ProductId? get productId => _productId;
 
   String? get salePrice => _salePrice;
 
@@ -314,6 +479,9 @@ class Data {
     if (_productCategories != null) {
       map['product_categories'] =
           _productCategories?.map((v) => v.toJson()).toList();
+    }
+    if(_productId != null){
+      map['product_id'] = _productId?.toJson();
     }
     // if (_productTags != null) {
     //   map['product_tags'] = _productTags?.map((v) => v.toJson()).toList();
@@ -436,6 +604,8 @@ class ProductVariations {
     _taxClassId = taxClassId;
     _shippingClassId = shippingClassId;
   }
+
+
 
   // ProductVariations.fromJson(dynamic json) {
   //   _id = json['id'];
