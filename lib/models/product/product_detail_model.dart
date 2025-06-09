@@ -167,7 +167,8 @@ class ProductId {
 
   ImageIds? get defaultImage => _defaultImage;
 
-  get slug => null;
+  // get slug => null;
+  String? get slug => _slug;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

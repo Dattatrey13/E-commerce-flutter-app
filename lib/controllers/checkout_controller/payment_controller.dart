@@ -12,6 +12,7 @@ import 'package:dapperz/models/order/order_checkout_model.dart';
 import 'package:dapperz/models/order/order_online_checkout_model.dart';
 import 'package:dapperz/user_singleton.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dapperz/controllers/checkout_controller/razorpay_controller.dart';
 
 import '../../config.dart';
 import '../../models/address_list_model.dart' as al;
@@ -146,8 +147,8 @@ class PaymentController extends GetxController {
   payNowOnline() async {
     try {
       HashMap<String, dynamic> params = HashMap();
-      params['payment_method'] = "payeasebuzz";
-      params['payment_method_title'] = "Pay Online";
+      params['payment_method'] = "razorpay";
+      params['payment_method_title'] = "Pay with Razorpay";
       params['set_paid'] = "true";
       HashMap<String, dynamic> billingParams = HashMap();
       billingParams['first_name'] = billingAddress!.firstName;
@@ -186,26 +187,40 @@ class PaymentController extends GetxController {
       if (OrderOnlineCheckoutModel.fromJson(response).success == true &&
           OrderOnlineCheckoutModel.fromJson(response).data != null) {
         UserSingleton().isBuyNow = false;
-        HashMap<String, dynamic> testPa = HashMap();
-        testPa['access_key'] =
-            OrderOnlineCheckoutModel.fromJson(response).data!.accessKey ?? "";
-        testPa['transaction_id'] =
-            OrderOnlineCheckoutModel.fromJson(response).data!.transactionId ??
-                "";
-        await Future.delayed(DurationsClass.s1);
         showProgressDialog(false);
-        testPa['shippingAddress'] = shippingAddress;
-        Get.toNamed(routeName.paymentPage, arguments: testPa);
+        
+        // Initialize Razorpay payment
+        final razorpayCtrl = Get.put(RazorpayController());
+        razorpayCtrl.startPayment(
+          keyId: Config.razorpayKeyId,
+          amount: double.parse(totalAmount),
+          name: "Dapperz",
+          description: "Payment for Order #${OrderOnlineCheckoutModel.fromJson(response).data!.transactionId}",
+          prefillEmail: billingAddress!.email ?? "",
+          prefillContact: billingAddress!.phoneNumber ?? "",
+        );
+
+        // Listen for payment success
+        ever(razorpayCtrl.isLoading, (bool loading) {
+          if (!loading) {
+            // Payment completed (success or failure)
+            HashMap<String, dynamic> params = HashMap();
+            params['orderId'] = OrderOnlineCheckoutModel.fromJson(response).data!.transactionId;
+            params['data'] = OrderOnlineCheckoutModel.fromJson(response).data;
+            params['type'] = 2; // For Online Payment
+            params['shippingAddress'] = shippingAddress;
+            Get.offAndToNamed(routeName.orderSuccess, arguments: params);
+          }
+        });
       } else {
         showProgressDialog(false);
         Fluttertoast.showToast(
             msg: OrderOnlineCheckoutModel.fromJson(response).message ??
                 "Unable to Place Order");
-        return false;
       }
     } catch (e) {
       showProgressDialog(false);
-      Fluttertoast.showToast(msg: "Payment Failed");
+      Fluttertoast.showToast(msg: "Unable to Place Order");
     }
   }
 

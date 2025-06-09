@@ -20,7 +20,8 @@ import '../../config.dart';
 
 class AppController extends GetxController {
   AppTheme _appTheme = AppTheme.fromType(ThemeType.light);
-  bool isLoading = false;
+  bool isLoading = true;
+  // bool isLoading = false;
   int selectedIndex = 0;
   bool isTheme = false;
   bool isRTL = false;

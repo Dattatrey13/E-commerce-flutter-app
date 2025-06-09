@@ -1,5 +1,4 @@
 import '../../config.dart';
-import 'package:video_player/video_player.dart';
 
 class HomerShimmer extends StatelessWidget {
   const HomerShimmer({Key? key}) : super(key: key);
@@ -7,20 +6,25 @@ class HomerShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(builder: (appCtrl) {
+      // Show only GIF while loading
+      if (appCtrl.isLoading) {
+        return Center(
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Image.asset(
+              'assets/gif/dapper.gif',
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+      }
+
+      // After loading (i.e., appCtrl.isLoading == false), show shimmer UI
       return SingleChildScrollView(
         primary: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ✅ Replaced with your specified GIF
-            Center(
-              child: Image.asset(
-                'assets/gif/dapper.gif',
-                width: 100,
-                height: 100,
-                fit: BoxFit.contain,
-              ),
-            ),
             const Space(0, 20),
             HomeShimmerWidget().textShimmer(),
             HomeShimmerWidget().textInRowShimmer(),

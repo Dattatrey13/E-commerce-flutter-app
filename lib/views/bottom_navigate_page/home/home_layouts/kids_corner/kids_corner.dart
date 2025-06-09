@@ -120,46 +120,147 @@ class _FeaturedCategoriesLayoutState extends State<FeaturedCategoriesLayout> {
   }
 }
 
-class RecommendedForYouLayout extends StatefulWidget {
+class NewArrivalProductListLayout extends StatefulWidget {
   final String title;
 
-  const RecommendedForYouLayout({Key? key, required this.title})
-      : super(key: key);
+  const NewArrivalProductListLayout({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<RecommendedForYouLayout> createState() =>
-      _RecommendedForYouLayoutState();
+  State<NewArrivalProductListLayout> createState() => _NewArrivalProductListLayoutState();
 }
 
-class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
-  // Timer? timer;
-  // ScrollController scrollController = ScrollController();
+class _NewArrivalProductListLayoutState extends State<NewArrivalProductListLayout> {
+  // Add any controllers or timers if needed here
 
   @override
   void initState() {
     super.initState();
-    // timer = Timer.periodic(const Duration(seconds: 3), (_) async {
-    //   double currentPosition = scrollController.offset; // Assuming uniform item height
-    //   double newPosition = currentPosition + (2 * 100);
-    //   double itemHeight = scrollController.position.extentTotal;
-    //
-    //   if (newPosition >= scrollController.position.maxScrollExtent - (2 * 100)) {
-    //     await Future.delayed(const Duration(seconds: 3));
-    //     newPosition = 0.0; // Jump to the beginning
-    //   } else {
-    //     newPosition = newPosition.clamp(0.0, scrollController.position.maxScrollExtent);
-    //     if (newPosition == currentPosition && newPosition < scrollController.position.maxScrollExtent) {
-    //       newPosition += itemHeight; // Ensure scrolling even near the end
-    //     }
-    //   }
-    //   if (scrollController.hasClients) {
-    //     scrollController.animateTo(
-    //       newPosition.clamp(0.0, scrollController.position.maxScrollExtent),
-    //       curve: Curves.ease,
-    //       duration: const Duration(milliseconds: 500),
-    //     );
-    //   }
-    // });
+    // Initialize any timers or controllers here
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeController>(builder: (homeCtrl) {
+      final productList = homeCtrl.newArrivalProductList.take(10).toList();
+
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppScreenUtil().screenWidth(15),
+          vertical: AppScreenUtil().screenHeight(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                LatoFontStyle(
+                  text: widget.title,
+                  fontSize: FontSizes.f14,
+                  fontWeight: FontWeight.w700,
+                  color: homeCtrl.appCtrl.appTheme.blackColor,
+                ),
+                TextButton(
+                  onPressed: () {
+                    var data = {
+                      'name': widget.title,
+                      'cat_id': "new_arrival_product",
+                    };
+                    Get.toNamed(routeName.shopPage, arguments: data)?.then((value) {
+                      homeCtrl.getRecentItemList();
+                    });
+                  },
+                  child: Text(
+                    'View More',
+                    style: TextStyle(color: homeCtrl.appCtrl.appTheme.blackColor),
+                  ),
+                ),
+              ],
+            ),
+            const Space(0, 5),
+            productList.isNotEmpty
+                ? SizedBox(
+              height: AppScreenUtil().screenHeight(180),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: productList.map((product) {
+                    return GestureDetector(
+                      onTap: () {
+                        appCtrl.goToProductDetail(
+                          slug: product.slug!,
+                          homeCtrl: homeCtrl,
+                        );
+                      },
+                      child: DashboardProductCard(
+                        data: product,
+                        isFit: true,
+                      ).paddingOnly(
+                        right: AppScreenUtil().screenWidth(10),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            )
+                : const SizedBox(
+              height: 70,
+              child: Center(
+                child: Text('No NewArrival'),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    // Dispose any controllers or timers here if used
+    super.dispose();
+  }
+}
+
+
+  class RecommendedForYouLayout extends StatefulWidget {
+  final String title;
+
+  const RecommendedForYouLayout({Key? key, required this.title}) : super(key: key);
+
+  @override
+  State<RecommendedForYouLayout> createState() => _RecommendedForYouLayoutState();
+}
+
+class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
+  // Timer? timer;
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Uncomment this part to enable auto scroll
+    /*
+    timer = Timer.periodic(const Duration(seconds: 3), (_) async {
+      double currentPosition = scrollController.offset;
+      double newPosition = currentPosition + 200; // Adjust as per card width
+      double maxScroll = scrollController.position.maxScrollExtent;
+
+      if (newPosition >= maxScroll) {
+        await Future.delayed(const Duration(seconds: 3));
+        newPosition = 0.0; // Reset to start
+      }
+
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          newPosition,
+          curve: Curves.ease,
+          duration: const Duration(milliseconds: 500),
+        );
+      }
+    });
+    */
   }
 
   @override
@@ -167,75 +268,72 @@ class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
     return GetBuilder<HomeController>(builder: (homeCtrl) {
       return Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: AppScreenUtil().screenWidth(15),
-            vertical: AppScreenUtil().screenHeight(20)),
+          horizontal: AppScreenUtil().screenWidth(15),
+          vertical: AppScreenUtil().screenHeight(20),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LatoFontStyle(
-                      text: widget.title,
-                      fontSize: FontSizes.f14,
-                      fontWeight: FontWeight.w700,
-                      color: homeCtrl.appCtrl.appTheme.blackColor,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        var data = {
-                          'name': widget.title,
-                          'cat_id': "recommended_product"
-                        };
-                        Get.toNamed(routeName.shopPage, arguments: data)
-                            ?.then((value) {
-                          homeCtrl.getRecentItemList();
-                        });
-                      
-                      },
-                      child: Text('View More',
-                          style: TextStyle(
-                              color: homeCtrl.appCtrl.appTheme.blackColor)),
-                    ),
-                  ],
+                LatoFontStyle(
+                  text: widget.title,
+                  fontSize: FontSizes.f14,
+                  fontWeight: FontWeight.w700,
+                  color: homeCtrl.appCtrl.appTheme.blackColor,
                 ),
-                const Space(0, 5),
-                homeCtrl.recommendedForYouList.isNotEmpty
-                    ? SingleChildScrollView(
-                        // controller: scrollController,
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: homeCtrl.recommendedForYouList
-                              .asMap()
-                              .entries
-                              .map((e) {
-                            return GestureDetector(
+                TextButton(
+                  onPressed: () {
+                    var data = {
+                      'name': widget.title,
+                      'cat_id': 'recommended_product',
+                    };
+                    Get.toNamed(routeName.shopPage, arguments: data)?.then((value) {
+                      homeCtrl.getRecentItemList();
+                    });
+                  },
+                  child: Text(
+                    'View More',
+                    style: TextStyle(color: homeCtrl.appCtrl.appTheme.blackColor),
+                  ),
+                ),
+              ],
+            ),
+            const Space(0, 5),
+            homeCtrl.recommendedForYouList.isNotEmpty
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: scrollController,
+                    child: Row(
+                      children: homeCtrl.recommendedForYouList
+                          .asMap()
+                          .entries
+                          .map(
+                            (e) => GestureDetector(
                               onTap: () {
                                 appCtrl.goToProductDetail(
-                                    slug: homeCtrl
-                                        .recommendedForYouList[e.key].slug!,
-                                        homeCtrl: homeCtrl);
+                                  slug: e.value.slug!,
+                                  homeCtrl: homeCtrl,
+                                );
                               },
                               child: DashboardProductCard(
-                                data: homeCtrl.recommendedForYouList[e.key],
+                                data: e.value,
                                 isFit: true,
                               ).paddingOnly(
-                                  right: AppScreenUtil().screenWidth(10)),
-                            );
-                          }).toList(),
-                        ),
-                      )
-                    : const SizedBox(
-                        height: 70,
-                        child: Center(
-                          child: Text('No Recommendation'),
-                        ),
-                      ),
-              ],
-            )
+                                right: AppScreenUtil().screenWidth(10),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  )
+                : const SizedBox(
+                    height: 70,
+                    child: Center(
+                      child: Text('No Recommendation'),
+                    ),
+                  ),
           ],
         ),
       );
@@ -245,20 +343,22 @@ class _RecommendedForYouLayoutState extends State<RecommendedForYouLayout> {
   @override
   void dispose() {
     // timer?.cancel();
+    scrollController.dispose();
     super.dispose();
   }
 }
 
-class BestSellingLayout extends StatefulWidget {
+
+class keyChainLayout extends StatefulWidget {
   final String title;
 
-  const BestSellingLayout({Key? key, required this.title}) : super(key: key);
+  const keyChainLayout({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<BestSellingLayout> createState() => _BestSellingLayoutState();
+  State<keyChainLayout> createState() => _keyChainLayoutState();
 }
 
-class _BestSellingLayoutState extends State<BestSellingLayout> {
+class _keyChainLayoutState extends State<keyChainLayout> {
   // Timer? timer;
   // ScrollController scrollController = ScrollController();
 
@@ -315,7 +415,7 @@ class _BestSellingLayoutState extends State<BestSellingLayout> {
                       onPressed: () async {
                         var data = {
                           'name': widget.title,
-                          'cat_id': "best_selling"
+                          'cat_id': "keychains"
                         };
                         await Get.toNamed(routeName.shopPage, arguments: data)
                             ?.then((value) {
@@ -329,13 +429,13 @@ class _BestSellingLayoutState extends State<BestSellingLayout> {
                   ],
                 ),
                 const Space(0, 20),
-                homeCtrl.bestSellingProductList.isNotEmpty
+                homeCtrl.keyChainProductList.isNotEmpty
                     ? SingleChildScrollView(
                         // controller: scrollController,
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: homeCtrl.bestSellingProductList
+                          children: homeCtrl.keyChainProductList
                               .asMap()
                               .entries
                               .map((e) {
@@ -343,12 +443,12 @@ class _BestSellingLayoutState extends State<BestSellingLayout> {
                               onTap: () {
                                 appCtrl.goToProductDetail(
                                     slug: homeCtrl
-                                        .bestSellingProductList[e.key].slug!,
+                                        .keyChainProductList[e.key].slug!,
                                         
                                     homeCtrl: homeCtrl);
                               },
                               child: DashboardProductCard(
-                                data: homeCtrl.bestSellingProductList[e.key],
+                                data: homeCtrl.keyChainProductList[e.key],
                                 isFit: true,
                               ).paddingOnly(
                                 right: AppScreenUtil().screenWidth(10),

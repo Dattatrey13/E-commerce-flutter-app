@@ -23,6 +23,7 @@ class HomeController extends GetxController {
   final storage = GetStorage();
   double loginWidth = 40.0;
   double loginHeight = 40.0;
+  int selectNewArrival = -1;
 
   List<pcm.Data> homeCategoryList = [];
   List<dynamic> slidersList = [];
@@ -31,7 +32,9 @@ class HomeController extends GetxController {
   List<plm.Data> featuredCategoriesList = [];
   List<bm.Data> brandsList = [];
   List<plm.Data> recommendedForYouList = [];
-  List<plm.Data> bestSellingProductList = [];
+  List<plm.Data> newArrivalList = [];
+  List<plm.Data> newArrivalProductList = [];
+  List<plm.Data> keyChainProductList = [];
   List<plm.Data> onSaleProductList = [];
   List<plm.Data> recentlyViewedList = [];
   List<gllm.Children> locationList = [];
@@ -44,6 +47,7 @@ class HomeController extends GetxController {
   List<HomeFindStyleCategoryModel> findStyleCategoryList = [];
   List<HomeFindStyleCategoryModel> findStyleCategoryCategoryWiseList = [];
   List<HomeFindStyleCategoryModel> homeKidsCornerList = [];
+
   int current = 0;
   List<int> selectedStyleCategory = [0];
   bool selected = false;
@@ -67,8 +71,6 @@ List<String> images = [
     super.onReady();
   }
 
-
-
 //   // get data list
 //   getData({bool getLocation = false}) async {
 //   appCtrl.isShimmer = true;
@@ -82,6 +84,7 @@ List<String> images = [
 //   try {
 //     if (!UserSingleton().isGuest!) {
 //       await getRecommendedProductList("1");
+//       await getNewArrivalProductList("1");
 //       update();
 //     }
 //
@@ -112,12 +115,16 @@ List<String> images = [
     featuredCategoriesList.clear();
     brandsList.clear();
     recommendedForYouList.clear();
-    bestSellingProductList.clear();
+    newArrivalProductList.clear();
+    keyChainProductList.clear();
     onSaleProductList.clear();
     recentlyViewedList.clear();
 
     if (!UserSingleton().isGuest!) {
       await getRecommendedProductList("1");
+
+      update();
+      await getNewArrivalProductList();
       update();
       await getRecentProduct("1");
       update();
@@ -128,7 +135,7 @@ List<String> images = [
     update();
     // await getBrandsList();
     // update();
-    await getBestSellingList("1");
+    await getkeyChainList("1");
     update();
     await getOnSaleList("1");
     update();
@@ -174,6 +181,7 @@ List<String> images = [
       AppArray()
           .featuredProductList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+      print("Featured Category: $response");
     } catch (e) {
       rethrow;
     }
@@ -188,10 +196,27 @@ List<String> images = [
       AppArray()
           .recommendedList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+      print("Recommended Product: $response");
     } catch (e) {
       rethrow;
     }
   }
+  getNewArrivalProductList() async {
+    newArrivalProductList.clear(); // Use the right list
+    try {
+      dynamic response = await apiCall.getResponse("${ApiMethodList.newArrivalProduct}?is_mobile=true&page=1");
+
+      // Extract only top 10 or 15
+      List<plm.Data> allProducts = plm.ProductListModel.fromJson(response).data ?? [];
+      newArrivalProductList.addAll(allProducts.take(10)); // Top 10
+
+      print("Fetched NewArrival: ${response}");
+      update(); // Ensure UI updates
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 
   getBrandsList() async {
     try {
@@ -205,31 +230,52 @@ List<String> images = [
     }
   }
 
-  getBestSellingList(String currentPage) async {
+  getkeyChainList(String currentPage) async {
     try {
       dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.bestSellingList}&page=$currentPage&filter_type=best_selling");
-      bestSellingProductList
+          ApiMethodList.keyChainList);
+      keyChainProductList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
       AppArray()
-          .bestSellingList
+          .keyChainList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+      print("keyChain: $response");
     } catch (e) {
       rethrow;
     }
   }
 
+  // getOnSaleList(String currentPage) async {
+  //   try {
+  //     dynamic response = await apiCall.getResponse(
+  //         "${ApiMethodList.bestSellingList}&page=$currentPage&filter_type=on_sale");
+  //     onSaleProductList
+  //         .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+  //     AppArray()
+  //         .onSaleList
+  //         .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+  //     print("Sale: $response");
+  //     print("Fetched on sale products: ${onSaleProductList.length}");
+  //     update();
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
   getOnSaleList(String currentPage) async {
     try {
       dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.bestSellingList}&page=$currentPage&filter_type=on_sale");
-      onSaleProductList
-          .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-      AppArray()
-          .onSaleList
-          .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+          "${ApiMethodList.keyChainList}&page=$currentPage&filter_type=on_sale");
+
+      var productList = plm.ProductListModel.fromJson(response).data ?? [];
+      print("Parsed product count: ${productList.length}");
+
+      onSaleProductList.addAll(productList);
+      AppArray().onSaleList.addAll(productList);
+
+      print("onSaleProductList: ${onSaleProductList.length}");
+      update(); // <-- This is important for GetBuilder
     } catch (e) {
-      rethrow;
+      print("Error: $e");
     }
   }
 
@@ -242,6 +288,7 @@ List<String> images = [
       AppArray()
           .recentlyViewedList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+      print("REcent Prouct: $response");
     } catch (e) {
       rethrow;
     }

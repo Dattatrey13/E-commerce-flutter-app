@@ -14,6 +14,7 @@ class SearchScreenController extends GetxController {
 
   TextEditingController controller = TextEditingController();
   int selectRecommended = 0;
+  int selectNewArrival = 0;
   acsm.Products? recentSearchList;
 
   // List<acsm.Products> recentSearchList = [];
@@ -23,6 +24,7 @@ class SearchScreenController extends GetxController {
   // acsm.category? categories;
   // List<acsm.Tags> tagsList = [];
   List recommendedList = [];
+  List newArrivalProductList = [];
   List innerCategoryProduct = [];
 
   BaseApi apiCall = ApiServiceCall();
@@ -30,6 +32,7 @@ class SearchScreenController extends GetxController {
   @override
   void onReady() {
     recommendedList = AppArray().recommendedList;
+    // newArrivalProductList= AppArray().newArrivalProductList;
     innerCategoryProduct = AppArray().innerCategoryProduct;
     update();
     super.onReady();

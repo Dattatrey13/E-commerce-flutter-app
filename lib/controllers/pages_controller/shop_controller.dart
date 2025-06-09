@@ -166,13 +166,19 @@ class ShopController extends GetxController {
       } else if (catId == 'featured_product') {
         response = await apiCall.getResponse(
             "${ApiMethodList.featuredProduct}&page=$currentPage$temp&filter_type=featured$filterString");
-      } else if (catId == 'best_selling') {
+      // } else if (catId == 'keychains') {
+      //   response = await apiCall.getResponse(
+      //       "${ApiMethodList
+      //           .keyChainList}&page=$currentPage$temp&filter_type=key_chains$filterString");
+      }else if (catId == 'keychains') {
         response = await apiCall.getResponse(
-            "${ApiMethodList.bestSellingList}&page=$currentPage$temp&filter_type=best_selling$filterString");
-      } else if (catId == 'on_sale') {
-        response = await apiCall.getResponse(
-            "${ApiMethodList.bestSellingList}&page=$currentPage$temp&filter_type=on_sale$filterString");
-      } else if (catId == 'on_recent') {
+            "${ApiMethodList.keyChainList}?page=$currentPage&page_size=20$filterString");
+        } else if (catId == 'on_sale') {
+          response = await apiCall.getResponse(
+              "${ApiMethodList.keyChainList}&page=$currentPage$temp&filter_type=on_sale$filterString");
+
+
+    } else if (catId == 'on_recent') {
         response = await apiCall.getResponse(
             "${ApiMethodList.recentProduct}&page=$currentPage$temp&filter_type=recent$filterString");
       } else if (catId == 'recommended_product') {

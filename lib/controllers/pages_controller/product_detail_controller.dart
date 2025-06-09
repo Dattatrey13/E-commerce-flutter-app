@@ -95,9 +95,10 @@ class ProductDetailController extends GetxController {
 
 
 getDetails(String slug) async {
-  await getProductDetails(slug); // use slug
-  await getProductReview("3", slug); // still use slug
-  await getRecommendedProductList(slug); // still use slug
+  await getProductDetails(slug);
+  await getProductReview("3", slug);
+  await getRecommendedProductList(slug);
+  // await getNewArrivalProductList(slug);
   if (UserSingleton().token != null) {
     await getRecentProduct("1");
   }
@@ -286,6 +287,19 @@ getDetails(String slug) async {
       rethrow;
     }
   }
+// getNewArrivalProductList(String? slug) async {
+//     recommendedForYouList.clear();
+//     try {
+//       dynamic response = await apiCall
+//           .getResponse("${ApiMethodList.NewArrivalProductById}$slug/");
+//       recommendedForYouList
+//           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
+//       print("Fetched NewArrival: ${response}");
+//
+//     } catch (e) {
+//       rethrow;
+//     }
+//   }
 
   getRecentProduct(String currentPage) async {
     try {

@@ -11,17 +11,61 @@ class ProductListModel {
     _data = data;
   }
 
+  // ProductListModel.fromJson(dynamic json) {
+  //   _success = json['success'];
+  //   _message = json['message'];
+  //   _pagination = json['pagination'] != null
+  //       ? Pagination.fromJson(json['pagination'])
+  //       : null;
+  //
+  //   if (json['data'] != null &&
+  //       json['data'] is Map &&
+  //       json['data']['products'] != null) {
+  //     _data = [];
+  //     json['data']['products'].forEach((v) {
+  //       _data?.add(Data.fromJson(v));
+  //     });
+  //   }
+  // }
+  // ProductListModel.fromJson(dynamic json) {
+  //   _success = json['success'];
+  //   _message = json['message'];
+  //   _pagination = json['pagination'] != null
+  //       ? Pagination.fromJson(json['pagination'])
+  //       : null;
+  //
+  //   if (json['data'] != null && json['data'] is List) {
+  //     _data = [];
+  //     json['data'].forEach((v) {
+  //       _data?.add(Data.fromJson(v));
+  //     });
+  //   }
+  // }
+
+
   ProductListModel.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
     _pagination = json['pagination'] != null
         ? Pagination.fromJson(json['pagination'])
         : null;
-    if (json['data'] != null && json['data'].isNotEmpty) {
-      _data = [];
-      json['data'].forEach((v) {
+
+    _data = [];
+
+    // Case 1: data -> products (Map structure)
+    if (json['data'] != null &&
+        json['data'] is Map &&
+        json['data']['products'] != null &&
+        json['data']['products'] is List) {
+      for (var v in json['data']['products']) {
         _data?.add(Data.fromJson(v));
-      });
+      }
+    }
+    // Case 2: data is a List (direct)
+    else if (json['data'] != null && json['data'] is List) {
+      for (var v in json['data']) {
+        _data?.add(Data.fromJson(v));
+      }
     }
   }
 

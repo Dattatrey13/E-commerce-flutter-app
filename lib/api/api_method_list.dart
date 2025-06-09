@@ -17,12 +17,15 @@ class ApiMethodList {
   static String allCategory = "categories/";
   static String featuredProduct = "product/list/?is_mobile=true";
   static String recentProduct = "product/list/?is_mobile=true";
-  static String recommendedProduct = "product/list/?is_mobile=true";
+  static String recommendedProduct = "product/list/";
+  static String newArrivalProduct = "product/list/?is_mobile=true";
   static String recommendedProductById = "recommended-by-product/";
+  static String NewArrivalProductById = "product/recommended-by-product/";
 
   //static String recommendedProductById = "product/recommended-by-product/";
   static String brandList = "all-brands/";
-  static String bestSellingList = "product/list/?is_mobile=true";
+  static String keyChainList = "product/list/keychains";
+  // static String bestSellingList = "product/list/?is_mobile=true";
   static String wishlistCount = "wish-list/count/";
   static String cartCount = "cart/cart-list/count/";
 
@@ -45,7 +48,8 @@ class ApiMethodList {
   static String productPrice = "product/price/";
   static String allBrands = "categories-vies-brands/";
   static String locationList = "location/list/";
-  static String statesList = "location/states/";
+  static String statesList = "user/address/";
+  // static String statesList = "location/states/";
   static String cityList = "location/states-vies-city/?state_id=";
 
   //endregion

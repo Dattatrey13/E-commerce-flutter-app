@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:dapperz/config.dart';
 import 'package:dapperz/models/dashboard/all_category_model.dart' as cm;
 import 'package:dapperz/models/onboarding_model.dart';
+import 'package:dapperz/models/home_banner_model.dart';
+import 'package:dapperz/models/cartlist_model.dart';
+import 'package:dapperz/models/home_find_style_category.dart';
 
 class AppArray {
   final appCtrl = Get.isRegistered<AppController>()
@@ -51,8 +56,9 @@ class AppArray {
   // Recommended List
   var recommendedList = [];
 
-  // Best Selling List
-  var bestSellingList = [];
+  var newArrivalProductList = [];
+
+  var keyChainList = [];
 
   // On Sale List
   var onSaleList = [];
@@ -290,36 +296,35 @@ class AppArray {
     {
       "title": "Cash On Delivery".tr,
       "image": iconAssets.cash,
+      "method": "cod",
+      "description": "Pay when you receive your order".tr,
+      "isSelected": false
     },
     {
-      "title": "Pay Online".tr,
+      "title": "Pay with Razorpay".tr,
       "image": iconAssets.card,
-      'child': 'form',
-    },
-    // {
-    //   "title": "wallets".tr,
-    //   "image": iconAssets.wallet,
-    //   'child': [
-    //     {'title': 'Industrial & Commercial Bank'.tr, 'isSelect': false},
-    //     {'title': 'Construction Bank Corp.'.tr, 'isSelect': false},
-    //     {'title': 'Agricultural Bank'.tr, 'isSelect': false},
-    //     {'title': 'HSBC Holdings'.tr, 'isSelect': false},
-    //     {'title': 'Bank of America'.tr, 'isSelect': false},
-    //     {'title': 'JPMorgan Chase & Co.'.tr, 'isSelect': false},
-    //   ]
-    // },
-    // {
-    //   "title": "Net Banking".tr,
-    //   "image": iconAssets.netBanking,
-    //   'child': [
-    //     {'title': 'Adyen'.tr, 'isSelect': false},
-    //     {'title': 'Airtel Money'.tr, 'isSelect': false},
-    //     {'title': 'AlliedWallet'.tr, 'isSelect': false},
-    //     {'title': 'Apple Pay'.tr, 'isSelect': false},
-    //     {'title': 'Brinks'.tr, 'isSelect': false},
-    //     {'title': 'CardFree'.tr, 'isSelect': false},
-    //   ]
-    // },
+      "method": "razorpay",
+      "description": "Pay securely using Credit/Debit cards, UPI, Net Banking, or Wallets".tr,
+      "isSelected": false,
+      "paymentOptions": [
+        {
+          "title": "Credit/Debit Cards".tr,
+          "description": "Pay using Visa, Mastercard, RuPay, and more".tr
+        },
+        {
+          "title": "UPI".tr,
+          "description": "Pay using Google Pay, PhonePe, Paytm, and more".tr
+        },
+        {
+          "title": "Net Banking".tr,
+          "description": "Pay using your bank account".tr
+        },
+        {
+          "title": "Wallets".tr,
+          "description": "Pay using Paytm, Amazon Pay, and more".tr
+        }
+      ]
+    }
   ];
 
   //card list
@@ -341,13 +346,12 @@ class AppArray {
     },
     {
       "title": "How can i place an order on your website ?",
-      "child":
-          "Placing an order on dapperz is easy. Follow these steps: Explore our website and When you find the items you want to purchase, click the “Add to Cart” button. You can continue shopping or proceed to checkout. Click on the “Checkout” button. You’ll be prompted to provide your billing and shipping information. If you have a promotional code or coupon, enter it in the designated field during checkout. Select your preferred payment method – whether it’s Cash on Delivery or online payment using Credit/Debit cards or Internet banking. After reviewing your order details, click “Place Order” to confirm your purchase. You will receive an order confirmation. Congratulations! You’ve successfully placed an order on dapperz."
+      "child": "Placing an order on dapperz is easy. Follow these steps:\n\n1. Explore our website and browse through our products\n2. When you find items you want to purchase, click the 'Add to Cart' button\n3. You can continue shopping or proceed to checkout\n4. Click on the 'Checkout' button\n5. You'll be prompted to provide your billing and shipping information\n6. If you have a promotional code or coupon, enter it in the designated field during checkout\n7. Select your preferred payment method – whether it's Cash on Delivery or online payment using Credit/Debit cards or Internet banking\n8. After reviewing your order details, click 'Place Order' to confirm your purchase\n9. You will receive an order confirmation\n\nCongratulations! You've successfully placed an order on dapperz."
     },
-    {
+  {
       "title": "What payment methods do you accept ?",
       "child":
-          "dapperz offers two convenient payment methods. one is Cash on Delivery (COD). second is Pay Online. In online pay you can securely pay using credit or debit cards or internet banking through Easebuzz. "
+          "dapperz offers two convenient payment methods: 1) Cash on Delivery (COD) - Pay when you receive your order. 2) Online Payment through Razorpay - Pay securely using Credit/Debit cards, UPI, Net Banking, or Wallets. All online payments are processed through Razorpay, ensuring a safe and secure transaction."
     },
     {
       "title": "Do you provide bulk or wholesale pricing ?",
@@ -361,12 +365,11 @@ class AppArray {
     },
     {
       "title": "Can i track my order ?",
-      "child":
-          "Absolutely! To track your order, simply navigate to the “My Account” section and select “Orders.” There, you’ll find the tracking information for your order."
+      "child": "Absolutely! To track your order, simply navigate to the 'My Account' section and select 'Orders'. There, you'll find the tracking information for your order."
     },
     {
       "title": "What is your return policy ?",
-      "child":
+      "child": "Yes, dapperz does accept returns of products in accordance with our terms and conditions. For detailed information, please refer to our Refund and Return Policy page."
           "Yes, dapperz does accept returns of products in accordance with our terms and conditions. For detailed information, please refer to our Refund and Return Policy page."
     },
     {
@@ -382,12 +385,12 @@ class AppArray {
     {
       "title": "Can i modify or cancel my order after placing it ?",
       "child":
-          "While modifications are not possible after placing an order, you can request cancellation. If you need to cancel your order, then you navigate to “My Account” and select “Orders”. In Orders section select “Cancel Request”. Keep in mind that once an order has been processed, modifications are not feasible. However, our support team will guide you through the cancellation process. However, our support team will guide you through the cancellation process."
+          "While modifications are not possible after placing an order, you can request cancellation. If you need to cancel your order, navigate to 'My Account' and select 'Orders'. In the Orders section, select 'Cancel Request'. Keep in mind that once an order has been processed, modifications are not feasible. However, our support team will guide you through the cancellation process."
     },
     {
       "title": "What if a product is out of stock ?",
       "child":
-          "We will notify you promptly of the stock shortage. We will suggest alternative or similar products that you may be interested in. We will provide you with an estimated restocking date as soon as it becomes available. Also you can still proceed with your order. We’ll fulfill it as soon as the product is back in stock."
+          "We will notify you promptly of the stock shortage. We will suggest alternative or similar products that you may be interested in. We will provide you with an estimated restocking date as soon as it becomes available. Also you can still proceed with your order. We'll fulfill it as soon as the product is back in stock."
     },
     {
       "title": "What do i do if i receive damaged or defective products ?",
@@ -396,8 +399,7 @@ class AppArray {
     },
     {
       "title": "How do i apply promotional codes or coupons during checkout ?",
-      "child":
-          "Applying promotional codes or coupons is a easy process. Follow these steps: Navigate to the designated section labeled “Get Coupon Code” on either the Cart Page or Checkout Page. In this section, you will find multiple coupon codes along with their details. Review the information to choose the coupon that best suits your purchase. In the coupon there is one button “Copy Coupon Code”. Click on it to copy the code to your clipboard. Proceed to the “apply coupon code” section during the checkout process. Paste the copied coupon code into the designated field. The system will verify if the conditions of the coupon code match your purchase items. If conditions are met, the coupon code will be successfully applied; otherwise, it will not. Enjoy the savings on your building material purchases with the applied coupon code at dapperz!"
+      "child": "Applying promotional codes or coupons is an easy process. Follow these steps:\n\n1. Navigate to the 'Get Coupon Code' section on either the Cart Page or Checkout Page\n2. Browse through available coupon codes and their details\n3. Select the coupon that best suits your purchase\n4. Click the 'Copy Coupon Code' button to copy the code\n5. Go to the 'Apply Coupon Code' section during checkout\n6. Paste the copied code into the designated field\n7. The system will verify if the coupon conditions match your purchase\n8. If conditions are met, the discount will be applied automatically\n\nEnjoy your savings at dapperz!"
     }
   ];
 

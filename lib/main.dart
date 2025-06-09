@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:collection';
 import 'dart:io';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dapperz/common/config/session.dart';
 import 'package:dapperz/config.dart';
@@ -11,11 +12,11 @@ import 'package:dapperz/views/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'common/language/index.dart';
+
 
 FirebaseAuth? auth;
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -86,6 +87,7 @@ void main() async {
   // await requestPermission();
   runApp(MyApp());
 }
+
 
 handlePermission() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;

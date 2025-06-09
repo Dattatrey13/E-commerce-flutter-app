@@ -65,50 +65,6 @@ class ApiServiceCall implements BaseApi {
   //   return headers;
   // }
 
-  // Map<String, String> getHeaders() {
-  //   final headers = {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //     'app': 'consumer',
-  //     'is-mobile': 'true',
-  //   };
-  //
-  //   final token = UserSingleton().token;
-  //   final guestUUID = UserSingleton().uuidForGuest;
-  //   final fcmUUID = UserSingleton().uuidFcm;
-  //   final location = UserSingleton().selectedLocation;
-  //
-  //   if (token != null && token.isNotEmpty) {
-  //     headers['Authorization'] =
-  //     'Token $token';
-  //     // print("Token Header: ${headers['Authorization']}");
-  //   }
-  //
-  //   if (guestUUID != null && guestUUID.isNotEmpty) {
-  //     headers['session-key'] = guestUUID;
-  //     print("Session-Key Header (guest): $guestUUID");
-  //   } else if (fcmUUID != null && fcmUUID.isNotEmpty) {
-  //     headers['session-key'] = fcmUUID;
-  //     print("Session-Key Header (fcm): $fcmUUID");
-  //   } else {
-  //     print("Session Key is missing");
-  //   }
-  //
-  //   if (location != null && location.isNotEmpty) {
-  //     headers['Location'] = location.toLowerCase();
-  //   }
-  //
-  //   // print('Request Headers: $headers');
-  //   print('======== API Headers ========');
-  //   // print('Authorization: Bearer ${UserSingleton().token}');
-  //   // print('Session-Key: ${UserSingleton().uuidForGuest ?? UserSingleton().uuidFcm}');
-  //   // print('Location: ${UserSingleton().selectedLocation}');
-  //   // print('Token saved in UserSingleton: ${UserSingleton().token}');
-  //
-  //   return headers;
-  // }
-
-
   @override
   getResponse(String url) async {
     dynamic responseJson;
@@ -274,48 +230,3 @@ class ApiServiceCall implements BaseApi {
     }
   }
 }
-//   dynamic returnResponse(http.Response response) {
-//     try {
-//       final bodyString = utf8.decode(response.bodyBytes);
-//
-//       // Only attempt JSON parsing for certain status codes
-//       switch (response.statusCode) {
-//         case 200:
-//         case 201:
-//         case 400:
-//         case 500:
-//           try {
-//             return jsonDecode(bodyString);
-//           } catch (e) {
-//             print("JSON parse error: $e");
-//             throw FormatException("Invalid JSON response: $bodyString");
-//           }
-//         case 401:
-//           Fluttertoast.showToast(msg: "Session Expired");
-//           break;
-//         case 403:
-//           if (UserSingleton().token != null) {
-//             Fluttertoast.showToast(msg: "Session Expired");
-//           }
-//           AppController appCtrl = AppController();
-//           appCtrl.selectedIndex = 0;
-//           appCtrl.storage.erase();
-//           Get.forceAppUpdate();
-//           UserSingleton().token = null;
-//           UserSingleton().selectedLocation = null;
-//           Get.offAllNamed(routeName.login);
-//           break;
-//         case 404:
-//           Fluttertoast.showToast(msg: "Not Found");
-//           throw UnauthorisedException("404 Not Found: $bodyString");
-//         default:
-//           throw FetchDataException(
-//               'Error occurred while communicating with server. Status: ${response.statusCode}, Body: $bodyString'
-//           );
-//       }
-//     } catch (e) {
-//       print("Unhandled returnResponse error: $e");
-//       throw FetchDataException("Unknown response format or error: $e");
-//     }
-//   }
-

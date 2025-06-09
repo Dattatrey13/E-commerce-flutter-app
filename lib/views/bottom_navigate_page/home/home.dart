@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset('assets/video/DapperBannerVidefoMobile.mp4')
+    _videoPlayerController = VideoPlayerController.asset('assets/video/DapperBannerVideoMobile.mp4')
       ..setLooping(true)
       ..setVolume(1.0);
 
@@ -131,8 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   ),
                       // ),
                       const SizedBox(height: 20),
-                      const HomeCategoryList(),
-                      const SizedBox(height: 20),
                       Card(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         clipBehavior: Clip.hardEdge,
@@ -157,23 +155,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
                       const BorderLineLayout(),
+                      const SizedBox(height: 20),
+                      const HomeCategoryList(),
+
                       const BorderLineLayout(),
                       if (homeCtrl.getAllCouponsModel != null &&
                           homeCtrl.getAllCouponsModel!.data != null &&
                           homeCtrl.getAllCouponsModel!.data!.isNotEmpty)
                         const OfferCorner(),
-                      const BestSellingLayout(title: 'Best Selling Products'),
+                      const keyChainLayout(title: 'keyChain'),
                       const BorderLineLayout(),
-                      homeCtrl.onSaleProductList.isNotEmpty
-                          ? const OnSaleLayout(title: 'Sale Products')
-                          : Container(),
+                      // homeCtrl.onSaleProductList.isNotEmpty
+                      //     ? const OnSaleLayout(title: 'Sale Products')
+                      //     : Container(),
                       Visibility(
                         visible: UserSingleton().token != null,
                         child: const Column(
                           children: [
                             BorderLineLayout(),
+                            // NewArrivalProductListLayout(title: 'New Arrival'),
+                            // BorderLineLayout(),
                             RecommendedForYouLayout(title: 'Recommended For You'),
                             BorderLineLayout(),
                             RecentlyViewedLayout(title: 'Recently Viewed'),
@@ -201,3 +203,5 @@ class _HomeScreenState extends State<HomeScreen> {
     awesomeNotifications!.setListeners(onActionReceivedMethod: onActionReceivedMethod);
   }
 }
+
+
