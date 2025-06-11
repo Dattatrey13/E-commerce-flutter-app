@@ -68,8 +68,6 @@ class DashboardProductCard extends StatelessWidget {
                     )
                   ],
                 ),
-                // if (data!.isNew) const NewLayout()
-                //if (false) const NewLayout()
 
                 if ((data?.discountPercentage ?? 0) > 0)
                   Positioned(
@@ -125,13 +123,16 @@ class DashboardProductCard extends StatelessWidget {
                 ],
               ),
             ),
-            LatoFontStyle(
-              text: data!.productTitle!.tr,
-              fontSize: FontSizes.f14,
-              fontWeight: FontWeight.normal,
-              color: appCtrl.appTheme.blackColor,
-              overflow: TextOverflow.ellipsis,
-            ).paddingOnly(left: AppScreenUtil().screenWidth(5)),
+            SizedBox(
+              width: 170,
+              child: LatoFontStyle(
+                text: data!.productTitle!.tr,
+                fontSize: FontSizes.f14,
+                fontWeight: FontWeight.normal,
+                color: appCtrl.appTheme.blackColor,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             const Space(0, 5),
             // data!.id != null && (data!.isFeatured ?? false)
             //     ? Container()

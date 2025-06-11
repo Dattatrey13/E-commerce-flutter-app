@@ -147,9 +147,10 @@ class PaymentController extends GetxController {
   payNowOnline() async {
     try {
       HashMap<String, dynamic> params = HashMap();
-      params['payment_method'] = "razorpay";
+
       params['payment_method_title'] = "Pay with Razorpay";
-      params['set_paid'] = "true";
+      params['payment_method'] = "online";
+      params['set_paid'] = "false";
       HashMap<String, dynamic> billingParams = HashMap();
       billingParams['first_name'] = billingAddress!.firstName;
       billingParams['last_name'] = billingAddress!.lastName;
@@ -182,20 +183,24 @@ class PaymentController extends GetxController {
       params['line_items'] = product;
       params['note'] = orderNote;
       params['is_buy_now'] = UserSingleton().isBuyNow;
-      dynamic response =
-          await apiCall.postRequest(ApiMethodList.userOrderCheckout, params);
-      if (OrderOnlineCheckoutModel.fromJson(response).success == true &&
-          OrderOnlineCheckoutModel.fromJson(response).data != null) {
+      
+      // Create order first
+      dynamic response = await apiCall.postRequest(ApiMethodList.userOrderCheckout, params);
+      print("payment_controller: $response");
+      OrderOnlineCheckoutModel orderResponse = OrderOnlineCheckoutModel.fromJson(response);
+      
+      if (orderResponse.success == true && orderResponse.data != null) {
         UserSingleton().isBuyNow = false;
         showProgressDialog(false);
         
         // Initialize Razorpay payment
         final razorpayCtrl = Get.put(RazorpayController());
+        razorpayCtrl.orderId = orderResponse.data!.transactionId;
         razorpayCtrl.startPayment(
           keyId: Config.razorpayKeyId,
           amount: double.parse(totalAmount),
           name: "Dapperz",
-          description: "Payment for Order #${OrderOnlineCheckoutModel.fromJson(response).data!.transactionId}",
+          description: "Payment for Order #${orderResponse.data!.transactionId}",
           prefillEmail: billingAddress!.email ?? "",
           prefillContact: billingAddress!.phoneNumber ?? "",
         );
@@ -205,8 +210,8 @@ class PaymentController extends GetxController {
           if (!loading) {
             // Payment completed (success or failure)
             HashMap<String, dynamic> params = HashMap();
-            params['orderId'] = OrderOnlineCheckoutModel.fromJson(response).data!.transactionId;
-            params['data'] = OrderOnlineCheckoutModel.fromJson(response).data;
+            params['orderId'] = orderResponse.data!.transactionId;
+            params['data'] = orderResponse.data;
             params['type'] = 2; // For Online Payment
             params['shippingAddress'] = shippingAddress;
             Get.offAndToNamed(routeName.orderSuccess, arguments: params);
@@ -215,8 +220,7 @@ class PaymentController extends GetxController {
       } else {
         showProgressDialog(false);
         Fluttertoast.showToast(
-            msg: OrderOnlineCheckoutModel.fromJson(response).message ??
-                "Unable to Place Order");
+            msg: orderResponse.message ?? "Unable to Place Order");
       }
     } catch (e) {
       showProgressDialog(false);

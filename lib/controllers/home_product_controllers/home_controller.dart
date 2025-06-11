@@ -58,11 +58,19 @@ class HomeController extends GetxController {
 
   late PageController pageController;
 
-List<String> images = [
-  // 'assets/video/slider.mp4',
-  'assets/video/DapperBannerVideoMobile.mp4',
-
-];
+// List<String> images = [
+//   // 'assets/video/slider.mp4',
+//   'assets/video/DapperBannerVideoMobile.mp4',
+//
+// ];
+  List<String> images = [
+    'assets/image/slider1.jpg',
+    'assets/image/slider2.jpg',
+    'assets/image/slider3.jpg',
+    'assets/image/slider4.jpg',
+    'assets/image/slider5.jpg',
+    'assets/image/slider6.jpg',
+  ];
 
   @override
   void onReady() async {

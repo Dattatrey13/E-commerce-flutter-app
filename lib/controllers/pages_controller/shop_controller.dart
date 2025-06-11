@@ -166,10 +166,7 @@ class ShopController extends GetxController {
       } else if (catId == 'featured_product') {
         response = await apiCall.getResponse(
             "${ApiMethodList.featuredProduct}&page=$currentPage$temp&filter_type=featured$filterString");
-      // } else if (catId == 'keychains') {
-      //   response = await apiCall.getResponse(
-      //       "${ApiMethodList
-      //           .keyChainList}&page=$currentPage$temp&filter_type=key_chains$filterString");
+
       }else if (catId == 'keychains') {
         response = await apiCall.getResponse(
             "${ApiMethodList.keyChainList}?page=$currentPage&page_size=20$filterString");

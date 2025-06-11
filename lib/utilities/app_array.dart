@@ -303,27 +303,9 @@ class AppArray {
     {
       "title": "Pay with Razorpay".tr,
       "image": iconAssets.card,
-      "method": "razorpay",
+
       "description": "Pay securely using Credit/Debit cards, UPI, Net Banking, or Wallets".tr,
-      "isSelected": false,
-      "paymentOptions": [
-        {
-          "title": "Credit/Debit Cards".tr,
-          "description": "Pay using Visa, Mastercard, RuPay, and more".tr
-        },
-        {
-          "title": "UPI".tr,
-          "description": "Pay using Google Pay, PhonePe, Paytm, and more".tr
-        },
-        {
-          "title": "Net Banking".tr,
-          "description": "Pay using your bank account".tr
-        },
-        {
-          "title": "Wallets".tr,
-          "description": "Pay using Paytm, Amazon Pay, and more".tr
-        }
-      ]
+      "isSelected": false
     }
   ];
 

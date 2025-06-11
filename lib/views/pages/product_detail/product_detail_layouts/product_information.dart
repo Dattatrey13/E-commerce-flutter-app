@@ -67,28 +67,67 @@ class _ProductInformationState extends State<ProductInformation> {
             ],
           ),
 
-          // Product Title
-          ProductDetailWidget().commonText(
-            text: productCtrl.product!.productTitle.toString().tr,
-            fontSize: FontSizes.f16,
-          ),
-
-          const SizedBox(height: 10),
-
-          // Short description
-          Padding(
-            padding: EdgeInsets.only(left: AppScreenUtil().screenWidth(5)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: productCtrl.getDescription(
-                productCtrl.product!.productShortDescription != ""
-                    ? productCtrl.product!.productShortDescription.toString()
-                    : "No Description Available",
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Product Title
+              Expanded(
+                child: ProductDetailWidget().commonText(
+                  text: productCtrl.product!.productTitle.toString().tr,
+                  fontSize: FontSizes.f16,
+                ),
               ),
-            ).marginOnly(left: AppScreenUtil().screenWidth(10)),
+              // Wishlist Icon
+              InkWell(
+                child: GestureDetector(
+                  onTap: () async {
+                    HashMap<String, dynamic> params = HashMap();
+                    params['product_id'] = productCtrl.product!.id!.toString();
+                    bool? addstatus = await appCtrl.addItemToWishlist(params);
+                    if (addstatus != null && addstatus) {
+                      Fluttertoast.showToast(
+                        msg: productCtrl.product!.isInWishlist!
+                            ? "Item removed from wishlist"
+                            : "Item added to Wishlist",
+                      );
+                      productCtrl.product!.setIsInWishlist =
+                      !productCtrl.product!.isInWishlist!;
+                      productCtrl.update();
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: productCtrl.product!.isInWishlist!
+                            ? "Unable to remove product from Wishlist"
+                            : "Unable to add product to Wishlist",
+                      );
+                    }
+                  },
+                  child: SizedBox(
+                    height: productCtrl.product!.isInWishlist! ? 25 : 20,
+                    width: 40,
+                    child: productCtrl.product!.isInWishlist!
+                        ? const LinkHeartIcon(onTap: null, isLiked: true)
+                        : HeartIcon(color: appCtrl.appTheme.blackColor),
+                  ),
+                ),
+              ),
+            ],
           ),
 
           const SizedBox(height: 10),
+
+          // // Short description
+          // Padding(
+          //   padding: EdgeInsets.only(left: AppScreenUtil().screenWidth(5)),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: productCtrl.getDescription(
+          //       productCtrl.product!.productShortDescription != ""
+          //           ? productCtrl.product!.productShortDescription.toString()
+          //           : "No Description Available",
+          //     ),
+          //   ).marginOnly(left: AppScreenUtil().screenWidth(10)),
+          // ),
 
           const RatingLayout(),
 
@@ -112,53 +151,6 @@ class _ProductInformationState extends State<ProductInformation> {
             ProductDetailWidget().inclusiveTax(
               "- ${ProductDetailFont().inclusiveOfAllTaxes}",
             ),
-
-          // Wishlist Icon
-          InkWell(
-            child: GestureDetector(
-              onTap: () async {
-                HashMap<String, dynamic> params = HashMap();
-                params['product_id'] = productCtrl.product!.id!.toString();
-                bool? addstatus = await appCtrl.addItemToWishlist(params);
-                if (addstatus != null && addstatus) {
-                  Fluttertoast.showToast(
-                    msg: productCtrl.product!.isInWishlist!
-                        ? "Item removed from wishlist"
-                        : "Item added to Wishlist",
-                  );
-                  productCtrl.product!.setIsInWishlist =
-                  !productCtrl.product!.isInWishlist!;
-                  productCtrl.update();
-                } else {
-                  Fluttertoast.showToast(
-                    msg: productCtrl.product!.isInWishlist!
-                        ? "Unable to remove product from Wishlist"
-                        : "Unable to add product to Wishlist",
-                  );
-                }
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: productCtrl.product!.isInWishlist! ? 20 : 15,
-                    width: 25,
-                    child: productCtrl.product!.isInWishlist!
-                        ? const LinkHeartIcon(onTap: null, isLiked: true)
-                        : HeartIcon(color: appCtrl.appTheme.blackColor),
-                  ),
-                  const Space(10, 0),
-                  LatoFontStyle(
-                    text: productCtrl.product!.isInWishlist!
-                        ? "Added to Wishlist".tr
-                        : "Add to Wishlist".tr,
-                    fontWeight: FontWeight.w600,
-                    fontSize: FontSizes.f12,
-                  ),
-                ],
-              ).marginOnly(right: 20, bottom: 20),
-            ),
-          ),
 
           const BorderLineLayout(),
 
@@ -205,7 +197,7 @@ class _ProductInformationState extends State<ProductInformation> {
                   ? ConstrainedBox(
                 constraints: _isExpanded
                     ? const BoxConstraints()
-                    : const BoxConstraints(maxHeight: 100),
+                    : const BoxConstraints(maxHeight: 95),
                 child: Padding(
                   padding: EdgeInsets.only(
                       left: AppScreenUtil().screenWidth(5)),

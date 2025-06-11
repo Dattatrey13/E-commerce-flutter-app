@@ -49,5 +49,5 @@ export 'package:shimmer/shimmer.dart';
 export '../routes/common_screen_list.dart';
 
 class Config {
-  static const String razorpayKeyId = 'rzp_test_YOUR_KEY_HERE';
+  static const String razorpayKeyId = 'rzp_test_QeUpckTC6Xhq0m';
 }

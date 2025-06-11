@@ -9,6 +9,8 @@ class ApiMethodList {
   static String userAddress = "user/address/";
   static String userLogin = "user/login/";
   static String subCategory = "category/item/";
+  static String userOrderCheckout = "orders/checkout/";
+  static String updateOrderStatus = "user/order/update-status/";
 
   //endregion
 
@@ -79,13 +81,12 @@ class ApiMethodList {
 
   // Order
   static String userCartTotal = "cart/summary/";
-  static String userOrderCheckout = "orders/checkout/";
-  static String getOrderDetailsByOrderId = "orders/";
+  static String getOrderDetailsByOrderId = "orders/list/";
   static String getOrderDetailsByTransactionId = "orders/transaction/";
   static String getOrderList = "orders/list/";
   static String cancelOrderList = "orders/cancel/";
   static String getAllCoupons = "coupons/";
-  static String getPincodeList = "product/pincode-list/";
+  static String getPincodeList = "location/pincode-validate/";
   static String updateCart = "cart/cart-item/";
 
   // Profile

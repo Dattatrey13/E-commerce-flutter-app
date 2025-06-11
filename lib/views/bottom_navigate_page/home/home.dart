@@ -20,27 +20,36 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final homeCtrl = Get.put(HomeController());
 
-  VideoPlayerController? _videoPlayerController;
-  Future<void>? _initializeVideoPlayerFuture;
+  // VideoPlayerController? _videoPlayerController;
+  // Future<void>? _initializeVideoPlayerFuture;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _videoPlayerController = VideoPlayerController.asset('assets/video/DapperBannerVideoMobile.mp4')
+  //     ..setLooping(true)
+  //     ..setVolume(1.0);
+  //
+  //   _initializeVideoPlayerFuture = _videoPlayerController!.initialize().then((_) {
+  //     _videoPlayerController!.play();
+  //     setState(() {}); // This rebuilds after initialization
+  //   });
+  // }
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset('assets/video/DapperBannerVideoMobile.mp4')
-      ..setLooping(true)
-      ..setVolume(1.0);
-
-    _initializeVideoPlayerFuture = _videoPlayerController!.initialize().then((_) {
-      _videoPlayerController!.play();
-      setState(() {}); // This rebuilds after initialization
-    });
   }
 
   @override
   void dispose() {
-    _videoPlayerController?.dispose();
     super.dispose();
   }
+
+  // @override
+  // void dispose() {
+  //   _videoPlayerController?.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -131,32 +140,76 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   ),
                       // ),
                       const SizedBox(height: 20),
-                      Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        clipBehavior: Clip.hardEdge,
-                        child: AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed(routeName.buildYourHome);
+                      CarouselSlider(
+                        items: homeCtrl.images.map((imagePath) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return GestureDetector(
+                                onTap: () {
+                                  int index = homeCtrl.images.indexOf(imagePath);
+                                  if (index == 0) {
+                                    Get.toNamed(routeName.buildYourHome);
+                                  } else if (index == 1) {
+                                    Get.toNamed(routeName.getQuote);
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width, // Full width
+                                  height: 300, // Set your desired height here
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Image.asset(
+                                      imagePath,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
                             },
-                            child: _videoPlayerController == null
-                                ? const Center(child: CircularProgressIndicator())
-                                : FutureBuilder(
-                              future: _initializeVideoPlayerFuture,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.done) {
-                                  return VideoPlayer(_videoPlayerController!);
-                                } else {
-                                  return const Center(child: CircularProgressIndicator());
-                                }
-                              },
-                            ),
-                          ),
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          height: 200, // Same as above or adjusted value
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          viewportFraction: 1.0,
                         ),
                       ),
-                      const BorderLineLayout(),
-                      const SizedBox(height: 20),
+
+
+                      const SizedBox(height: 10),
+                      // Card(
+                      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      //   clipBehavior: Clip.hardEdge,
+                      //   child: AspectRatio(
+                      //     aspectRatio: 16 / 9,
+                      //     child: GestureDetector(
+                      //       onTap: () {
+                      //         Get.toNamed(routeName.buildYourHome);
+                      //       },
+                      //       child: _videoPlayerController == null
+                      //           ? const Center(child: CircularProgressIndicator())
+                      //           : FutureBuilder(
+                      //         future: _initializeVideoPlayerFuture,
+                      //         builder: (context, snapshot) {
+                      //           if (snapshot.connectionState == ConnectionState.done) {
+                      //             return VideoPlayer(_videoPlayerController!);
+                      //           } else {
+                      //             return const Center(child: CircularProgressIndicator());
+                      //           }
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // const BorderLineLayout(),
+                      // const SizedBox(height: 20),
                       const HomeCategoryList(),
 
                       const BorderLineLayout(),
@@ -164,7 +217,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           homeCtrl.getAllCouponsModel!.data != null &&
                           homeCtrl.getAllCouponsModel!.data!.isNotEmpty)
                         const OfferCorner(),
-                      const keyChainLayout(title: 'keyChain'),
+                      RecommendedForYouLayout(title: 'New Arrival'),
+
                       const BorderLineLayout(),
                       // homeCtrl.onSaleProductList.isNotEmpty
                       //     ? const OnSaleLayout(title: 'Sale Products')
@@ -176,10 +230,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             BorderLineLayout(),
                             // NewArrivalProductListLayout(title: 'New Arrival'),
                             // BorderLineLayout(),
-                            RecommendedForYouLayout(title: 'Recommended For You'),
-                            BorderLineLayout(),
-                            RecentlyViewedLayout(title: 'Recently Viewed'),
-                            BorderLineLayout(),
+                            const keyChainLayout(title: 'keyChain'),
+                            // BorderLineLayout(),
+                            // RecentlyViewedLayout(title: 'Recently Viewed'),
+                            // BorderLineLayout(),
                           ],
                         ),
                       ),
