@@ -76,19 +76,19 @@ class _RefundAndReturnsPolicyState extends State<RefundAndReturnsPolicy> {
                 AboutUsWidget().commonDescText(
                     "- Cement, Steel, Binding Wire and other Building Material are not applicable for return."),
                 const Space(0, 20),
-                AboutUsWidget().commonText("Cancellation by CIVILIS Mart",
+                AboutUsWidget().commonText("Cancellation by Dapperz Mart",
                     FontWeight.w700, FontSizes.f16),
                 const Space(0, 20),
                 AboutUsWidget().commonDescText(
                     "- Please note that there may be certain orders that we are unable to accept and must cancel. We reserve the right, at our sole discretion, to refuse or cancel any order for any reason. Some situations that may result in your order being canceled include limitations of quantities available for purchase, inaccuracies or errors in Product or pricing information, or problems identified by our credit and fraud avoidance department."),
                 AboutUsWidget().commonDescText(
-                    "- We may also require additional verifications or information before accepting any order. We will contact you if all or any portion of your order is canceled or if additional information is required to accept your order. If your order is cancelled after your credit card has been charged, the said amount will be reversed back in your Card Account. The customer agrees not to dispute the decision made by CIVILIS MART and accept CIVILIS MART decision regarding the cancellation."),
+                    "- We may also require additional verifications or information before accepting any order. We will contact you if all or any portion of your order is canceled or if additional information is required to accept your order. If your order is cancelled after your credit card has been charged, the said amount will be reversed back in your Card Account. The customer agrees not to dispute the decision made by Dapperz MART and accept Dapperz MART decision regarding the cancellation."),
                 const Space(0, 20),
                 AboutUsWidget().commonText("Cancellations by the customer",
                     FontWeight.w700, FontSizes.f16),
                 const Space(0, 20),
                 AboutUsWidget().commonDescText(
-                    "- In case of requests for order cancellations, CIVILIS MART reserves the right to accept or reject requests for order cancellations for any reason. As part of usual business practice, if we receive a cancellation notice and the order has not been invoiced, we shall cancel the order and refund the entire amount."),
+                    "- In case of requests for order cancellations, Dapperz MART reserves the right to accept or reject requests for order cancellations for any reason. As part of usual business practice, if we receive a cancellation notice and the order has not been invoiced, we shall cancel the order and refund the entire amount."),
                 AboutUsWidget().commonDescText(
                     "- If you’d like to cancel your order please call customer service at +91 990 990 6954/+91 990 990 6964, MON-SUN : 09:00 – 18:00 (IST)"),
                 const Space(0, 20),
@@ -113,13 +113,13 @@ class _RefundAndReturnsPolicyState extends State<RefundAndReturnsPolicy> {
                     "Cancelled Orders", FontWeight.w700, FontSizes.f16),
                 const Space(0, 20),
                 AboutUsWidget().commonDescText(
-                    "If your payment method is Prepaid- Refund will reflect in 5-15 working days depending upon your bank. CIVILIS Credits- refund will reflect in your registered account within 48 working hours."),
+                    "If your payment method is Prepaid- Refund will reflect in 5-15 working days depending upon your bank. Dapperz Credits- refund will reflect in your registered account within 48 working hours."),
                 const Space(0, 20),
                 AboutUsWidget().commonText(
                     "Returned Orders", FontWeight.w700, FontSizes.f16),
                 const Space(0, 20),
                 AboutUsWidget().commonDescText(
-                    "Once the product(s) reaches back to our warehouse and completes the quality check, refund(s) shall be initiated as per the below, If your payment method is Prepaid- Refunds will be initiated in 48 hours and amount may take up to 5-10 working days depending upon your bank to reflect in your account. CIVILIS Credits- Refunds will be initiated in 24 hours, Credits shall reflect in your registered account within 2 working days. Cash on delivery – We shall send you a link on your registered number & Email Id within 48 hours, You can claim the amount by entering your UPI Id or your Bank Account information. (Link shall be valid up to 7 days)"),
+                    "Once the product(s) reaches back to our warehouse and completes the quality check, refund(s) shall be initiated as per the below, If your payment method is Prepaid- Refunds will be initiated in 48 hours and amount may take up to 5-10 working days depending upon your bank to reflect in your account. Dapperz Credits- Refunds will be initiated in 24 hours, Credits shall reflect in your registered account within 2 working days. Cash on delivery – We shall send you a link on your registered number & Email Id within 48 hours, You can claim the amount by entering your UPI Id or your Bank Account information. (Link shall be valid up to 7 days)"),
                 const Space(0, 20),
                 AboutUsWidget().commonText(
                     "Warranty Claim", FontWeight.w700, FontSizes.f16),

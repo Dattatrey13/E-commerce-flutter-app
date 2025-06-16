@@ -70,6 +70,8 @@ class HomeController extends GetxController {
     'assets/image/slider4.jpg',
     'assets/image/slider5.jpg',
     'assets/image/slider6.jpg',
+    'assets/image/slider6.jpg',
+    'assets/image/slider6.jpg',
   ];
 
   @override

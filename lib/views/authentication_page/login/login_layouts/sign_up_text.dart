@@ -11,7 +11,7 @@ class SignUpText extends StatelessWidget {
       return CommonAccountText(
         text1: CommonTextFont().ifYouAreNew,
         text2: CommonTextFont().createNow,
-        textColor: appCtrl.appTheme.blackColor,
+        textColor: appCtrl.appTheme.blackText,
         fontWeight: FontWeight.normal,
         onTap: () => Get.toNamed(routeName.signUp),
       );

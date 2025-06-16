@@ -27,10 +27,10 @@ class AboutUsBody extends StatelessWidget {
               const Space(0, 20),
               //description1 text layout
               AboutUsWidget().commonDescText(
-                  "Civilis Mart, established in Surat with the aim to provide top-quality building materials at lowest cost and with rapid service, we have designed a user friendly online store that promises an easy and enjoyable shopping experience."),
+                  "Dapperz Mart, established in Surat with the aim to provide top-quality building materials at lowest cost and with rapid service, we have designed a user friendly online store that promises an easy and enjoyable shopping experience."),
               const Space(0, 20),
               AboutUsWidget()
-                  .commonText("WHY CIVILIS ?", FontWeight.w700, FontSizes.f16),
+                  .commonText("WHY Dapperz ?", FontWeight.w700, FontSizes.f16),
               const Space(0, 20),
               //description2 text layout
               AboutUsWidget().commonDescText(
@@ -41,7 +41,7 @@ class AboutUsBody extends StatelessWidget {
               const Space(0, 20),
               //description2 text layout
               AboutUsWidget().commonDescText(
-                  "Civilis Mart was established on 2021 at Surat. It is an e-commerce website that serves as a platform for construction materials and other services. Civilis mart has successfully completed more than 200 orders with 75+ satisfied and happy customers. Our value lies in the trust we have established with countless builders and contractors in real estate."),
+                  "Dapperz Mart was established on 2021 at Surat. It is an e-commerce website that serves as a platform for construction materials and other services. Dapperz mart has successfully completed more than 200 orders with 75+ satisfied and happy customers. Our value lies in the trust we have established with countless builders and contractors in real estate."),
               const Space(0, 20),
               AboutUsWidget()
                   .commonText("OUR MISSION", FontWeight.w700, FontSizes.f16),
@@ -55,7 +55,7 @@ class AboutUsBody extends StatelessWidget {
               const Space(0, 20),
               //description2 text layout
               AboutUsWidget().commonDescText(
-                  "Our vision is to be the global leader in e-commerce for construction materials, known for our unwavering commitment to quality, innovation, and customer satisfaction. Civilis Mart aims to shape the future of construction procurement, setting new standards and redefining the way builders and contractors approach their material sourcing needs."),
+                  "Our vision is to be the global leader in e-commerce for construction materials, known for our unwavering commitment to quality, innovation, and customer satisfaction. Dapperz Mart aims to shape the future of construction procurement, setting new standards and redefining the way builders and contractors approach their material sourcing needs."),
               const Space(0, 30),
               //statistic layout
               const AboutUsStatistic(),

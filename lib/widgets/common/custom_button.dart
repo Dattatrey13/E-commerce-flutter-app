@@ -50,7 +50,7 @@ class CustomButton extends StatelessWidget {
                 ? (color ?? appCtrl.appTheme.primary)
                 : appCtrl.appTheme.greyLight25),
             overlayColor: MaterialStateProperty.all<Color>(onTap != null
-                ? (color ?? const Color(0xFFFFF7BF))
+                ? (color ?? Colors.white)
                 : appCtrl.appTheme.greyLight25),
             elevation: MaterialStateProperty.resolveWith((states) {
               if (states.contains(MaterialState.pressed)) {

@@ -70,7 +70,7 @@ class SignUpScreen extends StatelessWidget {
                     CommonAccountText(
                       text1: CommonTextFont().alreadyAccount,
                       text2: CommonTextFont().signIn,
-                      textColor: signUpCtrl.appCtrl.appTheme.blackColor,
+                      textColor: signUpCtrl.appCtrl.appTheme.blackText,
                       fontWeight: FontWeight.normal,
                       onTap: () => Get.back(),
                     ),

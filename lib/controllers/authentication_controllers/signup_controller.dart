@@ -39,64 +39,66 @@ class SignUpController extends GetxController {
   }
 
   Future<void> signRegister() async {
-    if (signupFormKey.currentState!.validate()) {
-      FocusScope.of(Get.context!).unfocus();
-      update();
-      socialLoginCtrl.showLoading();
-
-      try {
-        final params = {
-          "first_name": txtName.text.trim(),
-          "email": txtEmail.text.trim(),
-          "password": txtPassword.text.trim(),
-        };
-
-        print("Sending signup request: $params");
-
-        final response = await apiCall.postRequest(ApiMethodList.userRegister, params);
-        final registerModel = RegisterNewUserModel.fromJson(response);
-
-        print("Signup response: $response");
-
-        if (registerModel.isSuccess == true) {
-          // Store user info
-          UserSingleton().isGuest = false;
-          UserSingleton().token = registerModel.data!.access;
-          UserSingleton().uuidFcm = registerModel.data!.userData!.uuid;
-          UserSingleton().firstName = registerModel.data!.userData!.firstName ?? "";
-
-          // Save session data
-          await appCtrl.storage.write(Session.isGuest, false);
-          await appCtrl.storage.write(Session.isLogin, true);
-          await appCtrl.storage.write(Session.isGuestLoginToken, "");
-          await appCtrl.storage.write(Session.isRegularLoginToken, UserSingleton().token);
-          await appCtrl.storage.write(Session.id, UserSingleton().uuidFcm);
-          await appCtrl.storage.write(Session.userName, UserSingleton().firstName);
-          await appCtrl.storage.write(Session.password, txtPassword.text.trim());
-
-          // Optional UI flags
-          appCtrl.isHeart = true;
-          appCtrl.isCart = true;
-          appCtrl.isShare = false;
-          appCtrl.isSearch = true;
-          appCtrl.isNotification = false;
-
-          Fluttertoast.showToast(msg: "User Registered Successfully");
-          Get.offAllNamed(routeName.dashboard);
-        } else {
-          Fluttertoast.showToast(msg: "Registration failed. Try again.");
-        }
-      } catch (e) {
-        print("Signup error: $e");
-        Fluttertoast.showToast(msg: "An unexpected error occurred");
-      } finally {
-        socialLoginCtrl.hideLoading();
-        update();
-      }
-    } else {
+    if (!signupFormKey.currentState!.validate()) {
       print("Form not valid");
+      return;
+    }
+
+    FocusScope.of(Get.context!).unfocus();
+    update();
+    socialLoginCtrl.showLoading();
+
+    try {
+      final params = {
+        "first_name": txtName.text.trim(),
+        "email": txtEmail.text.trim(),
+        "password": txtPassword.text.trim(),
+      };
+
+      print("Sending signup request: $params");
+
+      final response = await apiCall.postRequest(ApiMethodList.userRegister, params);
+      final registerModel = RegisterNewUserModel.fromJson(response);
+
+      print("Signup response: $response");
+
+      if (registerModel.isSuccess == true) {
+        // Set singleton values
+        UserSingleton().isGuest = false;
+        UserSingleton().token = registerModel.data!.access;
+        UserSingleton().uuidFcm = registerModel.data!.userData!.uuid;
+        UserSingleton().firstName = registerModel.data!.userData!.firstName ?? "";
+
+        // Store in GetStorage
+        await appCtrl.storage.write(Session.isGuest, false);
+        await appCtrl.storage.write(Session.isLogin, true);
+        await appCtrl.storage.write(Session.isGuestLoginToken, "");
+        await appCtrl.storage.write(Session.isRegularLoginToken, UserSingleton().token);
+        await appCtrl.storage.write(Session.id, UserSingleton().uuidFcm);
+        await appCtrl.storage.write(Session.userName, UserSingleton().firstName);
+        await appCtrl.storage.write(Session.password, txtPassword.text.trim());
+
+        // UI flags
+        appCtrl.isHeart = true;
+        appCtrl.isCart = true;
+        appCtrl.isShare = false;
+        appCtrl.isSearch = true;
+        appCtrl.isNotification = false;
+
+        Fluttertoast.showToast(msg: "User Registered Successfully");
+        Get.offAllNamed(routeName.dashboard);
+      } else {
+        Fluttertoast.showToast(msg: registerModel.message ?? "Registration failed. Try again.");
+      }
+    } catch (e) {
+      print("Signup error: $e");
+      Fluttertoast.showToast(msg: "An unexpected error occurred");
+    } finally {
+      socialLoginCtrl.hideLoading();
+      update();
     }
   }
+
 
   // Future<void> signRegister() async {
   //   if (signupFormKey.currentState!.validate()) {

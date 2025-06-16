@@ -73,7 +73,7 @@ class DrawerPageController extends GetxController {
       Get.forceAppUpdate();
       navigatorKey.currentState!.push(MaterialPageRoute(
           builder: (BuildContext context) =>
-              const ChatScreen(id: "2", name: "Civilis Smart Support")));
+              const ChatScreen(id: "2", name: "Dapperz Smart Support")));
     } else if (index == 10) {
       Get.back();
       Get.toNamed(routeName.contactUs);

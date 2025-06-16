@@ -1,6 +1,6 @@
 /// success : true
 /// message : "Success"
-/// data : {"quotation":{"id":44,"request_count":9,"name":"Hemant","phone_number":"9123456780","company_name":"18","area":null,"requirements":"Building Material","details":"Testing","form_type":"GET_QUOTE","other_data":{"company_name":"18"},"created_at":"2024-10-16T23:05:09.523336","is_handover":false,"assigned_at":null,"is_reported":false,"reference_images":[],"is_blocked":false,"is_active":true,"city":null,"category_id":null,"requested_user":2,"assigned_vendor":null},"requests":{"id":15,"quotation_items":[{"id":16,"title":"item 1","description":"Description","price":"500.00","qty":5,"line_total":"2500.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44},{"id":17,"title":"Item 2","description":"Description","price":"200.00","qty":5,"line_total":"1000.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44}],"requested_user":{"id":2,"first_name":"Hemant","last_name":"Manglani"},"vendor_id":{"id":203,"first_name":"Civilis (c9)","last_name":"Mart"},"created_at":"2024-10-17T09:19:37.456920","updated_at":"2024-10-17T09:19:37.456939","is_reported":false,"is_deleted":false,"status":"pending","total":"3500.00","sub_total":"3150.00","total_tax":"350.00","notes":null,"is_advance":true,"shipping":"0.00","discount":"0.00","reference_images":null,"quotation_id":44}}
+/// data : {"quotation":{"id":44,"request_count":9,"name":"Hemant","phone_number":"9123456780","company_name":"18","area":null,"requirements":"Building Material","details":"Testing","form_type":"GET_QUOTE","other_data":{"company_name":"18"},"created_at":"2024-10-16T23:05:09.523336","is_handover":false,"assigned_at":null,"is_reported":false,"reference_images":[],"is_blocked":false,"is_active":true,"city":null,"category_id":null,"requested_user":2,"assigned_vendor":null},"requests":{"id":15,"quotation_items":[{"id":16,"title":"item 1","description":"Description","price":"500.00","qty":5,"line_total":"2500.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44},{"id":17,"title":"Item 2","description":"Description","price":"200.00","qty":5,"line_total":"1000.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44}],"requested_user":{"id":2,"first_name":"Hemant","last_name":"Manglani"},"vendor_id":{"id":203,"first_name":"Dapperz (c9)","last_name":"Mart"},"created_at":"2024-10-17T09:19:37.456920","updated_at":"2024-10-17T09:19:37.456939","is_reported":false,"is_deleted":false,"status":"pending","total":"3500.00","sub_total":"3150.00","total_tax":"350.00","notes":null,"is_advance":true,"shipping":"0.00","discount":"0.00","reference_images":null,"quotation_id":44}}
 
 class QuoteRequestDetailModel {
   QuoteRequestDetailModel({
@@ -41,7 +41,7 @@ class QuoteRequestDetailModel {
 }
 
 /// quotation : {"id":44,"request_count":9,"name":"Hemant","phone_number":"9123456780","company_name":"18","area":null,"requirements":"Building Material","details":"Testing","form_type":"GET_QUOTE","other_data":{"company_name":"18"},"created_at":"2024-10-16T23:05:09.523336","is_handover":false,"assigned_at":null,"is_reported":false,"reference_images":[],"is_blocked":false,"is_active":true,"city":null,"category_id":null,"requested_user":2,"assigned_vendor":null}
-/// requests : {"id":15,"quotation_items":[{"id":16,"title":"item 1","description":"Description","price":"500.00","qty":5,"line_total":"2500.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44},{"id":17,"title":"Item 2","description":"Description","price":"200.00","qty":5,"line_total":"1000.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44}],"requested_user":{"id":2,"first_name":"Hemant","last_name":"Manglani"},"vendor_id":{"id":203,"first_name":"Civilis (c9)","last_name":"Mart"},"created_at":"2024-10-17T09:19:37.456920","updated_at":"2024-10-17T09:19:37.456939","is_reported":false,"is_deleted":false,"status":"pending","total":"3500.00","sub_total":"3150.00","total_tax":"350.00","notes":null,"is_advance":true,"shipping":"0.00","discount":"0.00","reference_images":null,"quotation_id":44}
+/// requests : {"id":15,"quotation_items":[{"id":16,"title":"item 1","description":"Description","price":"500.00","qty":5,"line_total":"2500.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44},{"id":17,"title":"Item 2","description":"Description","price":"200.00","qty":5,"line_total":"1000.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44}],"requested_user":{"id":2,"first_name":"Hemant","last_name":"Manglani"},"vendor_id":{"id":203,"first_name":"Dapperz (c9)","last_name":"Mart"},"created_at":"2024-10-17T09:19:37.456920","updated_at":"2024-10-17T09:19:37.456939","is_reported":false,"is_deleted":false,"status":"pending","total":"3500.00","sub_total":"3150.00","total_tax":"350.00","notes":null,"is_advance":true,"shipping":"0.00","discount":"0.00","reference_images":null,"quotation_id":44}
 
 class Data {
   Data({
@@ -79,7 +79,7 @@ class Data {
 /// id : 15
 /// quotation_items : [{"id":16,"title":"item 1","description":"Description","price":"500.00","qty":5,"line_total":"2500.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44},{"id":17,"title":"Item 2","description":"Description","price":"200.00","qty":5,"line_total":"1000.00","is_included_tax":true,"tax_per":"10.00","quotation_id":44}]
 /// requested_user : {"id":2,"first_name":"Hemant","last_name":"Manglani"}
-/// vendor_id : {"id":203,"first_name":"Civilis (c9)","last_name":"Mart"}
+/// vendor_id : {"id":203,"first_name":"Dapperz (c9)","last_name":"Mart"}
 /// created_at : "2024-10-17T09:19:37.456920"
 /// updated_at : "2024-10-17T09:19:37.456939"
 /// is_reported : false
@@ -248,7 +248,7 @@ class Requests {
 }
 
 /// id : 203
-/// first_name : "Civilis (c9)"
+/// first_name : "Dapperz (c9)"
 /// last_name : "Mart"
 
 class VendorId {

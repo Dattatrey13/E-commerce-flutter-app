@@ -63,7 +63,7 @@ Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
         MaterialPageRoute(
           builder: (context) => ChatScreen(
             id: receivedAction.payload!['support_id'],
-            name: "Civilis Smart Support",
+            name: "Dapperz Smart Support",
           ),
         ),
       );
