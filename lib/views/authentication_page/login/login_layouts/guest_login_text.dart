@@ -32,7 +32,7 @@ class GuestLoginText extends StatelessWidget {
             CommonAccountText(
               text1: CommonTextFont().continueAsGuest,
               text2: "",
-              textColor: appCtrl.appTheme.blackText,
+              textColor: appCtrl.appTheme.whiteColor,
               fontWeight: FontWeight.normal,
             ),
           ],

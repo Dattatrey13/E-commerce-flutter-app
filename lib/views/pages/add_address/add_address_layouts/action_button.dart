@@ -16,7 +16,8 @@ class ActionButton extends StatelessWidget {
                 vertical: AppScreenUtil().screenHeight(6)),
             decoration: BoxDecoration(
                 color: index! == selectRadio
-                    ? appCtrl.appTheme.whiteColor
+                    ? appCtrl.appTheme.themeColor
+                    // ? appCtrl.appTheme.whiteColor
                     : appCtrl.appTheme.greyLight25,
                 borderRadius:
                 BorderRadius.circular(AppScreenUtil().borderRadius(2))),

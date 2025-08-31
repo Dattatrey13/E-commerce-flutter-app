@@ -18,7 +18,8 @@ class LinkHeartIcon extends StatelessWidget {
             horizontal: AppScreenUtil().size(5),
             vertical: AppScreenUtil().size(5)),
         decoration: BoxDecoration(
-          color: appCtrl.appTheme.bgColor,
+          // color: appCtrl.appTheme.bgColor,
+          color: appCtrl.appTheme.themeColor,
           shape: BoxShape.circle,
         ),
         child: LikeButton(

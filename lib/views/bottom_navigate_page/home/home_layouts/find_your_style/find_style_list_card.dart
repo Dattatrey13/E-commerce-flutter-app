@@ -13,13 +13,17 @@ class DashboardProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (data == null) {
+      return const SizedBox(); // Prevent null crash
+    }
+
     return GetBuilder<AppController>(builder: (appCtrl) {
-      double rating = double.parse((data!.averageRating ?? 0.0).toString());
+      double rating = double.tryParse(data?.averageRating?.toString() ?? '0.0') ?? 0.0;
+
       return SizedBox(
         width: 200,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Stack(
               alignment: Alignment.topCenter,
@@ -29,15 +33,6 @@ class DashboardProductCard extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: 200,
-                      child: data!.imageIds!.isEmpty
-                          ? Image.asset(imageAssets.noData)
-                          : ProductImage(
-                              // image: data!.imageIds!.first.url.toString(),
-                          image: data!.defaultImage!.productImageMeta!.mobile!,
-                          isFit: isFit),
-                    ),
-                    SizedBox(
-                      height: 200,
                       child: (data?.defaultImage?.productImageMeta?.mobile ?? '').isEmpty
                           ? Image.asset(imageAssets.noData)
                           : ProductImage(
@@ -45,22 +40,21 @@ class DashboardProductCard extends StatelessWidget {
                         isFit: isFit,
                       ),
                     ),
-
                     Container(
                       child: LinkHeartIcon(
                         onTap: (bool val) async {
+                          if (data?.id == null) return false;
                           HashMap<String, dynamic> params = HashMap();
                           params['product_id'] = data!.id!.toString();
-                          bool? status =
-                              await appCtrl.addItemToWishlist(params);
+
+                          bool? status = await appCtrl.addItemToWishlist(params);
 
                           if (status != null && status) {
-                            data!.setIsWishList =
-                                !(data!.isInWishlist ?? false);
+                            data!.setIsWishList = !(data!.isInWishlist ?? false);
                           }
-                          return data!.isInWishlist;
+                          return data!.isInWishlist ?? false;
                         },
-                        isLiked: data!.isInWishlist,
+                        isLiked: data!.isInWishlist ?? false,
                       ).paddingOnly(
                         top: AppScreenUtil().screenHeight(10),
                         right: AppScreenUtil().screenWidth(10),
@@ -92,29 +86,27 @@ class DashboardProductCard extends StatelessWidget {
               ],
             ),
             const Space(0, 5),
+
             Visibility(
-              visible: !(rating == 0.0),
+              visible: rating > 0.0,
               child: Column(
                 children: [
                   Row(
                     children: [
                       LatoFontStyle(
-                        text: " ${rating == 0.0 ? 0 : rating}".toString(),
+                        text: rating.toStringAsFixed(1),
                         fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        // color: appCtrl.appTheme.primary,
                       ),
                       const Space(5, 0),
                       Rating(
-                        val: double.parse(data!.averageRating.toString()),
+                        val: rating,
                         onRatingUpdate: (val) {},
                         ignoreGestures: true,
                       ),
                       const Space(5, 0),
                       LatoFontStyle(
-                        text: "(${data!.ratingCount.toString()})".toString(),
+                        text: "(${data!.ratingCount?.toString() ?? '0'})",
                         fontSize: 12,
-                        fontWeight: FontWeight.normal,
                         color: appCtrl.appTheme.contentColor,
                       )
                     ],
@@ -123,83 +115,234 @@ class DashboardProductCard extends StatelessWidget {
                 ],
               ),
             ),
+
             SizedBox(
               width: 170,
               child: LatoFontStyle(
-                text: data!.productTitle!.tr,
+                text: data?.productTitle,
                 fontSize: FontSizes.f14,
-                fontWeight: FontWeight.normal,
                 color: appCtrl.appTheme.blackColor,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             const Space(0, 5),
-            // data!.id != null && (data!.isFeatured ?? false)
-            //     ? Container()
-            //     : PriceLayout(
-            //         // totalPrice: data!.salePrice != null && data!.salePrice != "" && data!.salePrice != "null"
-            //         //     ? '${appCtrl.priceSymbol} ${(data!.salePrice!)}'
-            //         //     : "",
-            //   totalPrice: data!.isOnSale == true &&
-            //       data!.salePrice != data!.regularPrice &&
-            //       data!.regularPrice != "xyz"
-            //             ? data!.salePrice
-            //             : null,
-            //         // mrp: '${appCtrl.priceSymbol} ${data!.price}'
-            //         mrp: data!.price,
-            //         //  '${(data!.isAttribute! ? data!.priceRange : isInteger(num.parse(data!.regularPrice ?? "0")) ? num.parse(data!.regularPrice ?? "0").toStringAsFixed(0) : data!.regularPrice ?? "0")}'
-            //         //todo: set discount price
-            //         discount: data!.discountPercentage.toString(),
-            //         // data!.salePrice != null &&
-            //         //         data!.salePrice != "" &&
-            //         //         data!.salePrice != "null"
-            //         //     ? isInteger(num.parse(
-            //         //             (double.parse(data!.regularPrice!) - double.parse(data!.salePrice!)).toString()))
-            //         //         ? getDiscountPercentage(
-            //         //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
-            //         //             .toString()
-            //         //         : getDiscountPercentage(
-            //         //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
-            //         //             .toString()
-            //         //     : "",
-            //         fontSize: data!.regularPrice != null &&
-            //             data!.regularPrice != "" &&
-            //             data!.regularPrice != "xyz"
-            //             ? MediaQuery.of(context).size.width > 400
-            //                 ? FontSizes.f12
-            //                 : FontSizes.f12
-            //             : FontSizes.f12,
-            //         isDiscountShow: data!.discountPercentage != 0.0 &&
-            //                 data!.discountPercentage != null
-            //             ? true
-            //             : false,
-            //       ),
-            data!.id != null && (data!.isFeatured ?? false)
+
+            (data!.id != null && (data!.isFeatured ?? false))
                 ? Container()
                 : PriceLayout(
               totalPrice: data!.isOnSale == true &&
-                  data!.salePrice != data!.regularPrice &&
-                  data!.regularPrice != "xyz"
-                  ? data!.salePrice
+                  data?.salePrice != data?.regularPrice &&
+                  data?.regularPrice != "xyz"
+                  ? data?.salePrice
                   : null,
-              mrp: data!.regularPrice,
-              // discount: data!.discountPercentage.toString(),
-              fontSize: data!.regularPrice != null &&
-                  data!.regularPrice != "" &&
-                  data!.regularPrice != "xyz"
-                  ? MediaQuery.of(context).size.width > 400
-                  ? FontSizes.f12
-                  : FontSizes.f12
-                  : FontSizes.f12,
-              // isDiscountShow: data!.discountPercentage != 0.0 &&
-              //     data!.discountPercentage != null
-              //     ? true
-              //     : false,
+              mrp: data?.regularPrice,
+              fontSize: FontSizes.f12,
             ),
-
           ],
         ),
       );
     });
   }
 }
+
+
+
+// class DashboardProductCard extends StatelessWidget {
+//   final plm.Data? data;
+//   final bool isFit;
+//
+//   const DashboardProductCard({Key? key, this.data, this.isFit = true})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetBuilder<AppController>(builder: (appCtrl) {
+//       double rating = double.parse((data!.averageRating ?? 0.0).toString());
+//       return SizedBox(
+//         width: 200,
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Stack(
+//               alignment: Alignment.topCenter,
+//               children: [
+//                 Stack(
+//                   alignment: Alignment.topRight,
+//                   children: [
+//                     SizedBox(
+//                       height: 200,
+//                       child: data!.imageIds!.isEmpty
+//                           ? Image.asset(imageAssets.noData)
+//                           : ProductImage(
+//                               // image: data!.imageIds!.first.url.toString(),
+//                           image: data?.defaultImage?.productImageMeta?.mobile ?? imageAssets.logo,
+//                           isFit: isFit),
+//                     ),
+//                     SizedBox(
+//                       height: 200,
+//                       child: (data!.defaultImage!.productImageMeta!.mobile! ?? '').isEmpty
+//                           ? Image.asset(imageAssets.noData)
+//                           : ProductImage(
+//                         image: data!.defaultImage!.productImageMeta!.mobile!,
+//                         isFit: isFit,
+//                       ),
+//                     ),
+//
+//                     Container(
+//                       child: LinkHeartIcon(
+//                         onTap: (bool val) async {
+//                           HashMap<String, dynamic> params = HashMap();
+//                           params['product_id'] = data!.id!.toString();
+//                           bool? status =
+//                               await appCtrl.addItemToWishlist(params);
+//
+//                           if (status != null && status) {
+//                             data!.setIsWishList =
+//                                 !(data!.isInWishlist ?? false);
+//                           }
+//                           return data!.isInWishlist;
+//                         },
+//                         isLiked: data!.isInWishlist,
+//                       ).paddingOnly(
+//                         top: AppScreenUtil().screenHeight(10),
+//                         right: AppScreenUtil().screenWidth(10),
+//                       ),
+//                     )
+//                   ],
+//                 ),
+//
+//                 if ((data?.discountPercentage ?? 0) > 0)
+//                   Positioned(
+//                     top: 5,
+//                     left: 5,
+//                     child: Container(
+//                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//                       decoration: BoxDecoration(
+//                         color: Colors.redAccent,
+//                         borderRadius: BorderRadius.circular(8),
+//                       ),
+//                       child: Text(
+//                         "-${data!.discountPercentage!.toStringAsFixed(0)}%",
+//                         style: const TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 12,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//               ],
+//             ),
+//             const Space(0, 5),
+//             Visibility(
+//               visible: !(rating == 0.0),
+//               child: Column(
+//                 children: [
+//                   Row(
+//                     children: [
+//                       LatoFontStyle(
+//                         text: " ${rating == 0.0 ? 0 : rating}".toString(),
+//                         fontSize: 12,
+//                         fontWeight: FontWeight.normal,
+//                         // color: appCtrl.appTheme.primary,
+//                       ),
+//                       const Space(5, 0),
+//                       Rating(
+//                         val: double.parse(data!.averageRating.toString()),
+//                         onRatingUpdate: (val) {},
+//                         ignoreGestures: true,
+//                       ),
+//                       const Space(5, 0),
+//                       LatoFontStyle(
+//                         text: "(${data!.ratingCount.toString()})".toString(),
+//                         fontSize: 12,
+//                         fontWeight: FontWeight.normal,
+//                         color: appCtrl.appTheme.contentColor,
+//                       )
+//                     ],
+//                   ),
+//                   const Space(0, 5),
+//                 ],
+//               ),
+//             ),
+//             SizedBox(
+//               width: 170,
+//               child: LatoFontStyle(
+//                 text: data!.productTitle!.tr,
+//                 fontSize: FontSizes.f14,
+//                 fontWeight: FontWeight.normal,
+//                 color: appCtrl.appTheme.blackColor,
+//                 overflow: TextOverflow.ellipsis,
+//               ),
+//             ),
+//             const Space(0, 5),
+//             // data!.id != null && (data!.isFeatured ?? false)
+//             //     ? Container()
+//             //     : PriceLayout(
+//             //         // totalPrice: data!.salePrice != null && data!.salePrice != "" && data!.salePrice != "null"
+//             //         //     ? '${appCtrl.priceSymbol} ${(data!.salePrice!)}'
+//             //         //     : "",
+//             //   totalPrice: data!.isOnSale == true &&
+//             //       data!.salePrice != data!.regularPrice &&
+//             //       data!.regularPrice != "xyz"
+//             //             ? data!.salePrice
+//             //             : null,
+//             //         // mrp: '${appCtrl.priceSymbol} ${data!.price}'
+//             //         mrp: data!.price,
+//             //         //  '${(data!.isAttribute! ? data!.priceRange : isInteger(num.parse(data!.regularPrice ?? "0")) ? num.parse(data!.regularPrice ?? "0").toStringAsFixed(0) : data!.regularPrice ?? "0")}'
+//             //         //todo: set discount price
+//             //         discount: data!.discountPercentage.toString(),
+//             //         // data!.salePrice != null &&
+//             //         //         data!.salePrice != "" &&
+//             //         //         data!.salePrice != "null"
+//             //         //     ? isInteger(num.parse(
+//             //         //             (double.parse(data!.regularPrice!) - double.parse(data!.salePrice!)).toString()))
+//             //         //         ? getDiscountPercentage(
+//             //         //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
+//             //         //             .toString()
+//             //         //         : getDiscountPercentage(
+//             //         //                 double.parse(data!.regularPrice!), double.parse(data!.salePrice!))
+//             //         //             .toString()
+//             //         //     : "",
+//             //         fontSize: data!.regularPrice != null &&
+//             //             data!.regularPrice != "" &&
+//             //             data!.regularPrice != "xyz"
+//             //             ? MediaQuery.of(context).size.width > 400
+//             //                 ? FontSizes.f12
+//             //                 : FontSizes.f12
+//             //             : FontSizes.f12,
+//             //         isDiscountShow: data!.discountPercentage != 0.0 &&
+//             //                 data!.discountPercentage != null
+//             //             ? true
+//             //             : false,
+//             //       ),
+//             data!.id != null && (data!.isFeatured ?? false)
+//                 ? Container()
+//                 : PriceLayout(
+//               totalPrice: data!.isOnSale == true &&
+//                   data!.salePrice != data!.regularPrice &&
+//                   data!.regularPrice != "xyz"
+//                   ? data!.salePrice
+//                   : null,
+//               mrp: data!.regularPrice,
+//               // discount: data!.discountPercentage.toString(),
+//               fontSize: data!.regularPrice != null &&
+//                   data!.regularPrice != "" &&
+//                   data!.regularPrice != "xyz"
+//                   ? MediaQuery.of(context).size.width > 400
+//                   ? FontSizes.f12
+//                   : FontSizes.f12
+//                   : FontSizes.f12,
+//               // isDiscountShow: data!.discountPercentage != 0.0 &&
+//               //     data!.discountPercentage != null
+//               //     ? true
+//               //     : false,
+//             ),
+//
+//           ],
+//         ),
+//       );
+//     });
+//   }
+// }

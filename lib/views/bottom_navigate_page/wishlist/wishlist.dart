@@ -25,8 +25,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
           body: RefreshIndicator(
             displacement: 100,
             backgroundColor: Colors.white,
-            color: appCtrl.appTheme.primary,
             strokeWidth: 3,
+            color: appCtrl.appTheme.primary,
             triggerMode: RefreshIndicatorTriggerMode.onEdge,
             onRefresh: () async {
               wishListCtrl.getData();

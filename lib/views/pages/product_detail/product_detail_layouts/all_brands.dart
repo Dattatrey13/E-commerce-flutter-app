@@ -12,6 +12,7 @@ class AllBrands extends StatefulWidget {
 
 class _AllBrandsState extends State<AllBrands> {
   final allCtrl = Get.put(AllBrandsController());
+  final homeCtrl = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +22,36 @@ class _AllBrandsState extends State<AllBrands> {
           textDirection: appCtrl.isRTL || appCtrl.languageVal == "ar"
               ? TextDirection.rtl
               : TextDirection.ltr,
-          child: RefreshIndicator(
+          // child: RefreshIndicator(
+          //   displacement: 100,
+          //   backgroundColor: Colors.white,
+          //   color: appCtrl.appTheme.primary,
+          //   strokeWidth: 3,
+          //   triggerMode: RefreshIndicatorTriggerMode.onEdge,
+          //   onRefresh: () async {
+          //     allCtrl.getData();
+          //     allCtrl.update();
+          //   },
+          child: homeCtrl.appCtrl.isShimmer
+              ? Center(
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.asset(
+                'assets/gif/dapper.gif',
+                fit: BoxFit.contain,
+              ),
+            ),
+          )
+
+              : RefreshIndicator(
             displacement: 100,
             backgroundColor: Colors.white,
             color: appCtrl.appTheme.primary,
             strokeWidth: 3,
             triggerMode: RefreshIndicatorTriggerMode.onEdge,
             onRefresh: () async {
-              allCtrl.getData();
-              allCtrl.update();
+              homeCtrl.getData();
+              homeCtrl.update();
             },
             child: Scaffold(
               backgroundColor: appCtrl.appTheme.whiteColor,

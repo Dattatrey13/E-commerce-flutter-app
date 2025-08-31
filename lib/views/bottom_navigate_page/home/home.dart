@@ -6,9 +6,10 @@ import 'package:dapperz/config.dart';
 import 'package:dapperz/main.dart';
 import 'package:dapperz/user_singleton.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:video_player/video_player.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:video_player/video_player.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -44,7 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     super.dispose();
   }
-
   // @override
   // void dispose() {
   //   _videoPlayerController?.dispose();
@@ -97,7 +97,21 @@ class _HomeScreenState extends State<HomeScreen> {
             textDirection: homeCtrl.appCtrl.isRTL || homeCtrl.appCtrl.languageVal == "ar"
                 ? TextDirection.rtl
                 : TextDirection.ltr,
-            child: RefreshIndicator(
+
+
+            child: homeCtrl.appCtrl.isShimmer
+                ? Center(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Image.asset(
+                  'assets/gif/dapper.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            )
+
+
+                : RefreshIndicator(
               displacement: 100,
               backgroundColor: Colors.white,
               color: appCtrl.appTheme.primary,
@@ -109,9 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Scaffold(
                 resizeToAvoidBottomInset: false,
-                body: homeCtrl.appCtrl.isShimmer
-                    ? const HomerShimmer()
-                    : SingleChildScrollView(
+                body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -212,28 +224,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       // const SizedBox(height: 20),
                       const HomeCategoryList(),
 
-                      const BorderLineLayout(),
                       if (homeCtrl.getAllCouponsModel != null &&
                           homeCtrl.getAllCouponsModel!.data != null &&
                           homeCtrl.getAllCouponsModel!.data!.isNotEmpty)
                         const OfferCorner(),
+
+                      const BorderLineLayout(),
+
                       RecommendedForYouLayout(title: 'New Arrival'),
 
                       const BorderLineLayout(),
-                      // homeCtrl.onSaleProductList.isNotEmpty
-                      //     ? const OnSaleLayout(title: 'Sale Products')
-                      //     : Container(),
+
+                      homeCtrl.onSaleProductList.isNotEmpty
+                          ? const OnSaleLayout(title: 'Sale Products')
+                          : Container(),
+
                       Visibility(
                         visible: UserSingleton().token != null,
                         child: const Column(
                           children: [
                             BorderLineLayout(),
-                            // NewArrivalProductListLayout(title: 'New Arrival'),
-                            // BorderLineLayout(),
-                            const keyChainLayout(title: 'keyChain'),
-                            // BorderLineLayout(),
-                            // RecentlyViewedLayout(title: 'Recently Viewed'),
-                            // BorderLineLayout(),
+                            NewArrivalProductListLayout(title: 'New Arrival'),
+                            BorderLineLayout(),
+                            RecentlyViewedLayout(title: 'Recently Viewed'),
+                            BorderLineLayout(),
                           ],
                         ),
                       ),

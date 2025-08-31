@@ -27,7 +27,8 @@ if (flutterVersionName == null) {
 android {
     namespace "com.dapperz"
     compileSdkVersion 35
-    ndkVersion flutter.ndkVersion
+    ndkVersion "26.1.10909125"
+//    ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

@@ -30,8 +30,9 @@ class AppTheme {
   Color green;
   Color white;
   Color whiteColor;
-  Color blackText;
+  Color themeColor;
   Color blackColor;
+  Color blackText;
   Color textColor;
   Color contentColor;
   Color borderColor;
@@ -62,8 +63,9 @@ class AppTheme {
     required this.green,
     required this.white,
     required this.whiteColor,
-    required this.blackText,
+    required this.themeColor,
     required this.blackColor,
+    required this.blackText,
     required this.textColor,
     required this.contentColor,
     required this.borderColor,
@@ -80,16 +82,16 @@ class AppTheme {
       case ThemeType.light:
         return AppTheme(
           isDark: false,
-          txt: Colors.white,
-          // txt: const Color(0xFF001928),
+
+          txt: const Color(0xFF001928),
           // primary: const Color(0xFFFF4C3B),
 
           primary: const Color(0xFF5D4037),
           primaryLight: const Color(0xFFFFF4F4),
           // secondary: const Color(0xFF6EBAE7),
           secondary: const Color(0xFFD7CCC8),
-          // accentTxt: const Color(0xFF001928),
-          accentTxt: Colors.white,
+          accentTxt: const Color(0xFF001928),
+          // accentTxt: Colors.white,
           // bg1: Colors.white,
           bg1: const Color(0xFFF5F5F5),
           bgColor: Colors.white,
@@ -104,8 +106,8 @@ class AppTheme {
           green: const Color(0xFF5CB85C),
           white: Colors.white,
           whiteColor: Colors.white,
-          blackText: const Color(0xFF222222),
-          blackColor: Colors.white,
+          themeColor: const Color(0xFF222222),
+          blackColor: Colors.black,
           // blackColor: Colors.black,
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
@@ -117,6 +119,7 @@ class AppTheme {
           homeCategoryColor: const Color(0xFFEAEDF2),
           textColor: const Color(0xFF3E2723),
           greyLight25: const Color(0xFFEDEFF4),
+          blackText: Colors.black,
         );
 
       case ThemeType.dark:
@@ -129,8 +132,8 @@ class AppTheme {
           primaryLight: const Color(0xFF202020),
           secondary: const Color(0xFF6EBAE7),
           // secondary: const Color(0xFFD7CCC8),
-          // accentTxt: const Color(0xFF001928),
-          accentTxt: Colors.white,
+          accentTxt: const Color(0xFF001928),
+          // accentTxt: Colors.white,
           bg1: const Color(0xFF151A1E),
           bgColor: const Color(0xFF262626),
           surface: const Color(0xFF151A1E),
@@ -144,7 +147,7 @@ class AppTheme {
           green: const Color(0xFF5CB85C),
           white: Colors.white,
           whiteColor: Colors.black,
-          blackText: Colors.white,
+          blackText: Colors.black,
           // blackText: const Color(0xFF262626),
           blackColor: Colors.white,
           contentColor: const Color(0xFF777777),
@@ -157,6 +160,7 @@ class AppTheme {
           textColor: const Color(0xFF636363),
           homeCategoryColor: const Color(0xFFEAEDF2),
           greyLight25: Colors.black,
+          themeColor: const Color(0xFF5D4037),
         );
     }
   }

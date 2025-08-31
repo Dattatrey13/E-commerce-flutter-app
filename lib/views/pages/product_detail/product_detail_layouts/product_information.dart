@@ -74,7 +74,7 @@ class _ProductInformationState extends State<ProductInformation> {
               // Product Title
               Expanded(
                 child: ProductDetailWidget().commonText(
-                  text: productCtrl.product!.productTitle.toString().tr,
+                  text: productCtrl.product?.productTitle.toString().tr,
                   fontSize: FontSizes.f16,
                 ),
               ),
@@ -107,7 +107,7 @@ class _ProductInformationState extends State<ProductInformation> {
                     width: 40,
                     child: productCtrl.product!.isInWishlist!
                         ? const LinkHeartIcon(onTap: null, isLiked: true)
-                        : HeartIcon(color: appCtrl.appTheme.blackColor),
+                        : HeartIcon(color: appCtrl.appTheme.themeColor),
                   ),
                 ),
               ),

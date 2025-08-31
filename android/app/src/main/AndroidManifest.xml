@@ -53,7 +53,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="dapperz.in"
+                     android:host="dapperz.in"
                     android:pathPrefix="/product/"
                     android:scheme="https" />
             </intent-filter>

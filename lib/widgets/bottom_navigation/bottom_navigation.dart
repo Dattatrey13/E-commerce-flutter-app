@@ -10,7 +10,7 @@ class CommonBottomNavigation extends StatelessWidget {
     return GetBuilder<AppController>(builder: (appCtrl) {
       return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: appCtrl.appTheme.blackColor,
+        unselectedItemColor: appCtrl.appTheme.themeColor,
         showUnselectedLabels: true,
         selectedFontSize: 12,
         unselectedFontSize: 10,
@@ -19,9 +19,9 @@ class CommonBottomNavigation extends StatelessWidget {
         items: [
           ...appCtrl.bottomList.asMap().entries.map((e) {
             return BottomNavigationWidget().bottomNavigationCard(
-                color: appCtrl.selectedIndex == e.key ? appCtrl.appTheme.primary : appCtrl.appTheme.blackColor,
+                color: appCtrl.selectedIndex == e.key ? appCtrl.appTheme.primary : appCtrl.appTheme.themeColor,
                 selectedIndex: appCtrl.selectedIndex,
-                bgColor: appCtrl.appTheme.whiteColor,
+                bgColor: appCtrl.appTheme.themeColor,
                 image: appCtrl.selectedIndex == e.key ? e.value['selectedIcon'] : e.value['unSelectedIcon'],
                 title: e.value['title'].toString().tr.toUpperCase());
           }).toList()

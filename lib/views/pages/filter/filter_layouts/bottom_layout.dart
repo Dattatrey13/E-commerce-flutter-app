@@ -38,7 +38,7 @@ class BottomLayout extends StatelessWidget {
                   title: secondButtonText!,
                   height: MediaQuery.of(context).size.width > 400 ? 50 : 35,
                   onTap: secondTap,
-                  color: appCtrl.appTheme.whiteColor,
+                  color: appCtrl.appTheme.themeColor,
                   fontSize: FontSizes.f14,
                   border: Border.all(color: appCtrl.appTheme.primary),
                   fontColor: appCtrl.appTheme.primary)

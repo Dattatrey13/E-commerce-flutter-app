@@ -25,6 +25,7 @@ class AppArray {
 
   var homeCategory = [];
   var featuredProductList = [];
+  var recommendedProductList = [];
 
   // Slider List
   var homeSliderList = [
@@ -58,7 +59,7 @@ class AppArray {
 
   var newArrivalProductList = [];
 
-  var keyChainList = [];
+  // var keyChainList = [];
 
   // On Sale List
   var onSaleList = [];

@@ -17,7 +17,7 @@ class MenuRoundedIcon extends StatelessWidget {
                 ? CupertinoIcons.arrow_right
                 : CupertinoIcons.arrow_left,
         size: AppScreenUtil().size(25),
-        color: appCtrl.appTheme.blackColor,
+        color: appCtrl.appTheme.themeColor,
       ).gestures(onTap: onTap);
     });
   }

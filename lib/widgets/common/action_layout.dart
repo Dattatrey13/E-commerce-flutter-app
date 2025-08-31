@@ -25,7 +25,7 @@ class ActionLayout extends StatelessWidget {
                   text: firstActionName,
                   fontSize: FontSizes.f12,
                   fontWeight: FontWeight.w600,
-                  color: appCtrl.appTheme.blackColor,
+                  color: appCtrl.appTheme.themeColor,
                 )
               ],
             ).gestures(onTap: firstActionTap),
@@ -44,7 +44,7 @@ class ActionLayout extends StatelessWidget {
                 text: secondAction,
                 fontSize: FontSizes.f12,
                 fontWeight: FontWeight.w600,
-                color: appCtrl.appTheme.blackColor,
+                color: appCtrl.appTheme.themeColor,
               )
             ],
           ).gestures(onTap: secondActionTap)

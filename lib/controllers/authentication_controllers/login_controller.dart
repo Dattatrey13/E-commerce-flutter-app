@@ -85,7 +85,6 @@ class LoginController extends GetxController {
 
         txtEmail.clear();
         txtPassword.clear();
-
         Get.offAllNamed(routeName.dashboard);
       } else {
         socialLoginCtrl.showToast("Login failed. Please check credentials.");

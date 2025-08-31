@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dapperz/api/api_service_call.dart';
 import 'package:dapperz/api/base_api_call.dart';
 import 'package:dapperz/common_methods.dart';
@@ -11,7 +13,7 @@ import 'package:dapperz/models/product/product_list_model.dart' as plm;
 import 'package:dapperz/user_singleton.dart';
 import 'package:dapperz/views/bottom_navigate_page/home/city_selection_dialog.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:http/http.dart' as http;
 import '../../api/api_method_list.dart';
 import '../../config.dart';
 
@@ -34,7 +36,7 @@ class HomeController extends GetxController {
   List<plm.Data> recommendedForYouList = [];
   List<plm.Data> newArrivalList = [];
   List<plm.Data> newArrivalProductList = [];
-  List<plm.Data> keyChainProductList = [];
+  // List<plm.Data> keyChainProductList = [];
   List<plm.Data> onSaleProductList = [];
   List<plm.Data> recentlyViewedList = [];
   List<gllm.Children> locationList = [];
@@ -58,11 +60,6 @@ class HomeController extends GetxController {
 
   late PageController pageController;
 
-// List<String> images = [
-//   // 'assets/video/slider.mp4',
-//   'assets/video/DapperBannerVideoMobile.mp4',
-//
-// ];
   List<String> images = [
     'assets/image/slider1.jpg',
     'assets/image/slider2.jpg',
@@ -80,42 +77,6 @@ class HomeController extends GetxController {
     await getData(getLocation: true);
     super.onReady();
   }
-
-//   // get data list
-//   getData({bool getLocation = false}) async {
-//   appCtrl.isShimmer = true;
-//   appCtrl.update();
-//   homeCategoryList.clear();
-//   featuredCategoriesList.clear();
-//   recommendedForYouList.clear();
-//   bestSellingProductList.clear();
-//   onSaleProductList.clear();
-//
-//   try {
-//     if (!UserSingleton().isGuest!) {
-//       await getRecommendedProductList("1");
-//       await getNewArrivalProductList("1");
-//       update();
-//     }
-//
-//     await getFeaturedCategoryList("1");
-//     update();
-//
-//
-//     await getBestSellingList("1");
-//     update();
-//
-//     await getOnSaleList("1");
-//     update();
-//   } catch (e) {
-//     print("⚠️ Error loading product data: $e");
-//   }
-//   print("Home data: $getData");
-//
-//   appCtrl.isShimmer = false;
-//   appCtrl.update();
-// }
-
   getData({bool getLocation = false}) async {
     appCtrl.isShimmer = true;
     appCtrl.update();
@@ -126,28 +87,24 @@ class HomeController extends GetxController {
     brandsList.clear();
     recommendedForYouList.clear();
     newArrivalProductList.clear();
-    keyChainProductList.clear();
     onSaleProductList.clear();
     recentlyViewedList.clear();
 
-    if (!UserSingleton().isGuest!) {
-      await getRecommendedProductList("1");
-
-      update();
-      await getNewArrivalProductList();
-      update();
+    // if (!UserSingleton().isGuest!) {
+    //   await getRecommendedProductList("1");
+    //   update();
+    //   await getRecentProduct("1");
+    //   update();
+    // }
+    await getRecommendedProductList("1");
+    update();
       await getRecentProduct("1");
       update();
-    }
+      await getNewArrivalList("1");
+      update();
     await getParentCategoryList();
     update();
     await getFeaturedCategoryList("1");
-    update();
-    // await getBrandsList();
-    // update();
-    await getkeyChainList("1");
-    update();
-    await getOnSaleList("1");
     update();
     await getWishlistCount();
     await getCartCount();
@@ -159,8 +116,6 @@ class HomeController extends GetxController {
     loginWidth = ScreenUtil().screenWidth;
     loginHeight = 500.w;
     update();
-    // subCategoryList(0, 1);
-    // update();
     await Future.delayed(const Duration(milliseconds: 500));
     appCtrl.isShimmer = false;
     appCtrl.update();
@@ -197,36 +152,44 @@ class HomeController extends GetxController {
     }
   }
 
-  getRecommendedProductList(String currentPage) async {
+  Future<void> getRecommendedProductList(String currentPage) async {
+    try {
+      final url = Uri.parse(
+          "https://api.dapperz.in/api/product/list/?page_size=10&is_home=true"
+      );
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        print("Recommended Product JSON Response: $jsonData");
+        final productListModel = plm.ProductListModel.fromJson(jsonData);
+        recommendedForYouList.addAll(productListModel.data ?? []);
+
+        AppArray().recommendedProductList.addAll(productListModel.data ?? []);
+        print("Recommended Product List:$response");
+        update();
+      } else {
+        print("Error ${response.statusCode}: ${response.reasonPhrase}");
+      }
+    } catch (e) {
+      print("Exception in getRecommendedProductList: $e");
+      rethrow;
+    }
+  }
+
+  getNewArrivalList(String currentPage) async {
     try {
       dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.recommendedProduct}&page=$currentPage&filter_type=recommended");
-      recommendedForYouList
+          "${ApiMethodList.newArrivalProduct}&page=$currentPage&filter_type=newArrival");
+      newArrivalProductList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
       AppArray()
-          .recommendedList
+          .newArrivalProductList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-      print("Recommended Product: $response");
+      print("Recent Product: $response");
     } catch (e) {
       rethrow;
     }
   }
-  getNewArrivalProductList() async {
-    newArrivalProductList.clear(); // Use the right list
-    try {
-      dynamic response = await apiCall.getResponse("${ApiMethodList.newArrivalProduct}?is_mobile=true&page=1");
-
-      // Extract only top 10 or 15
-      List<plm.Data> allProducts = plm.ProductListModel.fromJson(response).data ?? [];
-      newArrivalProductList.addAll(allProducts.take(10)); // Top 10
-
-      print("Fetched NewArrival: ${response}");
-      update(); // Ensure UI updates
-    } catch (e) {
-      rethrow;
-    }
-  }
-
 
   getBrandsList() async {
     try {
@@ -240,55 +203,6 @@ class HomeController extends GetxController {
     }
   }
 
-  getkeyChainList(String currentPage) async {
-    try {
-      dynamic response = await apiCall.getResponse(
-          ApiMethodList.keyChainList);
-      keyChainProductList
-          .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-      AppArray()
-          .keyChainList
-          .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-      print("keyChain: $response");
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // getOnSaleList(String currentPage) async {
-  //   try {
-  //     dynamic response = await apiCall.getResponse(
-  //         "${ApiMethodList.bestSellingList}&page=$currentPage&filter_type=on_sale");
-  //     onSaleProductList
-  //         .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-  //     AppArray()
-  //         .onSaleList
-  //         .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-  //     print("Sale: $response");
-  //     print("Fetched on sale products: ${onSaleProductList.length}");
-  //     update();
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-  getOnSaleList(String currentPage) async {
-    try {
-      dynamic response = await apiCall.getResponse(
-          "${ApiMethodList.keyChainList}&page=$currentPage&filter_type=on_sale");
-
-      var productList = plm.ProductListModel.fromJson(response).data ?? [];
-      print("Parsed product count: ${productList.length}");
-
-      onSaleProductList.addAll(productList);
-      AppArray().onSaleList.addAll(productList);
-
-      print("onSaleProductList: ${onSaleProductList.length}");
-      update(); // <-- This is important for GetBuilder
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
   getRecentProduct(String currentPage) async {
     try {
       dynamic response = await apiCall.getResponse(
@@ -298,7 +212,7 @@ class HomeController extends GetxController {
       AppArray()
           .recentlyViewedList
           .addAll(plm.ProductListModel.fromJson(response).data ?? []);
-      print("REcent Prouct: $response");
+      print("Recent Product: $response");
     } catch (e) {
       rethrow;
     }
@@ -381,13 +295,11 @@ class HomeController extends GetxController {
   subCategoryList(index, categoryId) async {
     loginWidth = 40.0;
     loginHeight = 40.0;
-
     update();
     await Future.delayed(DurationsClass.s1);
     selected = !selected;
     findStyleCategoryCategoryWiseList = [];
     selectedStyleCategory.add(index);
-
     update();
     for (var i = 0; i < findStyleCategoryList.length; i++) {
       if (categoryId.toString() ==

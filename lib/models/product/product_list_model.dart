@@ -154,17 +154,18 @@ class Data {
     // _slug = json['product_slug'];
     _slug = json['product_slug']?.toString();
     _productShortDescription = json['product_short_description'];
-    _price = json['price']?.toString();
     _regularPrice = json['regular_price']?.toString();
     if (json['image_ids'] != null) {
       _imageIds = [];
       json['image_ids'].forEach((v) {
-        _imageIds?.add(ImageIds.fromJson(v));
+        _imageIds = (json['image_ids'] as List?)?.map((e) => ImageIds.fromJson(e)).toList() ?? [];
+        // _imageIds?.add(ImageIds.fromJson(v));
       });
     }
     _defaultImage = json['default_image'] != null
         ? ImageIds.fromJson(json['default_image'])
         : null;
+    _price = json['price']?.toString();
     _productType = json['product_type'];
     _variations =
         json['variations'] != null ? json['variations'].cast<num>() : [];
@@ -257,8 +258,6 @@ class Data {
   String? get wishlistToken => _wishlistToken;
 
   dynamic get discountPercentage => _discountPercentage;
-
-  // ImageIds? get defaultImage => _defaultImage; // <--- NEW
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

@@ -27,7 +27,7 @@ class AppBarActionLayout extends StatelessWidget {
             Stack(
               children: [
                 HeartIcon(
-                  color: appCtrl.appTheme.blackColor,
+                  color: appCtrl.appTheme.whiteColor,
                 ).gestures(onTap: () async {
                   appCtrl.isShimmer = true;
                   appCtrl.selectedIndex = 3;

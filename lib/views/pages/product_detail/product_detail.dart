@@ -17,7 +17,7 @@ class _ProductDetailState extends State<ProductDetail> {
       return Directionality(
         textDirection: productCtrl.appCtrl.isRTL || productCtrl.appCtrl.languageVal == "ar" ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
-          backgroundColor: productCtrl.appCtrl.appTheme.whiteColor,
+          backgroundColor: productCtrl.appCtrl.appTheme.themeColor,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: productCtrl.appCtrl.appTheme.whiteColor,
